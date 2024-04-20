@@ -36,7 +36,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habama" } },
+  -- install = { colorscheme = { "tokyonight", "habama" } },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {
@@ -57,3 +57,17 @@ require("lazy").setup({
 
 -- put he customizations here because it overides the default ones
 vim.api.nvim_set_hl(0, "LineNr", { ctermfg = "white" })
+-- Setup key mappings using Lua
+vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>ff",
+  ":lua require('telescope.builtin').find_files({ cwd = vim.fn.expand('~') })<CR>",
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>fb",
+  "<cmd>lua require('telescope.builtin').buffers()<CR>",
+  { noremap = true, silent = true }
+)
