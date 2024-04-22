@@ -18,6 +18,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     { import = "lazyvim.plugins.extras.coding.copilot" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+
     { import = "plugins" },
 
     -- import any extras modules here
@@ -36,7 +37,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  -- install = { colorscheme = { "tokyonight", "habama" } },
+  install = { colorscheme = { "tokyonight", "habama" } },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {

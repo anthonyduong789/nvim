@@ -1,13 +1,21 @@
 return {
-  -- {
+  --
   --   "nvimdev/dashboard-nvim",
   --   enabled = true,
   -- },
   {
     "nvim-lualine/lualine.nvim",
-    enabled = false,
+    enabled = true,
   },
   -- messages, cmdline and the popupmenu
+  {
+    "copilot.lua",
+    enabled = false,
+  },
+  {
+    "copilot-cmp",
+    enabled = false,
+  },
   {
     "folke/noice.nvim",
     opts = function(_, opts)
