@@ -16,6 +16,23 @@ return {
       "nvim-telescope/telescope-file-browser.nvim",
     },
     keys = {
+
+      {
+
+        "<Leader>flg",
+        function()
+          local builtin = require("telescope.builtin")
+          local current_file = vim.fn.expand("%:p")
+          builtin.live_grep({
+            search_dirs = { current_file }, -- Sets the search directory to the current file's directory
+          })
+          -- Function to perform a grep search on the current file using Telescope
+        end,
+        -- Function to live grep in the current file using Telescope
+
+        desc = "grep current file",
+      },
+
       {
         ";f",
         function()
@@ -47,6 +64,7 @@ return {
         ";;",
         function()
           local builtin = require("telescope.builtin")
+
           builtin.resume()
         end,
         desc = "Resume the previous telescope picker",

@@ -27,10 +27,20 @@ keymap.set("n", "te", ":tabedit")
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)
 keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 keymap.set("n", "tw", ":tabclose<Return>", opts)
-keymap.set("n", "<Leader>nt", ":tabnew<Return>", opts)
+keymap.set("n", "<Leader>nt", function()
+  vim.cmd("tabnew")
+  local telescope = require("telescope.builtin")
+  -- Get the directory of the current buffer
+  local current_dir = vim.fn.expand("%:p:h")
+
+  -- Open Telescope find_files at the directory of the current buffer
+  telescope.find_files({
+    cwd = current_dir,
+  })
+end, opts)
 -- Split window
-keymap.set("n", "ss", ":split<Return>", opts)
-keymap.set("n", "sv", ":vsplit<Return>", opts)
+keymap.set("n", "<Leader>wsh", ":split<Return>", opts)
+keymap.set("n", "<Leader>wsv", ":vsplit<Return>", opts)
 
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
