@@ -3,6 +3,13 @@ return {
   --   "nvimdev/dashboard-nvim",
   --   enabled = true,
   -- },
+  --
+  --
+  --
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    enabled = true,
+  },
   {
     "nvim-lualine/lualine.nvim",
     enabled = true,

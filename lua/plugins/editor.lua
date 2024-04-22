@@ -6,6 +6,10 @@ return {
     opts = {},
   },
   {
+
+    "https://github.com/preservim/tagbar",
+  },
+  {
     "telescope.nvim",
     priority = 1000,
     dependencies = {

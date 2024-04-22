@@ -127,11 +127,46 @@ return {
       setup = {},
     },
   },
+
   {
     "nvim-cmp",
     dependencies = { "hrsh7th/cmp-emoji" },
     opts = function(_, opts)
       table.insert(opts.sources, { name = "emoji" })
+
+      local has_words_before = function()
+        local unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+        return col ~= 0 and line_content:sub(col, col):match("%s") == nil
+      end
+
+      local luasnip = require("luasnip")
+      local cmp = require("cmp")
+
+      opts.mapping = vim.tbl_extend("force", opts.mapping, {
+        ["<C-j>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+
+        ["<C-k>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+      })
     end,
   },
 }
