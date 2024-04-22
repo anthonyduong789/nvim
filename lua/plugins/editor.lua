@@ -111,6 +111,7 @@ return {
         end,
         desc = "Open File Browser with the path of the current buffer",
       },
+
       {
         ";ls",
         function()

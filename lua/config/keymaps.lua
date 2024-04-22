@@ -28,14 +28,21 @@ keymap.set("n", "<tab>", ":tabnext<Return>", opts)
 keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 keymap.set("n", "tw", ":tabclose<Return>", opts)
 keymap.set("n", "<Leader>nt", function()
-  local telescope = require("telescope.builtin")
-  -- Get the directory of the current buffer
-  local current_dir = vim.fn.expand("%:p:h")
+  local telescope = require("telescope")
 
+  local function telescope_buffer_dir()
+    return vim.fn.expand("%:p:h")
+  end
   vim.cmd("tabnew")
-  -- Open Telescope find_files at the directory of the current buffer
-  telescope.find_files({
-    cwd = current_dir,
+  telescope.extensions.file_browser.file_browser({
+    path = "%:p:h",
+    cwd = telescope_buffer_dir(),
+    respect_gitignore = false,
+    hidden = true,
+    grouped = true,
+    previewer = false,
+    initial_mode = "normal",
+    layout_config = { height = 40 },
   })
 end, opts)
 
