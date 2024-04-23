@@ -17,6 +17,15 @@ return {
   -- lsp servers
   {
     "neovim/nvim-lspconfig",
+    -- init = function()
+    --   local keys = require("lazyvim.plugins.lsp.keymaps").get()
+    --   -- change a keymap
+    --   -- keys[#keys + 1] = { "K", "<cmd>echo 'hello'<cr>" }
+    --   -- disable a keymap
+    --   keys[#keys + 1] = { "K", false }
+    --   -- add a keymap
+    -- end,
+
     opts = {
       inlay_hints = { enabled = true },
       ---@type lspconfig.options
@@ -124,13 +133,17 @@ return {
           },
         },
       },
-      setup = {},
     },
   },
 
   {
     "nvim-cmp",
-    dependencies = { "hrsh7th/cmp-emoji" },
+    dependencies = {
+      { "hrsh7th/cmp-emoji" },
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-cmdline" },
+    },
     opts = function(_, opts)
       table.insert(opts.sources, { name = "emoji" })
 

@@ -28,34 +28,28 @@ keymap.set("n", "<tab>", ":tabnext<Return>", opts)
 keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 keymap.set("n", "tw", ":tabclose<Return>", opts)
 keymap.set("n", "<Leader>nt", function()
-  local telescope = require("telescope")
-
-  local function telescope_buffer_dir()
-    return vim.fn.expand("%:p:h")
-  end
   vim.cmd("tabnew")
-  telescope.extensions.file_browser.file_browser({
-    path = "%:p:h",
-    cwd = telescope_buffer_dir(),
-    respect_gitignore = false,
-    hidden = true,
-    grouped = true,
-    previewer = false,
-    initial_mode = "normal",
-    layout_config = { height = 40 },
+  local telescope = require("telescope.builtin")
+  -- Get the directory of the current buffer
+  local current_dir = vim.fn.expand("%:p:h")
+
+  vim.cmd("tabnew")
+  -- Open Telescope find_files at the directory of the current buffer
+  telescope.find_files({
+    cwd = current_dir,
   })
 end, opts)
-
 keymap.set("i", "<C-h>", "<Left>", { noremap = true, silent = true })
 keymap.set("i", "<C-l>", "<Right>", { noremap = true, silent = true })
 
 -- Split window
 keymap.set("n", "<Leader>wsh", ":split<Return>", opts)
 keymap.set("n", "<Leader>wsv", ":vsplit<Return>", opts)
-
 keymap.set("n", "T", ":TagbarToggle<Return>", opts)
-
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
 end, opts)
+-- vim.api.nvim_set_keymap("n", "H", "<cmd>lua vim.lsp.buf.hover()<cr>", { noremap = true })
+-- vim.api.nvim_set_keymap("n", "J", "<Plug>(easymotion-w)", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "K", "<Plug>(easymotion-b)", { noremap = true, silent = true })

@@ -1,5 +1,8 @@
 return {
   -- Hihglight colors
+  -- {
+  --   "easymotion/vim-easymotion",
+  -- },
   {
     "echasnovski/mini.hipatterns",
     event = "BufReadPre",
@@ -92,21 +95,13 @@ return {
       {
         "<leader>fls",
         function()
-          local telescope = require("telescope")
+          local telescope = require("telescope.builtin")
 
           local function telescope_buffer_dir()
             return vim.fn.expand("%:p:h")
           end
-
-          telescope.extensions.file_browser.file_browser({
-            path = "%:p:h",
+          telescope.find_files({
             cwd = telescope_buffer_dir(),
-            respect_gitignore = false,
-            hidden = true,
-            grouped = true,
-            previewer = false,
-            initial_mode = "normal",
-            layout_config = { height = 40 },
           })
         end,
         desc = "Open File Browser with the path of the current buffer",

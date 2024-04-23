@@ -73,3 +73,16 @@ vim.api.nvim_set_keymap(
   "<cmd>lua require('telescope.builtin').buffers()<CR>",
   { noremap = true, silent = true }
 )
+
+-- -- Set the background color to be transparent or inherit from the terminal
+-- vim.cmd([[
+--     hi Normal guibg=NONE ctermbg=NONE
+--     hi NonText guibg=NONE ctermbg=NONE
+-- ]])
+--
+-- -- Optional: Ensure that background transparency is respected in additional highlighting
+-- vim.cmd([[
+--     hi VertSplit guibg=NONE ctermbg=NONE
+--     hi SignColumn guibg=NONE ctermbg=NONE
+--     hi NormalNC guibg=NONE ctermbg=NONE
+-- ]])
