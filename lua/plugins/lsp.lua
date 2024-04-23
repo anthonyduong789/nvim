@@ -14,6 +14,15 @@ return {
       })
     end,
   },
+  {
+    "copilot.lua",
+    enabled = false,
+  },
+  {
+    "copilot-cmp",
+    enabled = false,
+  },
+
   -- lsp servers
   {
     "neovim/nvim-lspconfig",

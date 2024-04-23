@@ -16,14 +16,6 @@ return {
   },
   -- messages, cmdline and the popupmenu
   {
-    "copilot.lua",
-    enabled = false,
-  },
-  {
-    "copilot-cmp",
-    enabled = false,
-  },
-  {
     "folke/noice.nvim",
     opts = function(_, opts)
       table.insert(opts.routes, {
