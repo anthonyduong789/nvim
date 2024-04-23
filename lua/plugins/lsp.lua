@@ -10,22 +10,13 @@ return {
         "tailwindcss-language-server",
         "typescript-language-server",
         "css-lsp",
+        "emmet-language-server",
       })
     end,
   },
-
   -- lsp servers
   {
     "neovim/nvim-lspconfig",
-    -- init = function()
-    --   local keys = require("lazyvim.plugins.lsp.keymaps").get()
-    --   -- change a keymap
-    --   -- keys[#keys + 1] = { "K", "<cmd>echo 'hello'<cr>" }
-    --   -- disable a keymap
-    --   keys[#keys + 1] = { "K", false }
-    --   -- add a keymap
-    -- end,
-
     opts = {
       inlay_hints = { enabled = true },
       ---@type lspconfig.options
@@ -133,30 +124,33 @@ return {
           },
         },
       },
+      setup = {},
     },
   },
 
   {
     "nvim-cmp",
-    dependencies = {
-      { "hrsh7th/cmp-emoji" },
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-path" },
-      { "hrsh7th/cmp-cmdline" },
-    },
+    dependencies = { { "hrsh7th/cmp-emoji" }, { "hrsh7th/cmp-buffer" }, { "hrsh7th/cmp-cmdline" } },
     opts = function(_, opts)
       table.insert(opts.sources, { name = "emoji" })
 
-      local has_words_before = function()
-        local unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
-        return col ~= 0 and line_content:sub(col, col):match("%s") == nil
-      end
-
       local luasnip = require("luasnip")
       local cmp = require("cmp")
-
+      vim.opt.completeopt = { "menu", "menuone", "noselect" }
+      cmp.setup.cmdline("/", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = "buffer" },
+        },
+      })
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+        }, {
+          { name = "cmdline" },
+        }),
+      })
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<C-j>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
@@ -169,7 +163,6 @@ return {
             fallback()
           end
         end, { "i", "s" }),
-
         ["<C-k>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
