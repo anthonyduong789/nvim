@@ -2,7 +2,14 @@ return {
   -- Hihglight colors
   -- {
   --   "easymotion/vim-easymotion",
-  -- },
+  {
+    "folke/which-key.nvim",
+    opts = {
+      defaults = {
+        ["<leader>t"] = { name = "🖥️terminal🖥️" },
+      },
+    },
+  }, -- },
   {
     "echasnovski/mini.hipatterns",
     event = "BufReadPre",

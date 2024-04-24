@@ -49,6 +49,25 @@ keymap.set("n", "<Leader>tl", function()
 
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("live-server<CR>", true, false, true), "t", false)
 end, { desc = "new tab live-server" })
+
+keymap.set("n", "<Leader>tc", function()
+  local cmd = vim.fn.input("terminal command: ")
+  if cmd ~= "" then
+    vim.cmd("tabnew")
+    vim.cmd("setlocal nonumber norelativenumber")
+    vim.cmd("terminal")
+    vim.cmd("startinsert")
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd .. "<CR>", true, false, true), "t", false)
+  end
+end, { desc = "custom command" })
+
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<leader>tc",
+--   "<cmd>lua RunCustomCommandInTerminal()<CR>",
+--   { noremap = true, silent = true }
+-- )
+
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
