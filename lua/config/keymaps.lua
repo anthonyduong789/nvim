@@ -27,29 +27,38 @@ keymap.set("n", "te", ":tabedit")
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)
 keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 keymap.set("n", "tw", ":tabclose<Return>", opts)
-keymap.set("n", "<Leader>nt", function()
-  vim.cmd("tabnew")
-  local telescope = require("telescope.builtin")
-  -- Get the directory of the current buffer
-  local current_dir = vim.fn.expand("%:p:h")
-
-  vim.cmd("tabnew")
-  -- Open Telescope find_files at the directory of the current buffer
-  telescope.find_files({
-    cwd = current_dir,
-  })
-end, opts)
 keymap.set("i", "<C-h>", "<Left>", { noremap = true, silent = true })
 keymap.set("i", "<C-l>", "<Right>", { noremap = true, silent = true })
 
 -- Split window
-keymap.set("n", "<Leader>wsh", ":split<Return>", opts)
-keymap.set("n", "<Leader>wsv", ":vsplit<Return>", opts)
-keymap.set("n", "T", ":TagbarToggle<Return>", opts)
+keymap.set("n", "<Leader>ws", ":split<Return>", opts)
+keymap.set("n", "<Leader>wv", ":vsplit<Return>", opts)
+
+keymap.set("n", "<Leader>tt", function()
+  vim.cmd("tabnew")
+  vim.cmd("terminal")
+  vim.cmd("setlocal nonumber norelativenumber") -- Turn off line numbers for this tab
+  vim.cmd("startinsert")
+end, { desc = "terminal new tab" })
+
+keymap.set("n", "<Leader>tl", function()
+  vim.cmd("tabnew")
+  vim.cmd("terminal")
+  vim.cmd("setlocal nonumber norelativenumber") -- Turn off line numbers for this tab
+  vim.cmd("startinsert")
+
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("live-server<CR>", true, false, true), "t", false)
+end, { desc = "new tab live-server" })
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()
 end, opts)
+
+keymap.set("n", "<C-o>", function()
+  local current_file_path = vim.fn.expand("%:p")
+  print(current_file_path)
+end, opts)
+
 -- vim.api.nvim_set_keymap("n", "H", "<cmd>lua vim.lsp.buf.hover()<cr>", { noremap = true })
 -- vim.api.nvim_set_keymap("n", "J", "<Plug>(easymotion-w)", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("n", "K", "<Plug>(easymotion-b)", { noremap = true, silent = true })

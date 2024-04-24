@@ -96,38 +96,78 @@ return {
         "<leader>fls",
         function()
           local telescope = require("telescope.builtin")
+          local actions = require("telescope.actions")
+          local action_state = require("telescope.actions.state")
 
           local function telescope_buffer_dir()
             return vim.fn.expand("%:p:h")
           end
+          local open_in_new_tab = function(bufnr)
+            local selection = action_state.get_selected_entry()
+            actions.close(bufnr)
+            vim.cmd("tabnew " .. selection.path)
+          end
           telescope.find_files({
+            search_dirs = { telescope_buffer_dir() }, -- Set the search directory to the current buffer's directory
             cwd = telescope_buffer_dir(),
+            hidden = false,
+            no_ignore = false, -- Respect .gitignore
+            -- layout_strategy = "horizontal",
+            -- layout_config = {
+            --   height = 0.99, -- Use 100% of the height of Neovim
+            --   width = 0.99, -- Use 100% of the width of Neovim
+            --   -- preview_cutoff = 0,
+            --   preview_width = 0.8,
+            --   prompt_position = "top",
+            -- },
+            -- attach_mappings = function(_, map)
+            --   -- Map the <CR> (Enter) key to open the file in a new tab
+            --   map("i", "<CR>", open_in_new_tab)
+            --   map("n", "<CR>", open_in_new_tab)
+            --   return true -- Return true to keep default mappings as well, remove to only use custom mapping
+            -- end,
           })
         end,
         desc = "Open File Browser with the path of the current buffer",
       },
 
       {
-        ";ls",
+        "<Leader>nt",
         function()
-          local telescope = require("telescope")
+          local telescope = require("telescope.builtin")
+          local actions = require("telescope.actions")
+          local action_state = require("telescope.actions.state")
 
           local function telescope_buffer_dir()
             return vim.fn.expand("%:p:h")
           end
-
-          telescope.extensions.file_browser.file_browser({
-            path = "%:p:h",
+          local open_in_new_tab = function(bufnr)
+            local selection = action_state.get_selected_entry()
+            actions.close(bufnr)
+            vim.cmd("tabnew " .. selection.path)
+          end
+          telescope.find_files({
+            search_dirs = { telescope_buffer_dir() }, -- Set the search directory to the current buffer's directory
             cwd = telescope_buffer_dir(),
-            respect_gitignore = false,
-            hidden = true,
-            grouped = true,
-            previewer = false,
-            initial_mode = "normal",
-            layout_config = { height = 40 },
+            hidden = false,
+            no_ignore = false, -- Respect .gitignore
+            -- layout_strategy = "horizontal",
+            -- layout_config = {
+            --   height = 0.99, -- Use 100% of the height of Neovim
+            --   width = 0.99, -- Use 100% of the width of Neovim
+            --   -- preview_cutoff = 0,
+            --   preview_width = 0.8,
+            --   prompt_position = "top",
+            -- },
+            attach_mappings = function(_, map)
+              -- Map the <CR> (Enter) key to open the file in a new tab
+              map("i", "<CR>", open_in_new_tab)
+              map("n", "<CR>", open_in_new_tab)
+              return true -- Return true to keep default mappings as well, remove to only use custom mapping
+            end,
           })
         end,
-        desc = "Open File Browser with the path of the current buffer",
+        desc = "File Browser current buffer directory new Tab",
       },
     },
     config = function(_, opts)
