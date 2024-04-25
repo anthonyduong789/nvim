@@ -38,7 +38,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habama" } },
+  -- install = { colorscheme = { "tokyonight", "habama" } },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {
@@ -78,23 +78,29 @@ vim.api.nvim_set_keymap(
 -- vim.cmd([[
 --     hi Normal guibg=NONE ctermbg=NONE
 --     hi NonText guibg=NONE ctermbg=NONE
+--     highlight CursorLine cterm=none ctermbg=NONE gui=none guibg=NONE
+--   highlight Comment ctermfg=14 cterm=bold guifg=#00ffff gui=bold
+-- highlight Normal ctermfg=15 ctermbg=235 guifg=#ffffff guibg=#1c1c1c
 -- ]])
 --
 -- -- Optional: Ensure that background transparency is respected in additional highlighting
 -- vim.cmd([[
 --     hi VertSplit guibg=NONE ctermbg=NONE
 --     hi SignColumn guibg=NONE ctermbg=NONE
---     hi NormalNC guibg=NONE ctermbg=NONE
--- ]])
--- vim.api.nvim_set_keymap("n", "J", "<Plug>(easymotion-bd-w)", { noremap = true, silent = true })
-
+--     hi NormalNC guibg=NONE ctermbg=NONE ]]) vim.api.nvim_set_keymap("n", "J", "<Plug>(easymotion-bd-w)", { noremap = true, silent = true })
+-- Sets colors to line numbers Above, Current and Below  in this order
+-- vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#F5DAD2", bold = true })
+function LineNumberColors()
+  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#F5DAD2", bold = false })
+  vim.api.nvim_set_hl(0, "LineNr", { fg = "white", bold = true })
+  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#F5DAD2", bold = false })
+end
+vim.cmd.colorscheme("catppuccin-mocha")
+LineNumberColors()
 local cmp = require("cmp")
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 cmp.setup.cmdline("/", {
-  mapping = cmp.mapping.preset.cmdline({
-    ["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Accept the selected completion
-    ["<C-e>"] = cmp.mapping.abort(), -- Close the completion menu
-  }),
+  mapping = cmp.mapping.preset.cmdline({}),
   sources = {
     { name = "buffer" },
   },
