@@ -86,3 +86,25 @@ vim.api.nvim_set_keymap(
 --     hi SignColumn guibg=NONE ctermbg=NONE
 --     hi NormalNC guibg=NONE ctermbg=NONE
 -- ]])
+-- vim.api.nvim_set_keymap("n", "J", "<Plug>(easymotion-bd-w)", { noremap = true, silent = true })
+
+local cmp = require("cmp")
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+cmp.setup.cmdline("/", {
+  mapping = cmp.mapping.preset.cmdline({
+    ["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Accept the selected completion
+    ["<C-e>"] = cmp.mapping.abort(), -- Close the completion menu
+  }),
+  sources = {
+    { name = "buffer" },
+  },
+})
+cmp.setup.cmdline(":", {
+
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    { name = "cmdline" },
+  }),
+})
