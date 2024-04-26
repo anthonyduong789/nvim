@@ -74,15 +74,16 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 
+vim.cmd.colorscheme("catppuccin-mocha")
 -- -- Set the background color to be transparent or inherit from the terminal
--- vim.cmd([[
---     hi Normal guibg=NONE ctermbg=NONE
---     hi NonText guibg=NONE ctermbg=NONE
---     highlight CursorLine cterm=none ctermbg=NONE gui=none guibg=NONE
+vim.cmd([[
+    highlight CursorLine cterm=none ctermbg=NONE gui=none guibg=NONE
+]])
+--
 --   highlight Comment ctermfg=14 cterm=bold guifg=#00ffff gui=bold
 -- highlight Normal ctermfg=15 ctermbg=235 guifg=#ffffff guibg=#1c1c1c
--- ]])
---
+--     hi Normal guibg=NONE ctermbg=NONE
+--     hi NonText guibg=NONE ctermbg=NONE
 -- -- Optional: Ensure that background transparency is respected in additional highlighting
 -- vim.cmd([[
 --     hi VertSplit guibg=NONE ctermbg=NONE
@@ -95,7 +96,6 @@ function LineNumberColors()
   vim.api.nvim_set_hl(0, "LineNr", { fg = "white", bold = true })
   vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#F5DAD2", bold = false })
 end
-vim.cmd.colorscheme("catppuccin-mocha")
 LineNumberColors()
 local cmp = require("cmp")
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -113,4 +113,27 @@ cmp.setup.cmdline(":", {
   }, {
     { name = "cmdline" },
   }),
+})
+
+require("telescope").setup({
+  defaults = {
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal = {
+        -- Width of the Telescope window as a percentage of total screen width
+        width = 0.999,
+        -- Width of the preview window as a percentage of the Telescope window width
+        preview_width = 0.6,
+        -- Height of the Telescope window as a percentage of total screen height
+        height = 0.999,
+        prompt_position = "top",
+      },
+      vertical = {
+        width = 0.9,
+        height = 0.55,
+        preview_height = 0.4,
+        prompt_position = "top",
+      },
+    },
+  },
 })
