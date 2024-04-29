@@ -33,6 +33,7 @@ return {
   opts = {
     transparent_background = true,
     integrations = {
+      leap = true,
       telescope = true,
       harpoon = true,
       mason = true,

@@ -18,7 +18,7 @@ vim.opt.showcmd = true
 vim.opt.cmdheight = 0
 vim.opt.laststatus = 0
 vim.opt.expandtab = true
-vim.opt.scrolloff = 5
+vim.opt.scrolloff = 10
 vim.opt.inccommand = "split"
 vim.opt.ignorecase = true
 vim.opt.smarttab = true
@@ -33,6 +33,10 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = "a"
+vim.opt.cursorline = false
+-- Set the clipboard register to a custom register (let's say 'a')
+vim.opt.clipboard = "unnamed"
+
 vim.api.nvim_set_hl(0, "LineNr", { fg = "red", bg = "black" })
 
 -- Add asterisks in block comments

@@ -76,9 +76,9 @@ vim.api.nvim_set_keymap(
 
 vim.cmd.colorscheme("catppuccin-mocha")
 -- -- Set the background color to be transparent or inherit from the terminal
-vim.cmd([[
-    highlight CursorLine cterm=none ctermbg=NONE gui=none guibg=NONE
-]])
+-- vim.cmd([[
+--     highlight CursorLine cterm=none ctermbg=NONE gui=none guibg=NONE
+-- ]])
 --
 --   highlight Comment ctermfg=14 cterm=bold guifg=#00ffff gui=bold
 -- highlight Normal ctermfg=15 ctermbg=235 guifg=#ffffff guibg=#1c1c1c
@@ -92,11 +92,19 @@ vim.cmd([[
 -- Sets colors to line numbers Above, Current and Below  in this order
 -- vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#F5DAD2", bold = true })
 function LineNumberColors()
-  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#F5DAD2", bold = false })
+  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#8DECB4", bold = false })
   vim.api.nvim_set_hl(0, "LineNr", { fg = "white", bold = true })
-  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#F5DAD2", bold = false })
+  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#FFB1B1", bold = false })
 end
+
+function FlashColorschemes()
+  vim.cmd([[highlight FlashLabel guibg=#FF0000]])
+  vim.cmd([[highlight Substitute guibg=#FF0000]])
+end
+
 LineNumberColors()
+FlashColorschemes()
+
 local cmp = require("cmp")
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 cmp.setup.cmdline("/", {
@@ -115,25 +123,25 @@ cmp.setup.cmdline(":", {
   }),
 })
 
-require("telescope").setup({
-  defaults = {
-    layout_strategy = "horizontal",
-    layout_config = {
-      horizontal = {
-        -- Width of the Telescope window as a percentage of total screen width
-        width = 0.999,
-        -- Width of the preview window as a percentage of the Telescope window width
-        preview_width = 0.6,
-        -- Height of the Telescope window as a percentage of total screen height
-        height = 0.999,
-        prompt_position = "top",
-      },
-      vertical = {
-        width = 0.9,
-        height = 0.55,
-        preview_height = 0.4,
-        prompt_position = "top",
-      },
-    },
-  },
-})
+-- require("telescope").setup({
+--   defaults = {
+--     layout_strategy = "horizontal",
+--     layout_config = {
+--       horizontal = {
+--         -- Width of the Telescope window as a percentage of total screen width
+--         width = 0.999,
+--         -- Width of the preview window as a percentage of the Telescope window width
+--         preview_width = 0.75,
+--         -- Height of the Telescope window as a percentage of total screen height
+--         height = 0.999,
+--         prompt_position = "top",
+--       },
+--       vertical = {
+--         width = 0.9,
+--         height = 0.55,
+--         preview_height = 0.4,
+--         prompt_position = "top",
+--       },
+--     },
+--   },
+-- })

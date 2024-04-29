@@ -27,12 +27,15 @@ keymap.set("n", "te", ":tabedit")
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)
 keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 keymap.set("n", "tw", ":tabclose<Return>", opts)
-keymap.set("i", "<C-h>", "<Left>", { noremap = true, silent = true })
-keymap.set("i", "<C-l>", "<Right>", { noremap = true, silent = true })
 
 -- Split window
 keymap.set("n", "<Leader>ws", ":split<Return>", opts)
 keymap.set("n", "<Leader>wv", ":vsplit<Return>", opts)
+
+-- motin mappings
+keymap.set("i", "<C-h>", "<Left>", { noremap = true, silent = true })
+keymap.set("i", "<C-l>", "<Right>", { noremap = true, silent = true })
+keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
 
 -- saves terminal id to sent to later
 local terminal_channel_id = nil

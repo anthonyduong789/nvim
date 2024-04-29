@@ -2,6 +2,17 @@ return {
   -- Hihglight colors
   -- {
   --   "easymotion/vim-easymotion",
+  --
+  --
+  {
+
+    "folke/flash.nvim",
+    enabled = true,
+  },
+  {
+    "ggandor/leap.nvim",
+    enabled = false,
+  },
   {
     "folke/which-key.nvim",
     opts = {
@@ -47,25 +58,25 @@ return {
         desc = "grep current file",
       },
 
-      {
-        ";f",
-        function()
-          local builtin = require("telescope.builtin")
-          builtin.find_files({
-            no_ignore = false,
-            hidden = true,
-          })
-        end,
-        desc = "Lists files in your current working directory, respects .gitignore",
-      },
-      {
-        ";r",
-        function()
-          local builtin = require("telescope.builtin")
-          builtin.live_grep()
-        end,
-        desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
-      },
+      -- {
+      --   ";f",
+      --   function()
+      --     local builtin = require("telescope.builtin")
+      --     builtin.find_files({
+      --       no_ignore = false,
+      --       hidden = true,
+      --     })
+      --   end,
+      --   desc = "Lists files in your current working directory, respects .gitignore",
+      -- },
+      -- {
+      --   ";r",
+      --   function()
+      --     local builtin = require("telescope.builtin")
+      --     builtin.live_grep()
+      --   end,
+      --   desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
+      -- },
       {
         "\\\\",
         function()
@@ -74,23 +85,23 @@ return {
         end,
         desc = "Lists open buffers",
       },
-      {
-        ";;",
-        function()
-          local builtin = require("telescope.builtin")
-
-          builtin.resume()
-        end,
-        desc = "Resume the previous telescope picker",
-      },
-      {
-        ";e",
-        function()
-          local builtin = require("telescope.builtin")
-          builtin.diagnostics()
-        end,
-        desc = "Lists Diagnostics for all open buffers or a specific buffer",
-      },
+      -- {
+      --   ";;",
+      --   function()
+      --     local builtin = require("telescope.builtin")
+      --
+      --     builtin.resume()
+      --   end,
+      --   desc = "Resume the previous telescope picker",
+      -- },
+      -- {
+      --   ";e",
+      --   function()
+      --     local builtin = require("telescope.builtin")
+      --     builtin.diagnostics()
+      --   end,
+      --   desc = "Lists Diagnostics for all open buffers or a specific buffer",
+      -- },
       {
         "<leader>ft",
         function()
