@@ -74,7 +74,8 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 
-vim.cmd.colorscheme("catppuccin-mocha")
+vim.cmd.colorscheme("catppuccin")
+vim.api.nvim_del_keymap("n", ";c")
 -- -- Set the background color to be transparent or inherit from the terminal
 -- vim.cmd([[
 --     highlight CursorLine cterm=none ctermbg=NONE gui=none guibg=NONE
@@ -123,25 +124,25 @@ cmp.setup.cmdline(":", {
   }),
 })
 
--- require("telescope").setup({
---   defaults = {
---     layout_strategy = "horizontal",
---     layout_config = {
---       horizontal = {
---         -- Width of the Telescope window as a percentage of total screen width
---         width = 0.999,
---         -- Width of the preview window as a percentage of the Telescope window width
---         preview_width = 0.75,
---         -- Height of the Telescope window as a percentage of total screen height
---         height = 0.999,
---         prompt_position = "top",
---       },
---       vertical = {
---         width = 0.9,
---         height = 0.55,
---         preview_height = 0.4,
---         prompt_position = "top",
---       },
---     },
---   },
--- })
+require("telescope").setup({
+  defaults = {
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal = {
+        -- Width of the Telescope window as a percentage of total screen width
+        width = 0.999,
+        -- Width of the preview window as a percentage of the Telescope window width
+        preview_width = 0.6,
+        -- Height of the Telescope window as a percentage of total screen height
+        height = 0.999,
+        prompt_position = "top",
+      },
+      vertical = {
+        width = 0.9,
+        height = 0.55,
+        preview_height = 0.4,
+        prompt_position = "top",
+      },
+    },
+  },
+})

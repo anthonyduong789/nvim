@@ -7,12 +7,16 @@ return {
   --
   --
   {
-    "lukas-reineke/indent-blankline.nvim",
+    "davidgranstrom/nvim-markdown-preview",
     enabled = true,
   },
   {
+    "lukas-reineke/indent-blankline.nvim",
+    enabled = false,
+  },
+  {
     "nvim-lualine/lualine.nvim",
-    enabled = true,
+    enabled = false,
   },
   -- messages, cmdline and the popupmenu
   {

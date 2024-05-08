@@ -35,9 +35,9 @@ vim.opt.splitkeep = "cursor"
 vim.opt.mouse = "a"
 vim.opt.cursorline = false
 -- Set the clipboard register to a custom register (let's say 'a')
-vim.opt.clipboard = "unnamed"
-
+vim.opt.clipboard = "unnamedplus"
 vim.api.nvim_set_hl(0, "LineNr", { fg = "red", bg = "black" })
+-- Disable status line completely
 
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
