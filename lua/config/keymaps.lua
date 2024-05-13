@@ -83,6 +83,10 @@ keymap.set("n", "<Leader>tc", function()
   end
 end, { desc = "send command to terminal" })
 
+keymap.set("n", "<Leader>md", function()
+  vim.cmd("MarkdownPreview")
+end, { desc = "View your markdown file" })
+
 -- Diagnostics
 -- keymap.set("n", "<C-j>", function()
 --   vim.diagnostic.goto_next()
@@ -92,3 +96,6 @@ end, { desc = "send command to terminal" })
 --   local current_file_path = vim.fn.expand("%:p")
 --   print(current_file_path)
 -- end, opts)
+--
+--
+--

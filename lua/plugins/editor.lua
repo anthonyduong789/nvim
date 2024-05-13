@@ -7,7 +7,7 @@ return {
   {
 
     "folke/flash.nvim",
-    enabled = true,
+    enabled = false,
   },
   {
     "ggandor/leap.nvim",
@@ -18,6 +18,7 @@ return {
     opts = {
       defaults = {
         ["<leader>t"] = { name = "🖥️terminal🖥️" },
+        ["<leader>m"] = { name = "markdown prefix" },
       },
     },
   }, -- },
@@ -85,6 +86,7 @@ return {
         end,
         desc = "Lists open buffers",
       },
+
       -- {
       --   ";;",
       --   function()
