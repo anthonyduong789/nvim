@@ -96,6 +96,3 @@ end, { desc = "View your markdown file" })
 --   local current_file_path = vim.fn.expand("%:p")
 --   print(current_file_path)
 -- end, opts)
---
---
---
