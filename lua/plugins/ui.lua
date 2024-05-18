@@ -86,6 +86,7 @@ return {
         mode = "tabs",
         show_buffer_close_icons = false,
         show_close_icon = false,
+        inlay_hints = { enabled = false },
       },
     },
   },

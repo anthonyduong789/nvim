@@ -5,7 +5,6 @@ local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
 keymap.set("n", "x", '"_x')
-
 -- Increment/decrement
 keymap.set("n", "+", "<C-a>")
 keymap.set("n", "-", "<C-x>")
@@ -21,7 +20,6 @@ keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 -- File explorer with NvimTree
 -- keymap.set("n", "<Leader>f", ":NvimTreeFindFile<Return>", opts)
 -- keymap.set("n", "<Leader>t", ":NvimTreeToggle<Return>", opts)
-
 -- Tabs
 keymap.set("n", "te", ":tabedit")
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)
@@ -36,6 +34,14 @@ keymap.set("n", "<Leader>wv", ":vsplit<Return>", opts)
 keymap.set("i", "<C-h>", "<Left>", { noremap = true, silent = true })
 keymap.set("i", "<C-l>", "<Right>", { noremap = true, silent = true })
 keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
+keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
+-- copy to clipboard
+keymap.set("v", "<C-y>", '"+y', { noremap = true, silent = true })
+-- delete and wont go to yank register
+keymap.set("v", "<C-d>", '"-d', { noremap = true, silent = true })
+--copy to register 0 / paste
+keymap.set("v", "<C-1>", '"0y', { noremap = true, silent = true })
+keymap.set("n", "<C-1>", '"0p', { noremap = true, silent = true })
 
 -- saves terminal id to sent to later
 local terminal_channel_id = nil
