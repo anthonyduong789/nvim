@@ -74,9 +74,9 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 
--- vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("catppuccin")
 -- vim.cmd.colorscheme("tokyonight")
-vim.cmd.colorscheme("solarized-osaka")
+-- vim.cmd.colorscheme("solarized-osaka")
 vim.api.nvim_del_keymap("n", ";c")
 -- -- Set the background color to be transparent or inherit from the terminal
 -- vim.cmd([[

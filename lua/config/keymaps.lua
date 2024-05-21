@@ -39,9 +39,6 @@ keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 keymap.set("v", "<C-y>", '"+y', { noremap = true, silent = true })
 -- delete and wont go to yank register
 keymap.set("v", "<C-d>", '"-d', { noremap = true, silent = true })
---copy to register 0 / paste
-keymap.set("v", "<C-1>", '"0y', { noremap = true, silent = true })
-keymap.set("n", "<C-1>", '"0p', { noremap = true, silent = true })
 
 -- saves terminal id to sent to later
 local terminal_channel_id = nil
@@ -102,3 +99,149 @@ end, { desc = "View your markdown file" })
 --   local current_file_path = vim.fn.expand("%:p")
 --   print(current_file_path)
 -- end, opts)
+--
+-- local symbol_descriptions = {
+--   { symbol = "Symbol1", description = "Description for Symbol1" },
+--   { symbol = "Symbol2", description = "Description for Symbol2" },
+--   { symbol = "div", description = "Description for Symbol2" },
+--   -- Add more symbols and descriptions as needed
+-- }
+-- { symbol = "Symbol1 hellot", description = "Description for Symbol1", filepath = vim.fn.expand("%:p") },
+
+-- Define symbols
+-- Define custom words
+local custom_words = { "useState", "useEffect", "use", "className" }
+
+-- Function to search custom words in the current file using Telescope
+-- vim.api.nvim_set_keymap("n", "<Leader>fs", "", {
+--   noremap = true,
+--   callback = function()
+--     local builtin = require("telescope.builtin")
+--     local finders = require("telescope.finders")
+--     local pickers = require("telescope.pickers")
+--     local previewers = require("telescope.previewers")
+--     local conf = require("telescope.config").values
+--
+--     local current_file = vim.fn.expand("%:p")
+--     local word_occurrences = {}
+--
+--     -- Function to get all occurrences of the custom words in the current file
+--     local function get_word_occurrences()
+--       for _, word in ipairs(custom_words) do
+--         local cmd = "rg --vimgrep " .. word .. " " .. current_file
+--         local results = vim.fn.systemlist(cmd)
+--         for _, result in ipairs(results) do
+--           table.insert(word_occurrences, result)
+--         end
+--       end
+--     end
+--
+--     get_word_occurrences()
+--
+--     pickers
+--       .new({}, {
+--         prompt_title = "Search Custom Words in Current File",
+--         finder = finders.new_table({
+--           results = word_occurrences,
+--           entry_maker = function(entry)
+--             local split_entry = vim.split(entry, ":")
+--             return {
+--               value = entry,
+--               ordinal = entry,
+--               filename = split_entry[1],
+--               lnum = tonumber(split_entry[2]),
+--               col = tonumber(split_entry[3]),
+--               display = string.format("%d:%d: %s", tonumber(split_entry[2]), tonumber(split_entry[3]), split_entry[4]),
+--             }
+--           end,
+--         }),
+--         sorter = conf.generic_sorter({}),
+--         previewer = previewers.new_buffer_previewer({
+--           define_preview = function(self, entry, status)
+--             local bufnr = self.state.bufnr
+--             local lnum = entry.lnum
+--             vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.fn.getline(lnum, lnum + 10))
+--             vim.api.nvim_buf_add_highlight(bufnr, -1, "Search", 0, 0, -1)
+--             vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
+--           end,
+--         }),
+--         attach_mappings = function(_, map)
+--           map("i", "<CR>", function(prompt_bufnr)
+--             local entry = require("telescope.actions.state").get_selected_entry(prompt_bufnr)
+--             require("telescope.actions").close(prompt_bufnr)
+--             vim.cmd(string.format("edit %s", entry.filename))
+--             vim.fn.cursor(entry.lnum, entry.col)
+--           end)
+--           return true
+--         end,
+--       })
+--       :find()
+--   end,
+--   desc = "grep custom words in current file",
+-- })
+vim.api.nvim_set_keymap("n", "<Leader>fs", "", {
+  noremap = true,
+  callback = function()
+    local finders = require("telescope.finders")
+    local pickers = require("telescope.pickers")
+    local previewers = require("telescope.previewers")
+    local conf = require("telescope.config").values
+
+    local current_file = vim.fn.expand("%:p")
+    local word_occurrences = {}
+    -- Function to get all occurrences of the custom words in the current file
+    local function get_word_occurrences()
+      for _, word in ipairs(custom_words) do
+        local cmd = "rg --vimgrep --no-heading --line-number --column " .. word .. " " .. current_file
+        local results = vim.fn.systemlist(cmd)
+        for _, result in ipairs(results) do
+          table.insert(word_occurrences, result)
+        end
+      end
+    end
+
+    get_word_occurrences()
+
+    pickers
+      .new({}, {
+        prompt_title = "Search Custom Words in Current File",
+        finder = finders.new_table({
+          results = word_occurrences,
+          entry_maker = function(entry)
+            local split_entry = vim.split(entry, ":")
+            return {
+              value = entry,
+              display = string.format("%d:%d: %s", tonumber(split_entry[2]), tonumber(split_entry[3]), split_entry[4]),
+              ordinal = entry,
+              filename = split_entry[1],
+              lnum = tonumber(split_entry[2]),
+              col = tonumber(split_entry[3]),
+              text = split_entry[4],
+            }
+          end,
+        }),
+        sorter = conf.generic_sorter({}),
+        previewer = previewers.new_buffer_previewer({
+          define_preview = function(self, entry, status)
+            local bufnr = self.state.bufnr
+            local lnum = entry.lnum
+            local lines = vim.fn.getline(lnum, lnum + 10)
+            vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+            vim.api.nvim_buf_add_highlight(bufnr, -1, "Search", 0, 0, -1)
+            vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
+          end,
+        }),
+        attach_mappings = function(_, map)
+          map("i", "<CR>", function(prompt_bufnr)
+            local entry = require("telescope.actions.state").get_selected_entry(prompt_bufnr)
+            require("telescope.actions").close(prompt_bufnr)
+            vim.cmd(string.format("edit %s", entry.filename))
+            vim.fn.cursor(entry.lnum, entry.col)
+          end)
+          return true
+        end,
+      })
+      :find()
+  end,
+  desc = "grep custom words in current file",
+})

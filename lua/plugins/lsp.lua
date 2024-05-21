@@ -139,9 +139,15 @@ return {
 
   {
     "nvim-cmp",
-    dependencies = { { "hrsh7th/cmp-emoji" }, { "hrsh7th/cmp-buffer" }, { "hrsh7th/cmp-cmdline" } },
+    dependencies = {
+      { "hrsh7th/cmp-emoji" },
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-cmdline" },
+      { "mlaursen/vim-react-snippets" },
+    },
     opts = function(_, opts)
       table.insert(opts.sources, { name = "emoji" })
+      require("vim-react-snippets").lazy_load()
 
       local luasnip = require("luasnip")
       local cmp = require("cmp")
