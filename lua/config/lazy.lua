@@ -74,8 +74,8 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 
-vim.cmd.colorscheme("catppuccin")
--- vim.cmd.colorscheme("tokyonight")
+-- vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("tokyonight")
 -- vim.cmd.colorscheme("solarized-osaka")
 vim.api.nvim_del_keymap("n", ";c")
 -- -- Set the background color to be transparent or inherit from the terminal
@@ -95,9 +95,9 @@ vim.api.nvim_del_keymap("n", ";c")
 -- Sets colors to line numbers Above, Current and Below  in this order
 -- vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#F5DAD2", bold = true })
 function LineNumberColors()
-  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#8DECB4", bold = false })
-  vim.api.nvim_set_hl(0, "LineNr", { fg = "white", bold = true })
-  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#FFB1B1", bold = false })
+  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#CAF4FF", bold = false })
+  vim.api.nvim_set_hl(0, "LineNr", { fg = "white" })
+  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#EEF7FF", bold = false })
 end
 
 function FlashColorschemes()

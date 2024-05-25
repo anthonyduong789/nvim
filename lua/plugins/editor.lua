@@ -78,7 +78,7 @@ return {
 
       {
 
-        "<Leader>flg",
+        "\\g",
         function()
           local builtin = require("telescope.builtin")
           local current_file = vim.fn.expand("%:p")
@@ -112,7 +112,7 @@ return {
       --   desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
       -- },
       {
-        "\\\\",
+        "\\b",
         function()
           local builtin = require("telescope.builtin")
           builtin.buffers()
@@ -139,29 +139,7 @@ return {
       -- },
 
       {
-        "<Leader>fS",
-        function()
-          local symbol_descriptions = {
-            { symbol = "Symbol1", description = "Description for Symbol1", filepath = vim.fn.expand("%:p") },
-            { symbol = "Symbol2", description = "Description for Symbol2", filepath = vim.fn.expand("%:p") },
-            -- Add more symbols, descriptions, and file paths as needed
-          }
-
-          local builtin = require("telescope.builtin")
-          local current_file = vim.fn.expand("%:p")
-          builtin.live_grep({
-            search_dirs = { current_file }, -- Sets the search directory to the current file's directory
-            table = { symbol_descriptions },
-          })
-          -- Function to perform a grep search on the current file using Telescope
-        end,
-        -- Function to live grep in the current file using Telescope
-
-        desc = "grep current file",
-      },
-
-      {
-        "<leader>ft",
+        "\\t",
         function()
           local symbol_descriptions = {
             { symbol = "Symbol1", description = "Description for Symbol1", filepath = vim.fn.expand("%:p") },
@@ -174,7 +152,7 @@ return {
         desc = "Lists Function names, variables, from Treesitter",
       },
       {
-        "<leader>fls",
+        "\\ls",
         function()
           local telescope = require("telescope.builtin")
           local actions = require("telescope.actions")
@@ -213,7 +191,7 @@ return {
       },
 
       {
-        "<Leader>nt",
+        "\\nt",
         function()
           local telescope = require("telescope.builtin")
           local actions = require("telescope.actions")
