@@ -51,7 +51,7 @@ keymap.set("v", "<Leader>0c", function()
   if input_text ~= "" then
     require("CopilotChat").ask(input_text, { selection = require("CopilotChat.select").visual })
   end
-end, { noremap = true, silent = true })
+end, { noremap = true, silent = true, desc = "question about this code" })
 keymap.set("n", "<Leader>0c", function()
   local input_text = vim.fn.input("ask a question: ")
   if input_text ~= "" then
