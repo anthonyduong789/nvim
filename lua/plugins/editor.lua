@@ -35,9 +35,6 @@ return {
     },
   },
   {
-    "nvim-telescope/telescope-symbols.nvim",
-  },
-  {
 
     "folke/flash.nvim",
     enabled = false,
@@ -52,6 +49,7 @@ return {
       defaults = {
         ["<leader>t"] = { name = "🖥️terminal🖥️" },
         ["<leader>m"] = { name = "markdown prefix" },
+        ["<leader>0"] = { name = "Copilot 🤖" },
       },
     },
   }, -- },
@@ -77,6 +75,26 @@ return {
     keys = {
 
       {
+        "\\\\g",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.live_grep({
+            vimgrep_arguments = {
+              "rg",
+              "--color=never",
+              "--no-heading",
+              "--with-filename",
+              "--line-number",
+              "--column",
+              "--smart-case",
+              "--glob=!.git/",
+              "--glob=!node_modules/",
+            },
+          })
+        end,
+        desc = "grep current workign directory",
+      },
+      {
 
         "\\g",
         function()
@@ -92,17 +110,18 @@ return {
         desc = "grep current file",
       },
 
-      -- {
-      --   ";f",
-      --   function()
-      --     local builtin = require("telescope.builtin")
-      --     builtin.find_files({
-      --       no_ignore = false,
-      --       hidden = true,
-      --     })
-      --   end,
-      --   desc = "Lists files in your current working directory, respects .gitignore",
-      -- },
+      {
+        "\\f",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.find_files({
+            find_command = { "rg", "--files", "--hidden", "--no-ignore", "--glob=!.git/", "--glob=!node_modules/" },
+            no_ignore = true,
+            hidden = true,
+          })
+        end,
+        desc = "Lists files in your current working directory, respects .gitignore",
+      },
       -- {
       --   ";r",
       --   function()

@@ -40,6 +40,7 @@ keymap.set("v", "<C-y>", '"+y', { noremap = true, silent = true })
 -- delete and wont go to yank register
 keymap.set("v", "<C-d>", '"-d', { noremap = true, silent = true })
 
+-- NOTE:CopilotChat keymaps
 keymap.set("v", "<Leader>00d", function()
   local input_text = "give me a concise explanatioon of the code with a list that is similar to a doc explanation"
   if input_text ~= "" then
@@ -53,11 +54,11 @@ keymap.set("v", "<Leader>0c", function()
   end
 end, { noremap = true, silent = true, desc = "question about this code" })
 keymap.set("n", "<Leader>0c", function()
-  local input_text = vim.fn.input("ask a question: ")
+  local input_text = vim.fn.input("CopilotChat ?: ")
   if input_text ~= "" then
     require("CopilotChat").ask(input_text)
   end
-end, { noremap = true, silent = true })
+end, { noremap = true, silent = true, desc = "CopilotChat ?" })
 keymap.set(
   "n",
   "<Leader>0t",
@@ -76,14 +77,20 @@ keymap.set(
 keymap.set("v", "<Leader>0p", function()
   local actions = require("CopilotChat.actions")
   require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-end, { noremap = true, silent = true })
+end, { noremap = true, silent = true, desc = "CopilotChat actions" })
+keymap.set("n", "<Leader>0p", function()
+  local actions = require("CopilotChat.actions")
+  require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+end, { noremap = true, silent = true, desc = "CopilotChat actions" })
 
 keymap.set("n", "<Leader>0q", function()
   local input = vim.fn.input("Quick Chat: ")
   if input ~= "" then
     require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
   end
-end, { noremap = true, silent = true, desc = { "quick chat" } })
+end, { noremap = true, silent = true, desc = "quick chat current buffer" })
+
+-- --------------------------------------------------------------------------------------------------V
 
 -- saves terminal id to sent to later
 local terminal_channel_id = nil
