@@ -40,6 +40,51 @@ keymap.set("v", "<C-y>", '"+y', { noremap = true, silent = true })
 -- delete and wont go to yank register
 keymap.set("v", "<C-d>", '"-d', { noremap = true, silent = true })
 
+keymap.set("v", "<Leader>00d", function()
+  local input_text = "give me a concise explanatioon of the code with a list that is similar to a doc explanation"
+  if input_text ~= "" then
+    require("CopilotChat").ask(input_text, { selection = require("CopilotChat.select").visual })
+  end
+end, { noremap = true, silent = true, desc = "Short doc explanation" })
+keymap.set("v", "<Leader>0c", function()
+  local input_text = vim.fn.input("question about selected code: ")
+  if input_text ~= "" then
+    require("CopilotChat").ask(input_text, { selection = require("CopilotChat.select").visual })
+  end
+end, { noremap = true, silent = true })
+keymap.set("n", "<Leader>0c", function()
+  local input_text = vim.fn.input("ask a question: ")
+  if input_text ~= "" then
+    require("CopilotChat").ask(input_text)
+  end
+end, { noremap = true, silent = true })
+keymap.set(
+  "n",
+  "<Leader>0t",
+  ":CopilotChatToggle<Return>",
+  { noremap = true, silent = true, desc = "CopilotChatToggle" }
+)
+
+keymap.set("v", "<Leader>0e", ":CopilotChatExplain ", { noremap = true, silent = true, desc = "CopilotChatExplain" })
+keymap.set("v", "<Leader>0d", ":CopilotChatDocs<Return>", { noremap = true, silent = true, desc = "CopilotChatDocs" })
+keymap.set(
+  "v",
+  "<Leader>0o",
+  ":CopilotChatOptimize<Return>",
+  { noremap = true, silent = true, desc = "CopilotChatOptimize" }
+)
+keymap.set("v", "<Leader>0p", function()
+  local actions = require("CopilotChat.actions")
+  require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+end, { noremap = true, silent = true })
+
+keymap.set("n", "<Leader>0q", function()
+  local input = vim.fn.input("Quick Chat: ")
+  if input ~= "" then
+    require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+  end
+end, { noremap = true, silent = true, desc = { "quick chat" } })
+
 -- saves terminal id to sent to later
 local terminal_channel_id = nil
 -- Function to send commands to the terminal

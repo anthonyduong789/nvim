@@ -47,5 +47,6 @@ vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+vim.diagnostic.disable()
 
 -- vim.opt.foldexpr = ""
