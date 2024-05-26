@@ -50,3 +50,12 @@ vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 vim.diagnostic.disable()
 
 -- vim.opt.foldexpr = ""
+--
+--
+--
+--
+--
+--
+--
+--
+--

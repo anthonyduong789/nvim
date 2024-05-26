@@ -148,3 +148,4 @@ require("telescope").setup({
     },
   },
 })
+vim.fn.setreg("h", "*NVn")
