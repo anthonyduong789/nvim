@@ -126,16 +126,6 @@ cmp.setup.cmdline(":", {
   }),
 })
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.netrw_browsex_viewer = "xdg-open" -- for Linux
-vim.api.nvim_set_keymap(
-  "n",
-  "gx",
-  [[:silent execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]],
-  { noremap = true, silent = true }
-)
-
 require("telescope").setup({
   defaults = {
     layout_strategy = "horizontal",
@@ -158,8 +148,3 @@ require("telescope").setup({
     },
   },
 })
-vim.fn.setreg("h", "*NVn")
--- Check if netrw is loaded
-if vim.fn.exists(":NetrwBrowseX") == 0 then
-  vim.cmd("runtime! plugin/netrwPlugin.vim")
-end
