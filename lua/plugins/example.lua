@@ -195,9 +195,8 @@ return {
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip
   {
     "L3MON4D3/LuaSnip",
-    keys = function()
-      return {}
-    end,
+    require("luasnip.loaders.from_snipmate").lazy_load(),
+    -- require("luasnip.loaders.from_snipmate").lazy_load()
   },
   -- then: setup supertab in cmp
   {

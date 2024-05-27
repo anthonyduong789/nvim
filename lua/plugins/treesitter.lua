@@ -3,6 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     -- tag = "v0.9.1",
     opts = {
+
       ensure_installed = {
         "javascript",
         "typescript",
@@ -90,6 +91,9 @@ return {
         },
       })
       vim.treesitter.language.register("markdown", "mdx")
+
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
     end,
   },
   {

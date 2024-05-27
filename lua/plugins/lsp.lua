@@ -1,5 +1,15 @@
 return {
   -- tools
+  -- {
+  --   "nvimdev/lspsaga.nvim",
+  --   config = function()
+  --     require("lspsaga").setup({})
+  --   end,
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter", -- optional
+  --     "nvim-tree/nvim-web-devicons", -- optional
+  --   },
+  -- },
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
@@ -42,18 +52,18 @@ return {
   },
   {
     "copilot.lua",
-    enabled = true,
+    enabled = false,
   },
   {
     "copilot-cmp",
-    enabled = true,
+    enabled = false,
   },
 
   -- lsp servers
   {
     "neovim/nvim-lspconfig",
     opts = {
-      inlay_hints = { enabled = true },
+      inlay_hints = { enabled = false },
       ---@type lspconfig.options
       servers = {
         cssls = {},
@@ -63,17 +73,13 @@ return {
           end,
         },
         tsserver = {
-          root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git")(...)
-          end,
-          single_file_support = false,
           settings = {
             typescript = {
               inlayHints = {
-                includeInlayParameterNameHints = "literal",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
                 includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = false,
+                includeInlayVariableTypeHints = true,
                 includeInlayPropertyDeclarationTypeHints = true,
                 includeInlayFunctionLikeReturnTypeHints = true,
                 includeInlayEnumMemberValueHints = true,
@@ -148,7 +154,7 @@ return {
                 unusedLocalExclude = { "_*" },
               },
               format = {
-                enable = false,
+                enable = true,
                 defaultConfig = {
                   indent_style = "space",
                   indent_size = "2",
@@ -159,6 +165,30 @@ return {
           },
         },
       },
+      config = function()
+        local nvim_lsp = require("lspconfig")
+        local protocol = require("vim.lsp.protocol")
+
+        local on_attach = function(client, bufnr)
+          -- format on save
+          if client.server_capabilities.documentFormattingProvider then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              group = vim.api.nvim_create_augroup("Format", { clear = true }),
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.formatting_seq_sync()
+              end,
+            })
+          end
+        end
+
+        -- TypeScript
+        nvim_lsp.tsserver.setup({
+          on_attach = on_attach,
+          filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+          cmd = { "typescript-language-server", "--stdio" },
+        })
+      end,
       setup = {},
     },
   },
