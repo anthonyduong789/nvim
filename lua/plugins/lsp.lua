@@ -4,6 +4,9 @@ return {
     "nvimdev/lspsaga.nvim",
     config = function()
       require("lspsaga").setup({
+        symbol_in_winbar = {
+          enable = true,
+        },
         ui = {
           code_action = "♎",
         },
@@ -35,23 +38,53 @@ return {
       { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
       { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
     },
-    opts = {
-      debug = false, -- Enable debugging
-      -- See Configuration section for rest
-      window = {
+    opts = function(_, opts)
+      opts.show_folds = false
+      opts.debug = false
+      -- table.insert(opts.show_folds, false)
+      -- table.insert(opts.debug, false)
+      local max_width = 130
+      local width = math.min(math.floor(vim.o.columns * 0.9), max_width)
+      local max_height = 50 -- replace with your desired maximum height
+      local height = math.min(math.floor(vim.o.lines * 0.9), max_height)
+
+      opts.window = {
         layout = "float", -- 'vertical', 'horizontal', 'float', 'replace'
-        width = 0.7, -- fractional width of parent, or absolute width in columns when > 1
-        height = 0.8, -- fractional height of parent, or absolute height in rows when > 1
+
+        width = width, -- fractional width of parent, or absolute width in columns when > 1
+        height = height, -- fractional height of parent, or absolute height in rows when > 1
         -- Options below only apply to floating windows
         relative = "editor", -- 'editor', 'win', 'cursor', 'mouse'
         border = "single", -- 'none', single', 'double', 'rounded', 'solid', 'shadow'
         row = nil, -- row position of the window, default is centered
         col = nil, -- column position of the window, default is centered
-        title = "Copilot Chat", -- title of chat window
+        title = "** Copilot Chat 🤖 **", -- title of chat window
         footer = nil, -- footer of chat window
         zindex = 1, -- determines if window is on top or below other floating windows
-      },
-    },
+      }
+    end,
+    -- opts = {
+    --   function ()
+    --
+    --   end
+    --   show_folds = false,
+    --   debug = false, -- Enable debugging
+    --   -- See Configuration section for rest
+    --   window = {
+    --     layout = "float", -- 'vertical', 'horizontal', 'float', 'replace'
+    --
+    --     width = 0.8, -- fractional width of parent, or absolute width in columns when > 1
+    --     height = 0.8, -- fractional height of parent, or absolute height in rows when > 1
+    --     -- Options below only apply to floating windows
+    --     relative = "editor", -- 'editor', 'win', 'cursor', 'mouse'
+    --     border = "single", -- 'none', single', 'double', 'rounded', 'solid', 'shadow'
+    --     row = nil, -- row position of the window, default is centered
+    --     col = nil, -- column position of the window, default is centered
+    --     title = "** Copilot Chat 🤖 **", -- title of chat window
+    --     footer = nil, -- footer of chat window
+    --     zindex = 1, -- determines if window is on top or below other floating windows
+    --   },
+    -- },
     -- See Commands section for default commands if you want to lazy load on them
   },
   {
@@ -224,9 +257,7 @@ return {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
           { name = "path" },
-        }, {
-          { name = "cmdline" },
-        }),
+        }, { { name = "cmdline" } }),
       })
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<C-j>"] = cmp.mapping(function(fallback)

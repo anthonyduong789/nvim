@@ -21,10 +21,6 @@ keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 -- keymap.set("n", "<Leader>f", ":NvimTreeFindFile<Return>", opts)
 -- keymap.set("n", "<Leader>t", ":NvimTreeToggle<Return>", opts)
 -- Tabs
-keymap.set("n", "te", ":tabedit")
-keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
-keymap.set("n", "tw", ":tabclose<Return>", opts)
 
 -- Split window
 keymap.set("n", "<Leader>ws", ":split<Return>", opts)
@@ -334,7 +330,7 @@ function PersonalNotes()
       height = height,
       col = col,
       row = row,
-      border = "rounded",
+      border = "double",
       title = "*** Personal Notes 🐱 ***",
       title_pos = "center",
 
@@ -344,11 +340,11 @@ function PersonalNotes()
     })
 
     -- Set the FloatBorder highlight group
-    vim.api.nvim_set_hl(0, "FloatBorder", {
+    -- local ns_id = vim.api.nvim_create_namespace("PersonalNotes")
+    vim.api.nvim_set_hl(0, "PersonalNotesBorder", {
       fg = "#E1AFD1", -- Red foreground
-      bg = "#000000", -- Black background
     })
-    vim.api.nvim_win_set_option(win, "winhl", "FloatBorder:FloatBorder")
+    vim.api.nvim_win_set_option(win, "winhl", "FloatBorder:PersonalNotesBorder")
 
     vim.api.nvim_win_set_option(win, "cursorline", true) -- Highlight the line of the cursor
     -- vim.api.nvim_win_set_option(win, "cursorcolumn", true) -- Highlight the column of the cursor
