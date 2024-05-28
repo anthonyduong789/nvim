@@ -320,8 +320,9 @@ function PersonalNotes()
 
     -- Calculate the window size
     local width = 100
-    local height = 70
-    local row = math.floor((vim.o.lines - height) / 3)
+    local height = 50
+    -- local row = math.floor((vim.o.lines - height) / 3)
+    local row = 0
     local col = math.floor((vim.o.columns - width) / 2)
 
     -- Create the floating window
