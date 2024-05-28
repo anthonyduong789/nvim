@@ -230,3 +230,124 @@ vim.keymap.set("n", "gd", "<Cmd>Lspsaga lsp_finder<CR>", opts)
 vim.keymap.set("i", "<C-k>", "<Cmd>Lspsaga signature_help<CR>", opts)
 vim.keymap.set("n", "gp", "<Cmd>Lspsaga preview_definition<CR>", opts)
 vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>", opts)
+
+-- Define a list of commands
+local commands = {
+  { desc = "Show LSP hover documentation", cmd = ":Lspsaga hover_doc" },
+  { desc = "Show code action", cmd = ":Lspsaga code_action" },
+  { desc = "Show line diagnostics", cmd = ":Lspsaga show_line_diagnostics" },
+  { desc = "Diagnostic jump forward", cmd = ":Lspsaga diagnostic_jump_next" },
+  { desc = "Diagnostic jump backward", cmd = ":Lspsaga diagnostic_jump_prev" },
+  { desc = "Rename", cmd = ":Lspsaga rename" },
+  { desc = "Preview definition", cmd = ":Lspsaga preview_definition" },
+  { desc = "finder (shows references and implemenations)", cmd = ":Lspsaga finder" },
+}
+
+-- Function to execute the selected command
+local function execute_command(prompt_bufnr)
+  local entry = require("telescope.actions.state").get_selected_entry(prompt_bufnr)
+  require("telescope.actions").close(prompt_bufnr)
+  vim.cmd(entry.value.cmd)
+end
+
+-- Custom Telescope picker with layout customization
+function command_picker()
+  require("telescope.pickers")
+    .new({}, {
+      prompt_title = "Lspsaga/lsp commands",
+      finder = require("telescope.finders").new_table({
+        results = commands,
+        entry_maker = function(entry)
+          return {
+            value = entry,
+            display = entry.desc,
+            ordinal = entry.desc,
+          }
+        end,
+      }),
+      sorter = require("telescope.config").values.generic_sorter({}),
+      attach_mappings = function(_, map)
+        map("i", "<CR>", execute_command)
+        map("n", "<CR>", execute_command)
+        return true
+      end,
+      layout_strategy = "vertical",
+      layout_config = {
+        width = 0.5,
+        height = 0.4,
+        preview_cutoff = 1, -- Preview window disabled
+        prompt_position = "top",
+        anchor = "N",
+      },
+      borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+      border = true,
+    })
+    :find()
+end
+
+-- Key mapping to open the custom picker
+vim.api.nvim_set_keymap(
+  "n",
+  "\\\\c",
+  "<Cmd>lua command_picker()<CR>",
+  { noremap = true, silent = true, desc = "Lspsaga commands/lsp" }
+)
+local floating_window = {
+  buf = nil,
+  win = nil,
+}
+
+function PersonalNotes()
+  if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
+    -- Close the floating window if it is already open
+    vim.api.nvim_win_close(floating_window.win, true)
+    floating_window.win = nil
+    floating_window.buf = nil
+  else
+    -- Define the path to the Markdown file you want to edit
+    local file_path = vim.fn.expand("~/.config/nvim/notes.md")
+
+    -- Create or open the file buffer
+    local buf = vim.fn.bufadd(file_path)
+    vim.fn.bufload(buf)
+
+    -- Calculate the window size
+    local width = 100
+    local height = 50
+    local row = math.floor((vim.o.lines - height) / 3)
+    local col = math.floor(vim.o.columns)
+
+    -- Create the floating window
+    local win = vim.api.nvim_open_win(buf, true, {
+      relative = "editor",
+      width = width,
+      height = height,
+      col = col,
+      row = row,
+      style = "minimal",
+      border = "rounded",
+      zindex = 10, -- Set a lower z-index
+    })
+
+    -- Set buffer options
+    vim.api.nvim_buf_set_option(buf, "buftype", "")
+    vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
+    vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+
+    -- Set window options
+    vim.api.nvim_win_set_option(win, "cursorline", true)
+    vim.api.nvim_win_set_option(win, "relativenumber", true)
+
+    -- Save the buffer and window to the floating_window table
+    floating_window.buf = buf
+    floating_window.win = win
+  end
+end
+
+-- Key mapping to toggle the floating window
+vim.api.nvim_set_keymap(
+  "n",
+  "\\\\m",
+  ":lua PersonalNotes()<CR>",
+  { noremap = true, silent = true, desc = "personal note" }
+)
