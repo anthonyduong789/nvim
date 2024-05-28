@@ -232,22 +232,22 @@ vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>", opts)
 
 -- Define a list of commands
 local commands = {
-  { desc = "documentation", cmd = ":Lspsaga hover_doc" },
-  { desc = "Show code action", cmd = ":Lspsaga code_action" },
+  { desc = "doc 📄", cmd = ":Lspsaga hover_doc" },
+  { desc = "Show code action 🤖", cmd = ":Lspsaga code_action" },
   { desc = "Show line diagnostics", cmd = ":Lspsaga show_line_diagnostics" },
   { desc = "Diagnostic jump forward", cmd = ":Lspsaga diagnostic_jump_next" },
   { desc = "Diagnostic jump backward", cmd = ":Lspsaga diagnostic_jump_prev" },
-  { desc = "Rename", cmd = ":Lspsaga rename" },
-  { desc = "Preview definition", cmd = ":Lspsaga peek_definition" },
-  { desc = "peek type definition", cmd = ":Lspsaga peek_type_definition" },
-  { desc = "type definition", cmd = ":Lspsaga goto_type_definition" },
-  { desc = "finder (shows references and implemenations)", cmd = ":Lspsaga finder" },
-  { desc = "floating terminal", cmd = ":Lspsaga term_toggle" },
-  { desc = "outline", cmd = ":Lspsaga outline" },
-  { desc = "top windbar toggle", cmd = ":Lspsaga winbar_toggle" },
-  { desc = "workspace diagnostics", cmd = ":Lspsaga show_buf_diagnostics" },
-  { desc = "incoming calls", cmd = ":Lspsaga incoming_calls" },
-  { desc = "outgoing calls", cmd = ":Lspsaga outgoing_calls" },
+  { desc = "rename ✍️", cmd = ":Lspsaga rename" },
+  { desc = "peek_definition 🔍", cmd = ":Lspsaga peek_definition" },
+  { desc = "peek type definition 🔤", cmd = ":Lspsaga peek_type_definition" },
+  { desc = "type definition🔤", cmd = ":Lspsaga goto_type_definition" },
+  { desc = "references & Implementations 🌳", cmd = ":Lspsaga finder" },
+  { desc = "floating terminal💻", cmd = ":Lspsaga term_toggle" },
+  { desc = "outline 🎄", cmd = ":Lspsaga outline" },
+  { desc = "windbar toggle⬆️", cmd = ":Lspsaga winbar_toggle" },
+  { desc = "workspace diagnostics☹️", cmd = ":Lspsaga show_buf_diagnostics" },
+  { desc = "incoming calls 📲 ", cmd = ":Lspsaga incoming_calls" },
+  { desc = "outgoing calls 🔈", cmd = ":Lspsaga outgoing_calls" },
 }
 
 -- Function to execute the selected command
@@ -319,10 +319,12 @@ function PersonalNotes()
     vim.fn.bufload(buf)
 
     -- Calculate the window size
-    local width = 100
-    local height = 50
-    -- local row = math.floor((vim.o.lines - height) / 3)
-    local row = 0
+    local max_width = 130
+    local width = math.min(math.floor(vim.o.columns * 0.9), max_width)
+    local max_height = 50 -- replace with your desired maximum height
+    local height = math.min(math.floor(vim.o.lines * 0.9), max_height)
+    local row = math.floor((vim.o.lines - height) / 4)
+    -- local row =
     local col = math.floor((vim.o.columns - width) / 2)
 
     -- Create the floating window
@@ -332,14 +334,24 @@ function PersonalNotes()
       height = height,
       col = col,
       row = row,
-      style = "minimal",
-      border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" }, -- Set a more noticeable border
+      border = "rounded",
+      title = "*** Personal Notes 🐱 ***",
+      title_pos = "center",
+
       -- border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
 
-      zindex = 10, -- Set a lower z-index
+      zindex = 10, -- Set a lower z-indexn
     })
+
+    -- Set the FloatBorder highlight group
+    vim.api.nvim_set_hl(0, "FloatBorder", {
+      fg = "#E1AFD1", -- Red foreground
+      bg = "#000000", -- Black background
+    })
+    vim.api.nvim_win_set_option(win, "winhl", "FloatBorder:FloatBorder")
+
     vim.api.nvim_win_set_option(win, "cursorline", true) -- Highlight the line of the cursor
-    vim.api.nvim_win_set_option(win, "cursorcolumn", true) -- Highlight the column of the cursor
+    -- vim.api.nvim_win_set_option(win, "cursorcolumn", true) -- Highlight the column of the cursor
 
     -- Set buffer options
     vim.api.nvim_buf_set_option(buf, "buftype", "")
