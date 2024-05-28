@@ -224,27 +224,34 @@ function OpenLinkUnderCursor()
 end
 
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<C-j>", "<Cmd>Lspsaga diagnostic_jump_next<CR>", opts)
 vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
 vim.keymap.set("n", "gd", "<Cmd>Lspsaga lsp_finder<CR>", opts)
 vim.keymap.set("i", "<C-k>", "<Cmd>Lspsaga signature_help<CR>", opts)
-vim.keymap.set("n", "gp", "<Cmd>Lspsaga preview_definition<CR>", opts)
+vim.keymap.set("n", "gp", "<Cmd>Lspsaga peek_definition<CR>", opts)
 vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>", opts)
 
 -- Define a list of commands
 local commands = {
-  { desc = "Show LSP hover documentation", cmd = ":Lspsaga hover_doc" },
+  { desc = "documentation", cmd = ":Lspsaga hover_doc" },
   { desc = "Show code action", cmd = ":Lspsaga code_action" },
   { desc = "Show line diagnostics", cmd = ":Lspsaga show_line_diagnostics" },
   { desc = "Diagnostic jump forward", cmd = ":Lspsaga diagnostic_jump_next" },
   { desc = "Diagnostic jump backward", cmd = ":Lspsaga diagnostic_jump_prev" },
   { desc = "Rename", cmd = ":Lspsaga rename" },
-  { desc = "Preview definition", cmd = ":Lspsaga preview_definition" },
+  { desc = "Preview definition", cmd = ":Lspsaga peek_definition" },
+  { desc = "peek type definition", cmd = ":Lspsaga peek_type_definition" },
+  { desc = "type definition", cmd = ":Lspsaga goto_type_definition" },
   { desc = "finder (shows references and implemenations)", cmd = ":Lspsaga finder" },
+  { desc = "floating terminal", cmd = ":Lspsaga term_toggle" },
+  { desc = "outline", cmd = ":Lspsaga outline" },
+  { desc = "top windbar toggle", cmd = ":Lspsaga winbar_toggle" },
+  { desc = "workspace diagnostics", cmd = ":Lspsaga show_buf_diagnostics" },
+  { desc = "incoming calls", cmd = ":Lspsaga incoming_calls" },
+  { desc = "outgoing calls", cmd = ":Lspsaga outgoing_calls" },
 }
 
 -- Function to execute the selected command
-local function execute_command(prompt_bufnr)
+function execute_command(prompt_bufnr)
   local entry = require("telescope.actions.state").get_selected_entry(prompt_bufnr)
   require("telescope.actions").close(prompt_bufnr)
   vim.cmd(entry.value.cmd)
@@ -288,7 +295,7 @@ end
 -- Key mapping to open the custom picker
 vim.api.nvim_set_keymap(
   "n",
-  "\\\\c",
+  "\\c",
   "<Cmd>lua command_picker()<CR>",
   { noremap = true, silent = true, desc = "Lspsaga commands/lsp" }
 )
@@ -313,9 +320,9 @@ function PersonalNotes()
 
     -- Calculate the window size
     local width = 100
-    local height = 50
+    local height = 70
     local row = math.floor((vim.o.lines - height) / 3)
-    local col = math.floor(vim.o.columns)
+    local col = math.floor((vim.o.columns - width))
 
     -- Create the floating window
     local win = vim.api.nvim_open_win(buf, true, {
@@ -325,9 +332,13 @@ function PersonalNotes()
       col = col,
       row = row,
       style = "minimal",
-      border = "rounded",
+      border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" }, -- Set a more noticeable border
+      -- border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
+
       zindex = 10, -- Set a lower z-index
     })
+    vim.api.nvim_win_set_option(win, "cursorline", true) -- Highlight the line of the cursor
+    vim.api.nvim_win_set_option(win, "cursorcolumn", true) -- Highlight the column of the cursor
 
     -- Set buffer options
     vim.api.nvim_buf_set_option(buf, "buftype", "")
