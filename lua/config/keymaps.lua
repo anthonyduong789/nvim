@@ -322,7 +322,7 @@ function PersonalNotes()
     local width = 100
     local height = 70
     local row = math.floor((vim.o.lines - height) / 3)
-    local col = math.floor((vim.o.columns - width))
+    local col = math.floor((vim.o.columns - width) / 2)
 
     -- Create the floating window
     local win = vim.api.nvim_open_win(buf, true, {
