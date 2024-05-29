@@ -43,48 +43,6 @@ keymap.set("v", "<Leader>00d", function()
     require("CopilotChat").ask(input_text, { selection = require("CopilotChat.select").visual })
   end
 end, { noremap = true, silent = true, desc = "Short doc explanation" })
-keymap.set("v", "<Leader>0c", function()
-  local input_text = vim.fn.input("question about selected code: ")
-  if input_text ~= "" then
-    require("CopilotChat").ask(input_text, { selection = require("CopilotChat.select").visual })
-  end
-end, { noremap = true, silent = true, desc = "question about this code" })
-keymap.set("n", "<Leader>0c", function()
-  local input_text = vim.fn.input("CopilotChat ?: ")
-  if input_text ~= "" then
-    require("CopilotChat").ask(input_text)
-  end
-end, { noremap = true, silent = true, desc = "CopilotChat ?" })
-keymap.set(
-  "n",
-  "<Leader>0t",
-  ":CopilotChatToggle<Return>",
-  { noremap = true, silent = true, desc = "CopilotChatToggle" }
-)
-
-keymap.set("v", "<Leader>0e", ":CopilotChatExplain ", { noremap = true, silent = true, desc = "CopilotChatExplain" })
-keymap.set("v", "<Leader>0d", ":CopilotChatDocs<Return>", { noremap = true, silent = true, desc = "CopilotChatDocs" })
-keymap.set(
-  "v",
-  "<Leader>0o",
-  ":CopilotChatOptimize<Return>",
-  { noremap = true, silent = true, desc = "CopilotChatOptimize" }
-)
-keymap.set("v", "<Leader>0p", function()
-  local actions = require("CopilotChat.actions")
-  require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-end, { noremap = true, silent = true, desc = "CopilotChat actions" })
-keymap.set("n", "<Leader>0p", function()
-  local actions = require("CopilotChat.actions")
-  require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-end, { noremap = true, silent = true, desc = "CopilotChat actions" })
-
-keymap.set("n", "<Leader>0q", function()
-  local input = vim.fn.input("Quick Chat: ")
-  if input ~= "" then
-    require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
-  end
-end, { noremap = true, silent = true, desc = "quick chat current buffer" })
 
 -- --------------------------------------------------------------------------------------------------V
 

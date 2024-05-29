@@ -5,7 +5,7 @@ return {
     config = function()
       require("lspsaga").setup({
         symbol_in_winbar = {
-          enable = true,
+          enable = false,
         },
         ui = {
           code_action = "♎",
@@ -38,54 +38,117 @@ return {
       { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
       { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
     },
-    opts = function(_, opts)
-      opts.show_folds = false
-      opts.debug = false
-      -- table.insert(opts.show_folds, false)
-      -- table.insert(opts.debug, false)
+
+    opts = function()
+      local user = vim.env.USER or "User"
+      user = user:sub(1, 1):upper() .. user:sub(2)
       local max_width = 130
       local width = math.min(math.floor(vim.o.columns * 0.9), max_width)
       local max_height = 50 -- replace with your desired maximum height
       local height = math.min(math.floor(vim.o.lines * 0.9), max_height)
+      return {
+        model = "gpt-4",
+        debug = false,
+        auto_insert_mode = true,
+        show_help = true,
+        question_header = "  " .. user .. " ",
+        answer_header = "  Copilot ",
+        window = {
+          layout = "float", -- 'vertical', 'horizontal', 'float', 'replace'
 
-      opts.window = {
-        layout = "float", -- 'vertical', 'horizontal', 'float', 'replace'
-
-        width = width, -- fractional width of parent, or absolute width in columns when > 1
-        height = height, -- fractional height of parent, or absolute height in rows when > 1
-        -- Options below only apply to floating windows
-        relative = "editor", -- 'editor', 'win', 'cursor', 'mouse'
-        border = "single", -- 'none', single', 'double', 'rounded', 'solid', 'shadow'
-        row = nil, -- row position of the window, default is centered
-        col = nil, -- column position of the window, default is centered
-        title = "** Copilot Chat 🤖 **", -- title of chat window
-        footer = nil, -- footer of chat window
-        zindex = 1, -- determines if window is on top or below other floating windows
+          width = width, -- fractional width of parent, or absolute width in columns when > 1
+          height = height, -- fractional height of parent, or absolute height in rows when > 1
+          -- Options below only apply to floating windows
+          relative = "editor", -- 'editor', 'win', 'cursor', 'mouse'
+          border = "single", -- 'none', single', 'double', 'rounded', 'solid', 'shadow'
+          row = 0, -- row position of the window, default is centered
+          col = nil, -- column position of the window, default is centered
+          title = "** Copilot Chat 🤖 **", -- title of chat window
+          footer = nil, -- footer of chat window
+          zindex = 1, -- determines if window is on top or below other floating windows
+        },
+        selection = function(source)
+          local select = require("CopilotChat.select")
+          return select.visual(source) or select.buffer(source)
+        end,
       }
     end,
-    -- opts = {
-    --   function ()
-    --
-    --   end
-    --   show_folds = false,
-    --   debug = false, -- Enable debugging
-    --   -- See Configuration section for rest
-    --   window = {
-    --     layout = "float", -- 'vertical', 'horizontal', 'float', 'replace'
-    --
-    --     width = 0.8, -- fractional width of parent, or absolute width in columns when > 1
-    --     height = 0.8, -- fractional height of parent, or absolute height in rows when > 1
-    --     -- Options below only apply to floating windows
-    --     relative = "editor", -- 'editor', 'win', 'cursor', 'mouse'
-    --     border = "single", -- 'none', single', 'double', 'rounded', 'solid', 'shadow'
-    --     row = nil, -- row position of the window, default is centered
-    --     col = nil, -- column position of the window, default is centered
-    --     title = "** Copilot Chat 🤖 **", -- title of chat window
-    --     footer = nil, -- footer of chat window
-    --     zindex = 1, -- determines if window is on top or below other floating windows
-    --   },
-    -- },
-    -- See Commands section for default commands if you want to lazy load on them
+    keys = {
+      {
+        "<leader>0q",
+        function()
+          local input = vim.fn.input("Quick Chat: ")
+          if input ~= "" then
+            require("CopilotChat").ask(input)
+          end
+        end,
+        desc = "Quick Chat (CopilotChat)",
+        mode = { "n", "v" },
+      },
+
+      {
+        "<leader>0c",
+        function()
+          return require("CopilotChat").reset()
+        end,
+        desc = "Clear (CopilotChat)",
+        mode = { "n", "v" },
+      },
+
+      {
+        "<leader>0t",
+        function()
+          return require("CopilotChat").toggle()
+        end,
+        desc = "Toggle (CopilotChat)",
+        mode = { "n", "v" },
+      },
+      -- Show help actions with telescope
+      {
+        "<leader>0d",
+        function()
+          local actions = require("CopilotChat.actions")
+          local help = actions.help_actions()
+          if not help then
+            LazyVim.warn("No diagnostics found on the current line")
+            return
+          end
+          require("CopilotChat.integrations.telescope").pick(help)
+        end,
+        desc = "Diagnostic Help (CopilotChat)",
+        mode = { "n", "v" },
+      },
+      -- Show prompts actions with telescope
+      {
+        "<leader>0p",
+        function()
+          local actions = require("CopilotChat.actions")
+          require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+        end,
+        desc = "Prompt Actions (CopilotChat)",
+        mode = { "n", "v" },
+      },
+    },
+    init = function()
+      LazyVim.on_load("which-key.nvim", function()
+        vim.schedule(function()
+          require("which-key").register({ a = { name = "+CopilotChat (AI)" } }, { prefix = "<leader>" })
+        end)
+      end)
+    end,
+    config = function(_, opts)
+      local chat = require("CopilotChat")
+
+      vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "copilot-chat",
+        callback = function()
+          vim.opt_local.relativenumber = true
+          vim.opt_local.number = true
+        end,
+      })
+
+      chat.setup(opts)
+    end,
   },
   {
     "copilot.lua",
@@ -110,6 +173,9 @@ return {
           end,
         },
         tsserver = {
+          on_attach = on_attach,
+          filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+          cmd = { "typescript-language-server", "--stdio" },
           settings = {
             typescript = {
               inlayHints = {
@@ -220,11 +286,11 @@ return {
         end
 
         -- TypeScript
-        nvim_lsp.tsserver.setup({
-          on_attach = on_attach,
-          filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-          cmd = { "typescript-language-server", "--stdio" },
-        })
+        -- nvim_lsp.tsserver.setup({
+        --   on_attach = on_attach,
+        --   filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+        --   cmd = { "typescript-language-server", "--stdio" },
+        -- })
       end,
       setup = {},
     },
@@ -272,6 +338,7 @@ return {
           end
         end, { "i", "s" }),
         ["<C-k>"] = cmp.mapping(function(fallback)
+          assert(type(fallback) == "function", "Expected fallback to be a function")
           if cmp.visible() then
             cmp.select_prev_item()
           elseif luasnip.jumpable(-1) then

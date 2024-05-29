@@ -8,6 +8,7 @@ end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
+
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
@@ -19,6 +20,8 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.coding.copilot" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "lazyvim.plugins.extras.lang.python" },
+    { import = "lazyvim.plugins.extras.lang.tailwind" },
+    { import = "lazyvim.plugins.extras.lang.markdown" },
 
     { import = "plugins" },
 
@@ -39,7 +42,7 @@ require("lazy").setup({
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   -- install = { colorscheme = { "tokyonight", "habama" } },
-  checker = { enabled = true }, -- automatically check for plugin updates
+  checker = { enabled = false }, -- automatically check for plugin updates
   performance = {
     rtp = {
       -- disable some rtp plugins
@@ -60,40 +63,11 @@ require("lazy").setup({
 -- put he customizations here because it overides the default ones
 vim.api.nvim_set_hl(0, "LineNr", { ctermfg = "white" })
 -- Setup key mappings using Lua
-vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>ff",
-  ":lua require('telescope.builtin').find_files({ cwd = vim.fn.expand('~') })<CR>",
-  { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>fb",
-  "<cmd>lua require('telescope.builtin').buffers()<CR>",
-  { noremap = true, silent = true }
-)
 
 -- vim.cmd.colorscheme("catppuccin")
 vim.cmd.colorscheme("tokyonight")
 -- vim.cmd.colorscheme("solarized-osaka")
 vim.api.nvim_del_keymap("n", ";c")
--- -- Set the background color to be transparent or inherit from the terminal
--- vim.cmd([[
---     highlight CursorLine cterm=none ctermbg=NONE gui=none guibg=NONE
--- ]])
---
---   highlight Comment ctermfg=14 cterm=bold guifg=#00ffff gui=bold
--- highlight Normal ctermfg=15 ctermbg=235 guifg=#ffffff guibg=#1c1c1c
---     hi Normal guibg=NONE ctermbg=NONE
---     hi NonText guibg=NONE ctermbg=NONE
--- -- Optional: Ensure that background transparency is respected in additional highlighting
--- vim.cmd([[
---     hi VertSplit guibg=NONE ctermbg=NONE
---     hi SignColumn guibg=NONE ctermbg=NONE
---     hi NormalNC guibg=NONE ctermbg=NONE ]]) vim.api.nvim_set_keymap("n", "J", "<Plug>(easymotion-bd-w)", { noremap = true, silent = true })
--- Sets colors to line numbers Above, Current and Below  in this order
--- vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#F5DAD2", bold = true })
 function LineNumberColors()
   vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#CAF4FF", bold = false })
   vim.api.nvim_set_hl(0, "LineNr", { fg = "white" })
