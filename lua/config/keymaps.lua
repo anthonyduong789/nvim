@@ -74,6 +74,17 @@ keymap.set("n", "<Leader>tt", function()
   vim.cmd(current_tab .. "tabnext")
 end, { desc = "terminal new tab silently" })
 
+keymap.set("n", "<Leader>te", function()
+  local current_tab = vim.fn.tabpagenr()
+  vim.cmd("tabnew")
+  vim.cmd("terminal")
+  vim.cmd("setlocal nonumber norelativenumber") -- Turn off line numbers for this tab
+  terminal_channel_id = vim.b.terminal_job_id -- Store the terminal's job ID
+  -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("live-server<CR>", true, false, true), "t", false)
+  send_command_to_terminal("fe")
+  vim.cmd(current_tab .. "tabnext")
+end, { desc = "new tab live-server" })
+
 keymap.set("n", "<Leader>tl", function()
   local current_tab = vim.fn.tabpagenr()
   vim.cmd("tabnew")

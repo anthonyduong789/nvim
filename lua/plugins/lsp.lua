@@ -8,7 +8,7 @@ return {
           enable = false,
         },
         ui = {
-          code_action = "♎",
+          code_action = "",
         },
       })
     end,
@@ -173,9 +173,9 @@ return {
           end,
         },
         tsserver = {
-          on_attach = on_attach,
-          filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-          cmd = { "typescript-language-server", "--stdio" },
+          -- on_attach = on_attach,
+          -- filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+          -- cmd = { "typescript-language-server", "--stdio" },
           settings = {
             typescript = {
               inlayHints = {
@@ -285,7 +285,7 @@ return {
           end
         end
 
-        -- TypeScript
+        -- WARNING: going to let lazyvim handle the lsp for this instead
         -- nvim_lsp.tsserver.setup({
         --   on_attach = on_attach,
         --   filetypes = { "typescript", "typescriptreact", "typescript.tsx" },

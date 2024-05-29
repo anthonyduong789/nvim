@@ -161,7 +161,6 @@ return {
   },
   {
     "telescope.nvim",
-    priority = 1000,
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -170,6 +169,29 @@ return {
       "nvim-telescope/telescope-file-browser.nvim",
     },
     keys = {
+      {
+        -- FIXME: fix this
+        "\\e",
+        function()
+          local telescope = require("telescope._extensions.file_browser")
+
+          local function telescope_buffer_dir()
+            return vim.fn.expand("%:p:h")
+          end
+
+          telescope({
+            path = "%:p:h",
+            cwd = telescope_buffer_dir(),
+            respect_gitignore = true,
+            hidden = true,
+            grouped = true,
+            previewer = false,
+            initial_mode = "normal",
+            layout_config = { height = 40 },
+          })
+        end,
+        desc = "Open file browser with the current buffer",
+      },
 
       {
         "\\\\g",
@@ -305,6 +327,12 @@ return {
         end,
         desc = "Open File Browser with the path of the current buffer",
       },
+      {
+        "\\e",
+        function()
+          local telescope = require("telescope.builtin")
+        end,
+      },
 
       {
         "\\nt",
@@ -345,6 +373,7 @@ return {
         desc = "File Browser current buffer directory new Tab",
       },
     },
+
     config = function(_, opts)
       local telescope = require("telescope")
       local actions = require("telescope.actions")

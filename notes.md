@@ -1,5 +1,3 @@
 # Personal Notes
 
 ---
-
-### fkldajfljsdklj
