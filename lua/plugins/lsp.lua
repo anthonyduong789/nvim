@@ -5,35 +5,10 @@ return {
     config = function()
       require("lspsaga").setup({
         symbol_in_winbar = {
-          enable = false,
+          enable = true,
         },
         ui = {
           code_action = "♎",
-        },
-        kind = {
-          -- Define custom icons for LSP kinds
-          Class = " ", -- Class
-          Color = " ", -- Color
-          Constant = " ", -- Constant
-          Constructor = " ", -- Constructor
-          Enum = "了 ", -- Enum
-          EnumMember = " ", -- EnumMember
-          Event = " ", -- Event
-          Field = "識", -- Field
-          File = " ", -- File
-          Folder = " ", -- Folder
-          Function = " ", -- Function
-          Interface = "ﰮ ", -- Interface
-          Keyword = " ", -- Keyword
-          Method = "ƒ ", -- Method
-          Module = " ", -- Module
-          Property = " ", -- Property
-          Snippet = "﬌ ", -- Snippet
-          Struct = " ", -- Struct
-          Text = " ", -- Text
-          Unit = " ", -- Unit
-          Value = " ", -- Value
-          Variable = " ", -- Variable
         },
       })
     end,
@@ -81,7 +56,7 @@ return {
         -- Options below only apply to floating windows
         relative = "editor", -- 'editor', 'win', 'cursor', 'mouse'
         border = "single", -- 'none', single', 'double', 'rounded', 'solid', 'shadow'
-        row = 0, -- row position of the window, default is centered
+        row = nil, -- row position of the window, default is centered
         col = nil, -- column position of the window, default is centered
         title = "** Copilot Chat 🤖 **", -- title of chat window
         footer = nil, -- footer of chat window

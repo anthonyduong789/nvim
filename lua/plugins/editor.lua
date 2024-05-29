@@ -5,62 +5,6 @@ return {
   --
   --
   --
-  --
-
-  {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    opts = {
-      menu = {
-        width = vim.api.nvim_win_get_width(0) - 4,
-      },
-      settings = {
-        save_on_toggle = true,
-        sync_on_ui_close = true,
-      },
-    },
-
-    keys = function()
-      local keys = {
-        {
-          "<leader>H",
-          function()
-            require("harpoon"):list():add()
-          end,
-          desc = "Harpoon File Add files to list",
-        },
-        {
-          "<leader>h",
-          function()
-            local harpoon = require("harpoon")
-            harpoon.ui:toggle_quick_menu(harpoon:list())
-          end,
-          desc = "Harpoon Quick Menu",
-        },
-      }
-      -- for i = 1, 5 do
-      --   table.insert(keys, {
-      --     "<leader>hd" .. i,
-      --     function()
-      --       require("harpoon"):list():remove(item)(i)
-      --     end,
-      --     desc = "Harpoon to File " .. i,
-      --   })
-      -- end
-
-      for i = 1, 5 do
-        table.insert(keys, {
-          "<leader>h" .. i,
-          function()
-            require("harpoon"):list():select(i)
-          end,
-          desc = "Harpoon to File " .. i,
-        })
-      end
-      return keys
-    end,
-    config = function() end,
-  },
 
   {
 
@@ -93,7 +37,7 @@ return {
   {
 
     "folke/flash.nvim",
-    enabled = true,
+    enabled = false,
   },
   {
     "ggandor/leap.nvim",
@@ -101,19 +45,7 @@ return {
   },
   {
     "folke/which-key.nvim",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 400
-    end,
     opts = {
-      window = {
-        border = "none", -- none, single, double, shadow
-        position = "bottom", -- bottom, top
-        margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]. When between 0 and 1, will be treated as a percentage of the screen size.
-        padding = { 1, 3, 1, 3 }, -- extra window padding [top, right, bottom, left]
-        winblend = 0, -- value between 0-100 0 for fully opaque and 100 for fully transparent
-        zindex = 1000, -- positive value to position WhichKey above other floating windows.
-      },
       defaults = {
         ["<leader>t"] = { name = "🖥️terminal🖥️" },
         ["<leader>m"] = { name = "markdown prefix" },
