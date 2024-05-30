@@ -283,8 +283,8 @@ function OpenNotes(notes)
     -- Define the path to the Markdown file you want to edit
     -- local notesFolder = "~/.config/nvim/Notes/" .. tostring(v)
     local notesFolder = "~/.config/nvim/Notes/" .. tostring(notes)
-    vim.api.nvim_out_write(notesFolder)
-    print(notesFolder)
+    -- vim.api.nvim_out_write(notesFolder)
+    -- print(notesFolder)
 
     local file_path = vim.fn.expand(notesFolder)
 
@@ -315,7 +315,7 @@ function OpenNotes(notes)
 
       -- border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
 
-      zindex = 10, -- Set a lower z-indexn
+      zindex = 1, -- Set a lower z-indexn
     })
 
     -- Set the FloatBorder highlight group

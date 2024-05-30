@@ -172,35 +172,35 @@ return {
             return require("lspconfig.util").root_pattern(".git")(...)
           end,
         },
-        tsserver = {
-          -- on_attach = on_attach,
-          -- filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-          -- cmd = { "typescript-language-server", "--stdio" },
-          settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-            javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-          },
-        },
+        -- tsserver = {
+        --   -- on_attach = on_attach,
+        --   -- filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+        --   -- cmd = { "typescript-language-server", "--stdio" },
+        --   settings = {
+        --     typescript = {
+        --       inlayHints = {
+        --         includeInlayParameterNameHints = "all",
+        --         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        --         includeInlayFunctionParameterTypeHints = true,
+        --         includeInlayVariableTypeHints = true,
+        --         includeInlayPropertyDeclarationTypeHints = true,
+        --         includeInlayFunctionLikeReturnTypeHints = true,
+        --         includeInlayEnumMemberValueHints = true,
+        --       },
+        --     },
+        --     javascript = {
+        --       inlayHints = {
+        --         includeInlayParameterNameHints = "all",
+        --         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        --         includeInlayFunctionParameterTypeHints = true,
+        --         includeInlayVariableTypeHints = true,
+        --         includeInlayPropertyDeclarationTypeHints = true,
+        --         includeInlayFunctionLikeReturnTypeHints = true,
+        --         includeInlayEnumMemberValueHints = true,
+        --       },
+        --     },
+        --   },
+        -- },
         html = {},
         lua_ls = {
           -- enabled = false,
@@ -273,17 +273,49 @@ return {
         local protocol = require("vim.lsp.protocol")
 
         local on_attach = function(client, bufnr)
-          -- format on save
-          if client.server_capabilities.documentFormattingProvider then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              group = vim.api.nvim_create_augroup("Format", { clear = true }),
-              buffer = bufnr,
-              callback = function()
-                vim.lsp.buf.formatting_seq_sync()
-              end,
-            })
+          local function buf_set_keymap(...)
+            vim.api.nvim_buf_set_keymap(bufnr, ...)
           end
+          local opts = { noremap = true, silent = true }
+
+          buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+          buf_set_keymap("n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
+          buf_set_keymap("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+          buf_set_keymap("n", "gs", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+          buf_set_keymap("n", "<leader>rn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+          buf_set_keymap("n", "<leader>ca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+          buf_set_keymap("n", "<leader>f", "<Cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+          client.resolved_capabilities.document_formatting = true
+          client.resolved_capabilities.document_range_formatting = true
         end
+        -- local on_attach = function(client, bufnr)
+        --   -- format on save
+        --   if client.server_capabilities.documentFormattingProvider then
+        --     vim.api.nvim_create_autocmd("BufWritePre", {
+        --       group = vim.api.nvim_create_augroup("Format", { clear = true }),
+        --       buffer = bufnr,
+        --       callback = function()
+        --         vim.lsp.buf.formatting_seq_sync()
+        --       end,
+        --     })
+        --   end
+        -- end
+        -- nvim_lsp.tsserver.setup({
+        --
+        --   on_attach = on_attach,
+        --   flags = {
+        --     debounce_text_changes = 150,
+        --   },
+        --   root_dir = function(fname)
+        --     local project_dir = "/home/anthony/cse160/cse160-assignment4"
+        --     if fname:sub(1, #project_dir) == project_dir then
+        --       return project_dir
+        --     else
+        --       return nil
+        --     end
+        --   end,
+        -- })
 
         -- WARNING: going to let lazyvim handle the lsp for this instead
         -- nvim_lsp.tsserver.setup({
