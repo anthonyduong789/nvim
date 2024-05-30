@@ -7,6 +7,7 @@ return {
   --
   --
   {
+    -- NOTE: provides a healines of how to markdown files
     "lukas-reineke/headlines.nvim",
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = function()
@@ -126,6 +127,7 @@ return {
 
   -- buffer line
   {
+    -- NOTE: SHOWS THE TOP OF THE Endior
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     keys = {
@@ -134,10 +136,13 @@ return {
     },
     opts = {
       options = {
+        -- mode = "buffers", -- set to "tabs" to only show tabpages instead
         mode = "tabs",
         show_buffer_close_icons = true,
         show_close_icon = true,
-        buffer_close_icon = "🐜",
+        -- buffer_close_icon = "󰅖",
+        separator_style = "slant", -- "slant"| "slope" | "thick" | "thin" | { 'any', 'any' },
+        buffer_close_icon = "👾↔️ 👾",
         inlay_hints = { enabled = true },
       },
     },
