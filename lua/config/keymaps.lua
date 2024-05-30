@@ -344,13 +344,53 @@ function OpenNotes(notes)
   end
 end
 
-local notes = {
-  "nvimHelp.md",
-  "notes.md",
-  "nvimApiLuaNotes.md",
+local notes = {}
 
-  -- add more notes here
-}
+-- local path = "~/.config/nvim/Notes/"
+
+function insert_files_in_path()
+  local path = vim.fn.expand("~/.config/nvim/Notes/") -- expand the tilde to the full path
+  local files = {
+    "nvimHelp.md",
+    "notes.md",
+    "nvimApiLuaNotes.md",
+  }
+
+  local function file_exists(file)
+    for _, existing_file in ipairs(files) do
+      if existing_file == file then
+        return true
+      end
+    end
+    return false
+  end
+  -- List all files in the directory
+  ---- List all files in the directory
+  local handle = io.popen('ls "' .. path .. '"')
+  if handle then
+    for file in handle:lines() do
+      if not file_exists(file) then
+        table.insert(files, file)
+      end
+    end
+    handle:close()
+  else
+    print("Error: Unable to open path " .. path)
+  end
+
+  return files
+end
+
+notes = insert_files_in_path()
+-- for file in lfs.dir(path) do
+--   if file ~= "." and file ~= ".." then -- exclude these special directories
+--     local f = path .. "/" .. file
+--     local attr = lfs.attributes(f)
+--     if attr.mode == "file" then -- only add if it's a file
+--       table.insert(files, f)
+--     end
+--   end
+-- end
 
 vim.api.nvim_command("command! -nargs=1 OpenNotes lua OpenNotes(<f-args>)")
 
