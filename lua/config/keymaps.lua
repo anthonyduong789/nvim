@@ -213,6 +213,8 @@ local LspSagaCmds = {
   { desc = "workspace diagnostics☹️", cmd = ":Lspsaga show_buf_diagnostics" },
   { desc = "incoming calls 📲 ", cmd = ":Lspsaga incoming_calls" },
   { desc = "outgoing calls 🔈", cmd = ":Lspsaga outgoing_calls" },
+  { desc = "Calls incoming + outgoing calls 🔈", cmd = ":Lspsaga finder incoming_calls outgoing_calls" },
+  { desc = "finder tyd+ref+imp+def", cmd = ":Lspsaga finder tyd+ref+imp+def" },
 }
 
 -- Function to execute the selected command
