@@ -196,7 +196,7 @@ vim.keymap.set("n", "gp", "<Cmd>Lspsaga peek_definition<CR>", opts)
 vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>", opts)
 
 -- Define a list of commands
-local commands = {
+local LspSagaCmds = {
   { desc = "doc 📄", cmd = ":Lspsaga hover_doc" },
   { desc = "Show code action 🤖", cmd = ":Lspsaga code_action" },
   { desc = "Show line diagnostics", cmd = ":Lspsaga show_line_diagnostics" },
@@ -223,12 +223,12 @@ function execute_command(prompt_bufnr)
 end
 
 -- Custom Telescope picker with layout customization
-function command_picker()
+function command_picker(tableList)
   require("telescope.pickers")
     .new({}, {
       prompt_title = "Lspsaga/lsp commands",
       finder = require("telescope.finders").new_table({
-        results = commands,
+        results = tableList,
         entry_maker = function(entry)
           return {
             value = entry,
@@ -257,11 +257,15 @@ function command_picker()
     :find()
 end
 
+function command_pickerLspSaga()
+  command_picker(LspSagaCmds)
+end
+
 -- Key mapping to open the custom picker
 vim.api.nvim_set_keymap(
   "n",
   "\\c",
-  "<Cmd>lua command_picker()<CR>",
+  "<Cmd>lua command_pickerLspSaga()<CR>",
   { noremap = true, silent = true, desc = "Lspsaga commands/lsp" }
 )
 local floating_window = {
@@ -269,7 +273,7 @@ local floating_window = {
   win = nil,
 }
 
-function PersonalNotes()
+function OpenNotes(notes)
   if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
     -- Close the floating window if it is already open
     vim.api.nvim_win_close(floating_window.win, true)
@@ -277,16 +281,22 @@ function PersonalNotes()
     floating_window.buf = nil
   else
     -- Define the path to the Markdown file you want to edit
-    local file_path = vim.fn.expand("~/.config/nvim/notes.md")
+    -- local notesFolder = "~/.config/nvim/Notes/" .. tostring(v)
+    local notesFolder = "~/.config/nvim/Notes/" .. tostring(notes)
+    vim.api.nvim_out_write(notesFolder)
+    print(notesFolder)
+
+    local file_path = vim.fn.expand(notesFolder)
 
     -- Create or open the file buffer
     local buf = vim.fn.bufadd(file_path)
+
     vim.fn.bufload(buf)
 
     -- Calculate the window size
     local max_width = 130
     local width = math.min(math.floor(vim.o.columns * 0.9), max_width)
-    local max_height = 50 -- replace with your desired maximum height
+    local max_height = 25 -- replace with your desired maximum heightke
     local height = math.min(math.floor(vim.o.lines * 0.9), max_height)
     local row = math.floor((vim.o.lines - height) / 4)
     -- local row =
@@ -298,9 +308,9 @@ function PersonalNotes()
       width = width,
       height = height,
       col = col,
-      row = row,
+      row = 0,
       border = "double",
-      title = "*** Personal Notes 🐱 ***",
+      title = "***---" .. tostring(notes) .. "---🐱 ***",
       title_pos = "center",
 
       -- border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
@@ -328,15 +338,34 @@ function PersonalNotes()
     vim.api.nvim_win_set_option(win, "relativenumber", true)
 
     -- Save the buffer and window to the floating_window table
+
     floating_window.buf = buf
     floating_window.win = win
   end
 end
 
+local notes = {
+  "nvimHelp.md",
+  "notes.md",
+  "nvimApiLuaNotes.md",
+
+  -- add more notes here
+}
+
+vim.api.nvim_command("command! -nargs=1 OpenNotes lua OpenNotes(<f-args>)")
+
 -- Key mapping to toggle the floating window
-vim.api.nvim_set_keymap(
-  "n",
-  "\\\\m",
-  ":lua PersonalNotes()<CR>",
-  { noremap = true, silent = true, desc = "personal note" }
-)
+for i, note in ipairs(notes) do
+  vim.api.nvim_set_keymap(
+    "n",
+    "\\\\" .. i,
+    ":lua OpenNotes('" .. note .. "')<CR>",
+    { noremap = true, silent = true, desc = note }
+  )
+  -- - vim.api.nvim_set_keymap(
+end
+--   "n",
+--   "\\\\m",
+--   ":lua OpenNotes('notes.md')<CR>",
+--   { noremap = true, silent = true, desc = "personal note" }
+-- )
