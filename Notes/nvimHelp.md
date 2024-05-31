@@ -16,3 +16,15 @@
 ### Vblock for multy cursor
 
 > simple go Vblock mode and then shift + a/i
+
+### mini.surround
+
+> keymaps:
+> prefix: gs
+> gsa Add Surrounding n, v + "whatever you want to surround it with"
+> gsd Delete Surrounding n + whatever you want to delete it with
+> gsf Find Right Surrounding n
+> gsF Find Left Surrounding n
+> gsh Highlight Surrounding n
+> gsn Update MiniSurround.config.n_lines n
+> gsr Replace Surrounding n

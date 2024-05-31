@@ -296,13 +296,12 @@ function OpenNotes(notes)
     vim.fn.bufload(buf)
 
     -- Calculate the window size
-    local max_width = 130
+    local max_width = 100
     local width = math.min(math.floor(vim.o.columns * 0.9), max_width)
-    local max_height = 25 -- replace with your desired maximum heightke
-    local height = math.min(math.floor(vim.o.lines * 0.9), max_height)
+    local height = vim.o.lines
     local row = math.floor((vim.o.lines - height) / 4)
     -- local row =
-    local col = math.floor((vim.o.columns - width) / 2)
+    local col = math.floor((vim.o.columns - width))
 
     -- Create the floating window
     local win = vim.api.nvim_open_win(buf, true, {

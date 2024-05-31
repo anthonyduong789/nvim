@@ -99,10 +99,7 @@ return {
       parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
     end,
   },
-  {
-    --
-    --
-  },
+  {},
 }
 -- require("nvim-treesitter.configs").setup({
 --   -- Add languages to be installed here that you want installed for treesitter
