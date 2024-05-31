@@ -387,6 +387,26 @@ return {
       local telescope = require("telescope")
       local actions = require("telescope.actions")
       local fb_actions = require("telescope").extensions.file_browser.actions
+      -- opts.defaults = {
+      --   layout_strategy = "horizontal",
+      --   layout_config = {
+      --     horizontal = {
+      --       -- Width of the Telescope window as a percentage of total screen width
+      --       width = 0.999,
+      --       -- Width of the preview window as a percentage of the Telescope window width
+      --       preview_width = 0.6,
+      --       -- Height of the Telescope window as a percentage of total screen height
+      --       height = 0.999,
+      --       prompt_position = "top",
+      --     },
+      --     vertical = {
+      --       width = 0.9,
+      --       height = 0.55,
+      --       preview_height = 0.4,
+      --       prompt_position = "top",
+      --     },
+      --   },
+      -- }
 
       opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
         wrap_results = true,
@@ -433,8 +453,8 @@ return {
         },
       }
       telescope.setup(opts)
-      require("telescope").load_extension("fzf")
-      require("telescope").load_extension("file_browser")
+      -- require("telescope").load_extension("fzf")
+      -- require("telescope").load_extension("file_browser")
     end,
   },
 }
