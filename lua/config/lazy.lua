@@ -85,7 +85,7 @@ function FlashColorschemes()
 end
 
 LineNumberColors()
-FlashColorschemes()
+-- FlashColorschemes()
 
 local cmp = require("cmp")
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
