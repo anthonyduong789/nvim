@@ -68,7 +68,12 @@ return {
     priority = 1000,
     opts = function()
       return {
-        transparent = false,
+        transparent = true,
+        leap = true,
+        telescope = true,
+        harpoon = true,
+        mason = true,
+        neotest = true,
       }
     end,
   },
