@@ -135,6 +135,15 @@ return {
 
     "folke/flash.nvim",
     enabled = true,
+    opts = {},
+  -- stylua: ignore
+  keys = {
+    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  },
   },
   {
     "ggandor/leap.nvim",
@@ -279,11 +288,6 @@ return {
       {
         "\\t",
         function()
-          local symbol_descriptions = {
-            { symbol = "Symbol1", description = "Description for Symbol1", filepath = vim.fn.expand("%:p") },
-            { symbol = "Symbol2", description = "Description for Symbol2", filepath = vim.fn.expand("%:p") },
-            -- Add more symbols, descriptions, and file paths as needed
-          }
           local builtin = require("telescope.builtin")
           builtin.treesitter()
         end,

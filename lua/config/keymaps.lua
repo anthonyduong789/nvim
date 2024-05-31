@@ -23,8 +23,8 @@ keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 -- Tabs
 
 -- Split window
-keymap.set("n", "<Leader>ws", ":split<Return>", opts)
-keymap.set("n", "<Leader>wv", ":vsplit<Return>", opts)
+keymap.set("n", "<Leader>wv", ":split<Return>", opts)
+keymap.set("n", "<Leader>ws", ":vsplit<Return>", opts)
 
 -- motin mappings
 keymap.set("i", "<C-h>", "<Left>", { noremap = true, silent = true })
@@ -311,13 +311,13 @@ function OpenNotes(notes)
       height = height,
       col = col,
       row = 0,
-      border = "double",
+      border = "rounded",
       title = "***---" .. tostring(notes) .. "---🐱 ***",
       title_pos = "center",
 
       -- border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
 
-      zindex = 1, -- Set a lower z-indexn
+      zindex = 50, -- Set a lower z-indexn
     })
 
     -- Set the FloatBorder highlight group

@@ -48,7 +48,7 @@ return {
       local height = math.min(math.floor(vim.o.lines * 0.9), max_height)
       return {
         model = "gpt-4",
-        debug = false,
+        debug = true,
         auto_insert_mode = true,
         show_help = true,
         question_header = "  " .. user .. " ",
@@ -60,12 +60,12 @@ return {
           height = height, -- fractional height of parent, or absolute height in rows when > 1
           -- Options below only apply to floating windows
           relative = "editor", -- 'editor', 'win', 'cursor', 'mouse'
-          border = "single", -- 'none', single', 'double', 'rounded', 'solid', 'shadow'
+          border = "rounded", -- 'none', single', 'double', 'rounded', 'solid', 'shadow'
           row = 0, -- row position of the window, default is centered
           col = nil, -- column position of the window, default is centered
           title = "** Copilot Chat 🤖 **", -- title of chat window
-          footer = nil, -- footer of chat window
-          zindex = 1, -- determines if window is on top or below other floating windows
+          footer = "👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽", -- footer of chat window
+          zindex = 52, -- determines if window is on top or below other floating windows
         },
         selection = function(source)
           local select = require("CopilotChat.select")
