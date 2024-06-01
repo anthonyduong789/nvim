@@ -410,3 +410,25 @@ end
 --   ":lua OpenNotes('notes.md')<CR>",
 --   { noremap = true, silent = true, desc = "personal note" }
 -- )
+
+-- Function to re-indent the entire buffer
+function reindent_buffer()
+  vim.cmd("gg=G")
+end
+
+-- Function to remove leading whitespace from every line
+function align_left()
+  vim.cmd("%s/^\\s\\+//g")
+end
+
+-- Function to setup keymaps
+function setup_keymaps()
+  -- Map the key Leader + left arrow to re-indent the entire buffer
+  vim.api.nvim_set_keymap("n", "<Leader><Left>", ":lua reindent_buffer()<CR>", { noremap = true, silent = true })
+
+  -- Map the key Leader + right arrow to align all lines to the left
+  vim.api.nvim_set_keymap("n", "<Leader><Right>", ":lua align_left()<CR>", { noremap = true, silent = true })
+end
+
+-- Call the setup function to activate the keymaps
+setup_keymaps()

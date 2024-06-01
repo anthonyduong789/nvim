@@ -37,3 +37,10 @@ funtion(input){
 }
 
 ```
+
+manager
+
+1. retrive data
+2. get data with the filter id
+   ^ check for each task if manager with hash map is that will by 2 \* O(n)
+3.

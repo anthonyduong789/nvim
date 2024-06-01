@@ -9,11 +9,11 @@ return {
   -- animations
   {
     "echasnovski/mini.animate",
-    enabled = true,
+    enabled = false,
     event = "VeryLazy",
     opts = function(_, opts)
       opts.scroll = {
-        enable = false,
+        enable = true,
       }
     end,
   },
@@ -93,8 +93,8 @@ return {
       })
     end,
   },
+  -- NOTE: launches markdown to the browser
   {
-    -- NOTE: launches markdown to the browser
     "davidgranstrom/nvim-markdown-preview",
     enabled = true,
   },
@@ -317,7 +317,7 @@ return {
       ░░░░░░░░░░░░░░░░░▀░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
             ]]
 
-      logo = string.rep("\n", (vim.o.lines * 0.2)) .. logo .. ""
+      logo = string.rep("\n", (vim.o.lines * 0.15)) .. logo .. ""
       opts.config.header = vim.split(logo, "\n")
     end,
   },

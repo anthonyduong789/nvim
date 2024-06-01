@@ -134,7 +134,7 @@ return {
   {
 
     "folke/flash.nvim",
-    enabled = true,
+    enabled = false,
     opts = {},
   -- stylua: ignore
   keys = {

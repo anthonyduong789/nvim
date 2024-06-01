@@ -331,10 +331,13 @@ return {
   {
     "nvim-cmp",
     dependencies = {
-      { "hrsh7th/cmp-emoji" },
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-cmdline" },
-      { "mlaursen/vim-react-snippets" },
+      "hrsh7th/cmp-emoji",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-cmdline",
+      -- "L3MON4D3/LuaSnip",
+      -- "saadparwaiz1/cmp_luasnip",
+
+      "mlaursen/vim-react-snippets",
     },
     opts = function(_, opts)
       table.insert(opts.sources, { name = "emoji" })
@@ -380,6 +383,7 @@ return {
           end
         end, { "i", "s" }),
       })
+      require("vim-react-snippets").lazy_load()
     end,
   },
 }

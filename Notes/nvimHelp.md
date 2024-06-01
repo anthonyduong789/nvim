@@ -28,3 +28,9 @@
 > gsh Highlight Surrounding n
 > gsn Update MiniSurround.config.n_lines n
 > gsr Replace Surrounding n
+
+##### shadow window layout
+
+Ctrl+w + H or K
+
+> H-> | | K -> =
