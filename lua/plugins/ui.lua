@@ -209,37 +209,68 @@ return {
   },
 
   -- filename
+  -- {
+  --   -- NOTE: top right ft_icon
+  --   "b0o/incline.nvim",
+  --   dependencies = {},
+  --   event = "BufReadPre",
+  --   priority = 1200,
+  --   config = function()
+  --     local helpers = require("incline.helpers")
+  --     require("incline").setup({
+  --       window = {
+  --         padding = 0,
+  --         margin = { horizontal = 0, vertical = 2 },
+  --         zindex = 1,
+  --       },
+  --       render = function(props)
+  --         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+  --         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+  --         local modified = vim.bo[props.buf].modified
+  --         local buffer = {
+  --           ft_icon and { " ", ft_icon, " ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or "",
+  --           " ",
+  --           { filename, gui = modified and "bold,italic" or "bold" },
+  --           " ",
+  --           guibg = "#363944",
+  --         }
+  --         return buffer
+  --       end,
+  --     })
+  --   end,
+  -- },
+  -- LazyGit integration with Telescope
+
   {
-    -- NOTE: top right ft_icon
     "b0o/incline.nvim",
-    dependencies = {},
+    dependencies = { "craftzdog/solarized-osaka.nvim" },
     event = "BufReadPre",
     priority = 1200,
     config = function()
-      local helpers = require("incline.helpers")
+      local colors = require("solarized-osaka.colors").setup()
       require("incline").setup({
-        window = {
-          padding = 0,
-          margin = { horizontal = 0, vertical = 2 },
-          zindex = 1,
+        highlight = {
+          groups = {
+            InclineNormal = { guibg = colors.magenta500, guifg = colors.base04 },
+            InclineNormalNC = { guifg = colors.violet500, guibg = colors.base03 },
+          },
+        },
+        window = { padding = 2, margin = { vertical = 2, horizontal = 1 }, zindex = 1 },
+        hide = {
+          cursorline = true,
         },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-          local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-          local modified = vim.bo[props.buf].modified
-          local buffer = {
-            ft_icon and { " ", ft_icon, " ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or "",
-            " ",
-            { filename, gui = modified and "bold,italic" or "bold" },
-            " ",
-            guibg = "#363944",
-          }
-          return buffer
+          if vim.bo[props.buf].modified then
+            filename = "[+] " .. filename
+          end
+
+          local icon, color = require("nvim-web-devicons").get_icon_color(filename)
+          return { { icon, guifg = color }, { " " }, { filename } }
         end,
       })
     end,
   },
-  -- LazyGit integration with Telescope
   {
     "kdheepak/lazygit.nvim",
     keys = {

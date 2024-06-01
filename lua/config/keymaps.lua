@@ -297,7 +297,7 @@ function OpenNotes(notes)
 
     -- Calculate the window size
     local max_width = 100
-    local width = math.min(math.floor(vim.o.columns * 0.9), max_width)
+    local width = math.min(math.floor(vim.o.columns * 0.4), max_width)
     local height = vim.o.lines
     local row = math.floor((vim.o.lines - height) / 4)
     -- local row =
@@ -311,8 +311,8 @@ function OpenNotes(notes)
       col = col,
       row = 0,
       border = "rounded",
-      title = "***---" .. tostring(notes) .. "---🐱 ***",
-      title_pos = "center",
+      title = "***---" .. tostring(notes) .. "--- ***",
+      title_pos = "left",
 
       -- border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
 
