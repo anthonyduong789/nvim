@@ -48,3 +48,13 @@ manager
 ### COnfig Notes window
 
 > make a way to use a telescope picker for Persona>l notes
+
+#### Add more things to the scene
+
+> moving saflying saucer that will pick things up under the light ?
+
+1. move physical saucer
+
+2. move the light with the saucer
+
+3. third

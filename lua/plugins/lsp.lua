@@ -329,61 +329,202 @@ return {
   },
 
   {
-    "nvim-cmp",
+    "hrsh7th/nvim-cmp",
+    version = false, -- last release is way too old
+    event = "InsertEnter",
     dependencies = {
-      "hrsh7th/cmp-emoji",
+      "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
-      -- "L3MON4D3/LuaSnip",
-      -- "saadparwaiz1/cmp_luasnip",
-
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
       "mlaursen/vim-react-snippets",
     },
-    opts = function(_, opts)
-      table.insert(opts.sources, { name = "emoji" })
-      require("vim-react-snippets").lazy_load()
+    -- Not all LSP servers add brackets when completing a function.
+    -- To better deal with this, LazyVim adds a custom option to cmp,
+    -- that you can configure. For example:
+    --
+    -- ```lua
+    -- opts = {
+    --   auto_brackets = { "python" }
+    -- }
+    -- ```
 
-      local luasnip = require("luasnip")
+    opts = function()
+      vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require("cmp")
-      vim.opt.completeopt = { "menu", "menuone", "noselect" }
-      cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
+      local defaults = require("cmp.config.default")()
+      local luasnip = require("luasnip")
 
-        sources = {
-          { name = "buffer" },
+      local compare = cmp.config.compare
+      return {
+        luasnip.filetype_extend("typescript", { "tsdoc", "react-ts" }),
+        auto_brackets = {}, -- configure any filetype to auto add brackets
+        completion = {
+          completeopt = "menu,menuone,noinsert",
         },
-      })
-      cmp.setup.cmdline(":", {
-
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.insert({
+          ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+          ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = LazyVim.cmp.confirm(),
+          ["<S-CR>"] = LazyVim.cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<C-CR>"] = function(fallback)
+            cmp.abort()
+            fallback()
+          end,
+        }),
         sources = cmp.config.sources({
+          { name = "nvim_lsp" },
           { name = "path" },
-        }, { { name = "cmdline" } }),
-      })
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<C-j>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          elseif has_words_before() then
-            cmp.complete()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        ["<C-k>"] = cmp.mapping(function(fallback)
-          assert(type(fallback) == "function", "Expected fallback to be a function")
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-      })
+        }, {
+          { name = "buffer" },
+        }),
+        formatting = {
+          format = function(_, item)
+            local icons = require("lazyvim.config").icons.kinds
+            if icons[item.kind] then
+              item.kind = icons[item.kind] .. item.kind
+            end
+            return item
+          end,
+        },
+        experimental = {
+          ghost_text = {
+            hl_group = "CmpGhostText",
+          },
+        },
+        sorting = defaults.sorting,
+      }
+    end,
+    ---@param opts cmp.ConfigSchema | {auto_brackets?: string[]}
+    config = function(_, opts)
       require("vim-react-snippets").lazy_load()
+      for _, source in ipairs(opts.sources) do
+        source.group_index = source.group_index or 1
+      end
+
+      local parse = require("cmp.utils.snippet").parse
+      require("cmp.utils.snippet").parse = function(input)
+        local ok, ret = pcall(parse, input)
+        if ok then
+          return ret
+        end
+        return LazyVim.cmp.snippet_preview(input)
+      end
+
+      local cmp = require("cmp")
+      cmp.setup(opts)
+      cmp.event:on("confirm_done", function(event)
+        if vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
+          LazyVim.cmp.auto_brackets(event.entry)
+        end
+      end)
+      cmp.event:on("menu_opened", function(event)
+        LazyVim.cmp.add_missing_snippet_docs(event.window)
+      end)
+    end,
+  },
+
+  -- {
+  --   "nvim-cmp",
+  --   dependencies = {
+  --     "hrsh7th/cmp-emoji",
+  --     "hrsh7th/cmp-buffer",
+  --     "hrsh7th/cmp-cmdline",
+  -- "L3MON4D3/LuaSnip",
+  -- "saadparwaiz1/cmp_luasnip",
+  --
+  --     "mlaursen/vim-react-snippets",
+  --   },
+  --   opts = function(_, opts)
+  --     table.insert(opts.sources, { name = "emoji" })
+  --     require("vim-react-snippets").lazy_load()
+  --
+  --     local luasnip = require("luasnip")
+  --     local cmp = require("cmp")
+  --     vim.opt.completeopt = { "menu", "menuone", "noselect" }
+  --     cmp.setup.cmdline("/", {
+  --       mapping = cmp.mapping.preset.cmdline(),
+  --
+  --       sources = {
+  --         { name = "buffer" },
+  --       },
+  --     })
+  --     cmp.setup.cmdline(":", {
+  --
+  --       mapping = cmp.mapping.preset.cmdline(),
+  --       sources = cmp.config.sources({
+  --         { name = "path" },
+  --       }, { { name = "cmdline" } }),
+  --     })
+  --     opts.mapping = vim.tbl_extend("force", opts.mapping, {
+  --       ["<C-j>"] = cmp.mapping(function(fallback)
+  --         if cmp.visible() then
+  --           cmp.select_next_item()
+  --         elseif luasnip.expand_or_jumpable() then
+  --           luasnip.expand_or_jump()
+  --         elseif has_words_before() then
+  --           cmp.complete()
+  --         else
+  --           fallback()
+  --         end
+  --       end, { "i", "s" }),
+  --       ["<C-k>"] = cmp.mapping(function(fallback)
+  --         assert(type(fallback) == "function", "Expected fallback to be a function")
+  --         if cmp.visible() then
+  --           cmp.select_prev_item()
+  --         elseif luasnip.jumpable(-1) then
+  --           luasnip.jump(-1)
+  --         else
+  --           fallback()
+  --         end
+  --       end, { "i", "s" }),
+  --     })
+  --   end,
+  -- },
+
+  {
+    "garymjr/nvim-snippets",
+    opts = {
+      friendly_snippets = true,
+    },
+    dependencies = { "rafamadriz/friendly-snippets" },
+  },
+  -- Snippet Courtesy of @Zeioth,
+
+  {
+    "L3MON4D3/LuaSnip",
+    build = vim.fn.has("win32") ~= 0 and "make install_jsregexp" or nil,
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      "benfowler/telescope-luasnip.nvim",
+    },
+    config = function(_, opts)
+      if opts then
+        require("luasnip").config.setup(opts)
+      end
+      vim.tbl_map(function(type)
+        require("luasnip.loaders.from_" .. type).lazy_load()
+      end, { "vscode", "snipmate", "lua" })
+      -- friendly-snippets - enable standardized comments snippets
+      require("luasnip").filetype_extend("typescript", { "tsdoc", "react-ts" })
+      require("luasnip").filetype_extend("javascript", { "jsdoc", "react" })
+      require("luasnip").filetype_extend("lua", { "luadoc" })
+      require("luasnip").filetype_extend("python", { "pydoc" })
+      require("luasnip").filetype_extend("rust", { "rustdoc" })
+      require("luasnip").filetype_extend("cs", { "csharpdoc" })
+      require("luasnip").filetype_extend("java", { "javadoc" })
+      require("luasnip").filetype_extend("c", { "cdoc" })
+      require("luasnip").filetype_extend("cpp", { "cppdoc" })
+      require("luasnip").filetype_extend("php", { "phpdoc" })
+      require("luasnip").filetype_extend("kotlin", { "kdoc" })
+      require("luasnip").filetype_extend("ruby", { "rdoc" })
+      require("luasnip").filetype_extend("sh", { "shelldoc" })
     end,
   },
 }
