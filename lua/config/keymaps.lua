@@ -276,72 +276,60 @@ local floating_window = {
 }
 
 function OpenNotes(notes)
+  -- if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
+  --   CloseFloatingWindow()
+  --   vim.api.nvim_win_close(floating_window.win, true)
+  --   floating_window.win = nil
+  --   floating_window.buf = nil
+  -- else
+
   if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
-    -- Close the floating window if it is already open
+    CloseFloatingWindow()
+  end
+
+  local notesFolder = "~/.config/nvim/Notes/" .. tostring(notes)
+  local file_path = vim.fn.expand(notesFolder)
+  local buf = vim.fn.bufadd(file_path)
+  vim.fn.bufload(buf)
+  local max_width = 100
+  local width = math.min(math.floor(vim.o.columns * 0.4), max_width)
+  local height = vim.o.lines
+  local row = math.floor((vim.o.lines - height) / 4)
+  local col = math.floor((vim.o.columns - width))
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width,
+    height = height,
+    col = col,
+    row = 0,
+    border = "rounded",
+    title = "***---" .. tostring(notes) .. "--- ***",
+    title_pos = "left",
+    zindex = 50,
+  })
+  vim.api.nvim_set_hl(0, "PersonalNotesBorder", {
+    fg = "#E1AFD1",
+  })
+  vim.api.nvim_win_set_option(win, "winhl", "FloatBorder:PersonalNotesBorder")
+  vim.api.nvim_win_set_option(win, "cursorline", true)
+  vim.api.nvim_buf_set_option(buf, "buftype", "")
+  vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
+  vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+  vim.api.nvim_win_set_option(win, "cursorline", true)
+  vim.api.nvim_win_set_option(win, "relativenumber", true)
+  floating_window.buf = buf
+  floating_window.win = win
+
+  -- Set 'q' to close the floating window
+  vim.api.nvim_buf_set_keymap(buf, "n", "q", ":lua CloseFloatingWindow()<CR>", { noremap = true, silent = true })
+  -- end
+end
+
+function CloseFloatingWindow()
+  if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
     vim.api.nvim_win_close(floating_window.win, true)
     floating_window.win = nil
     floating_window.buf = nil
-  else
-    -- Define the path to the Markdown file you want to edit
-    -- local notesFolder = "~/.config/nvim/Notes/" .. tostring(v)
-    local notesFolder = "~/.config/nvim/Notes/" .. tostring(notes)
-    -- vim.api.nvim_out_write(notesFolder)
-    -- print(notesFolder)
-
-    local file_path = vim.fn.expand(notesFolder)
-
-    -- Create or open the file buffer
-    local buf = vim.fn.bufadd(file_path)
-
-    vim.fn.bufload(buf)
-
-    -- Calculate the window size
-    local max_width = 100
-    local width = math.min(math.floor(vim.o.columns * 0.4), max_width)
-    local height = vim.o.lines
-    local row = math.floor((vim.o.lines - height) / 4)
-    -- local row =
-    local col = math.floor((vim.o.columns - width))
-
-    -- Create the floating window
-    local win = vim.api.nvim_open_win(buf, true, {
-      relative = "editor",
-      width = width,
-      height = height,
-      col = col,
-      row = 0,
-      border = "rounded",
-      title = "***---" .. tostring(notes) .. "--- ***",
-      title_pos = "left",
-
-      -- border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
-
-      zindex = 50, -- Set a lower z-indexn
-    })
-
-    -- Set the FloatBorder highlight group
-    -- local ns_id = vim.api.nvim_create_namespace("PersonalNotes")
-    vim.api.nvim_set_hl(0, "PersonalNotesBorder", {
-      fg = "#E1AFD1", -- Red foreground
-    })
-    vim.api.nvim_win_set_option(win, "winhl", "FloatBorder:PersonalNotesBorder")
-
-    vim.api.nvim_win_set_option(win, "cursorline", true) -- Highlight the line of the cursor
-    -- vim.api.nvim_win_set_option(win, "cursorcolumn", true) -- Highlight the column of the cursor
-
-    -- Set buffer options
-    vim.api.nvim_buf_set_option(buf, "buftype", "")
-    vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
-    vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
-
-    -- Set window options
-    vim.api.nvim_win_set_option(win, "cursorline", true)
-    vim.api.nvim_win_set_option(win, "relativenumber", true)
-
-    -- Save the buffer and window to the floating_window table
-
-    floating_window.buf = buf
-    floating_window.win = win
   end
 end
 
