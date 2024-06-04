@@ -330,15 +330,15 @@ return {
   --   },
   -- },
   -- {}
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-    },
-  },
+  -- {
+  --   "hrsh7th/nvim-cmp",
+  --   dependencies = {
+  --     "hrsh7th/cmp-nvim-lsp",
+  --     "hrsh7th/cmp-buffer",
+  --     "hrsh7th/cmp-path",
+  --     "hrsh7th/cmp-cmdline",
+  --   },
+  -- },
 
   -- {
   --   "hrsh7th/nvim-cmp",
@@ -514,95 +514,95 @@ return {
   --   enabled = true,
   -- },
 
-  -- {
-  --   "nvim-cmp",
-  --   dependencies = {
-  --     "hrsh7th/cmp-emoji",
-  --     "hrsh7th/cmp-buffer",
-  --     "hrsh7th/cmp-cmdline",
-  -- "L3MON4D3/LuaSnip",
-  -- "saadparwaiz1/cmp_luasnip",
-  --
-  --     "mlaursen/vim-react-snippets",
-  --   },
-  --   opts = function(_, opts)
-  --     table.insert(opts.sources, { name = "emoji" })
-  --     require("vim-react-snippets").lazy_load()
-  --
-  --     local luasnip = require("luasnip")
-  --     local cmp = require("cmp")
-  --     vim.opt.completeopt = { "menu", "menuone", "noselect" }
-  --     cmp.setup.cmdline("/", {
-  --       mapping = cmp.mapping.preset.cmdline(),
-  --
-  --       sources = {
-  --         { name = "buffer" },
-  --       },
-  --     })
-  --     cmp.setup.cmdline(":", {
-  --
-  --       mapping = cmp.mapping.preset.cmdline(),
-  --       sources = cmp.config.sources({
-  --         { name = "path" },
-  --       }, { { name = "cmdline" } }),
-  --     })
-  --     opts.mapping = vim.tbl_extend("force", opts.mapping, {
-  --       ["<C-j>"] = cmp.mapping(function(fallback)
-  --         if cmp.visible() then
-  --           cmp.select_next_item()
-  --         elseif luasnip.expand_or_jumpable() then
-  --           luasnip.expand_or_jump()
-  --         elseif has_words_before() then
-  --           cmp.complete()
-  --         else
-  --           fallback()
-  --         end
-  --       end, { "i", "s" }),
-  --       ["<C-k>"] = cmp.mapping(function(fallback)
-  --         assert(type(fallback) == "function", "Expected fallback to be a function")
-  --         if cmp.visible() then
-  --           cmp.select_prev_item()
-  --         elseif luasnip.jumpable(-1) then
-  --           luasnip.jump(-1)
-  --         else
-  --           fallback()
-  --         end
-  --       end, { "i", "s" }),
-  --     })
-  --   end,
-  -- },
+  {
+    "nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-emoji",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-cmdline",
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
+
+      "mlaursen/vim-react-snippets",
+    },
+    opts = function(_, opts)
+      table.insert(opts.sources, { name = "emoji" })
+      require("vim-react-snippets").lazy_load()
+
+      local luasnip = require("luasnip")
+      local cmp = require("cmp")
+      vim.opt.completeopt = { "menu", "menuone", "noselect" }
+      cmp.setup.cmdline("/", {
+        mapping = cmp.mapping.preset.cmdline(),
+
+        sources = {
+          { name = "buffer" },
+        },
+      })
+      cmp.setup.cmdline(":", {
+
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+        }, { { name = "cmdline" } }),
+      })
+      opts.mapping = vim.tbl_extend("force", opts.mapping, {
+        ["<C-j>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<C-k>"] = cmp.mapping(function(fallback)
+          assert(type(fallback) == "function", "Expected fallback to be a function")
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+      })
+    end,
+  },
 
   -- Snippet Courtesy of @Zeioth,
 
-  {
-    "L3MON4D3/LuaSnip",
-    enabled = true,
-    build = vim.fn.has("win32") ~= 0 and "make install_jsregexp" or nil,
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      "benfowler/telescope-luasnip.nvim",
-    },
-    config = function(_, opts)
-      if opts then
-        require("luasnip").config.setup(opts)
-      end
-      vim.tbl_map(function(type)
-        require("luasnip.loaders.from_" .. type).lazy_load()
-      end, { "vscode", "snipmate", "lua" })
-      -- friendly-snippets - enable standardized comments snippets
-      require("luasnip").filetype_extend("typescript", { "tsdoc", "react-ts" })
-      require("luasnip").filetype_extend("javascript", { "jsdoc", "react" })
-      require("luasnip").filetype_extend("lua", { "luadoc" })
-      require("luasnip").filetype_extend("python", { "pydoc" })
-      require("luasnip").filetype_extend("rust", { "rustdoc" })
-      require("luasnip").filetype_extend("cs", { "csharpdoc" })
-      require("luasnip").filetype_extend("java", { "javadoc" })
-      require("luasnip").filetype_extend("c", { "cdoc" })
-      require("luasnip").filetype_extend("cpp", { "cppdoc" })
-      require("luasnip").filetype_extend("php", { "phpdoc" })
-      require("luasnip").filetype_extend("kotlin", { "kdoc" })
-      require("luasnip").filetype_extend("ruby", { "rdoc" })
-      require("luasnip").filetype_extend("sh", { "shelldoc" })
-    end,
-  },
+  -- {
+  --   "L3MON4D3/LuaSnip",
+  --   enabled = true,
+  --   build = vim.fn.has("win32") ~= 0 and "make install_jsregexp" or nil,
+  --   dependencies = {
+  --     "rafamadriz/friendly-snippets",
+  --     "benfowler/telescope-luasnip.nvim",
+  --   },
+  --   config = function(_, opts)
+  --     if opts then
+  --       require("luasnip").config.setup(opts)
+  --     end
+  --     vim.tbl_map(function(type)
+  --       require("luasnip.loaders.from_" .. type).lazy_load()
+  --     end, { "vscode", "snipmate", "lua" })
+  --     -- friendly-snippets - enable standardized comments snippets
+  --     require("luasnip").filetype_extend("typescript", { "tsdoc", "react-ts" })
+  --     require("luasnip").filetype_extend("javascript", { "jsdoc", "react" })
+  --     require("luasnip").filetype_extend("lua", { "luadoc" })
+  --     require("luasnip").filetype_extend("python", { "pydoc" })
+  --     require("luasnip").filetype_extend("rust", { "rustdoc" })
+  --     require("luasnip").filetype_extend("cs", { "csharpdoc" })
+  --     require("luasnip").filetype_extend("java", { "javadoc" })
+  --     require("luasnip").filetype_extend("c", { "cdoc" })
+  --     require("luasnip").filetype_extend("cpp", { "cppdoc" })
+  --     require("luasnip").filetype_extend("php", { "phpdoc" })
+  --     require("luasnip").filetype_extend("kotlin", { "kdoc" })
+  --     require("luasnip").filetype_extend("ruby", { "rdoc" })
+  --     require("luasnip").filetype_extend("sh", { "shelldoc" })
+  --   end,
+  -- },
 }
