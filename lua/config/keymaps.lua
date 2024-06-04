@@ -26,15 +26,19 @@ keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 keymap.set("n", "<Leader>wv", ":split<Return>", opts)
 keymap.set("n", "<Leader>ws", ":vsplit<Return>", opts)
 
+local default = { noremap = true, silent = true }
 -- motin mappings
-keymap.set("i", "<C-h>", "<Left>", { noremap = true, silent = true })
-keymap.set("i", "<C-l>", "<Right>", { noremap = true, silent = true })
-keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
-keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
+keymap.set("i", "<C-h>", "<Left>", default)
+keymap.set("i", "<C-l>", "<Right>", default)
+keymap.set("n", "<C-d>", "<C-d>zz", default)
+keymap.set("n", "<C-u>", "<C-u>zz", default)
 -- copy to clipboard
-keymap.set("v", "<C-y>", '"+y', { noremap = true, silent = true })
+keymap.set("v", "<C-y>", '"+y', default)
 -- delete and wont go to yank register
-keymap.set("v", "<C-d>", '"-d', { noremap = true, silent = true })
+keymap.set("v", "<C-d>", '"-d', default)
+
+--         ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+--         ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
 
 -- NOTE:CopilotChat keymaps
 keymap.set("v", "<Leader>00d", function()
@@ -403,6 +407,13 @@ notes = insert_files_in_path()
 -- local notes = {}
 -- Key mapping to toggle the floating window
 local notesPickerList = {}
+function newNote()
+  local newNoteFileName = vim.fn.input("Name for new Note file")
+  local file = newNoteFileName .. ".md"
+  OpenNotes(file)
+  table.insert(notes, file)
+end
+table.insert(notesPickerList, { desc = "new noteFile", cmd = ":lua newNote()", { noremap = true, silent = true } })
 
 for i, note in ipairs(notes) do
   table.insert(

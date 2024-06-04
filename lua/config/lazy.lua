@@ -21,10 +21,11 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
-    { import = "lazyvim.plugins.extras.lang.markdown" },
+    -- { import = "lazyvim.plugins.extras.lang.markdown" },
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
     -- {import = "lazyvim.plugins.extras.ui.treesitter-context"}, --ontop will display what function you are in --configured it more in my plugins
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
+    { import = "lazyvim.plugins.extras.lang.markdown" },
     -- { import = "lazyvim.plugins.extras.coding.codeium" },
 
     { import = "plugins" },
@@ -70,6 +71,8 @@ vim.api.nvim_set_hl(0, "LineNr", { ctermfg = "white" })
 vim.cmd.colorscheme("tokyonight")
 -- vim.cmd.colorscheme("solarized-osaka")
 vim.api.nvim_del_keymap("n", ";c")
+-- vim.api.nvim_del_keymap("n", "<C-n>")
+-- vim.api.nvim_del_keymap("n", "<C-p>")
 -- vim.api.nvim_del_keymap("n", "<space><space>")
 -- vim.api.nvim_del_keymap("n", "<leader><leader>")
 
@@ -87,6 +90,8 @@ end
 LineNumberColors()
 -- FlashColorschemes()
 
+
+-- NOTE: overide the auto completion settings correctly
 local cmp = require("cmp")
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 cmp.setup.cmdline("/", {
@@ -104,6 +109,32 @@ cmp.setup.cmdline(":", {
     { name = "cmdline" },
   }),
 })
+
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+    ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+    ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.abort(),
+    ["<CR>"] = LazyVim.cmp.confirm(),
+    ["<S-CR>"] = LazyVim.cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ["<C-CR>"] = function(fallback)
+      cmp.abort()
+      fallback()
+    end,
+  }),
+})
+
+-- local cmp = require("cmp")
+-- vim.keymap.set("n", "<C-j>", function()
+--   cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+-- end, default)
+--
+-- vim.keymap.set("n", "<C-k>", function()
+--   cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+-- end, default)
 
 require("telescope").setup({
   defaults = {
@@ -127,3 +158,4 @@ require("telescope").setup({
     },
   },
 })
+
