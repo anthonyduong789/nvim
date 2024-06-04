@@ -348,7 +348,7 @@ end, desc = "Flash" },
       },
 
       {
-        "\\nt",
+        "\\o",
         function()
           local telescope = require("telescope.builtin")
           local actions = require("telescope.actions")

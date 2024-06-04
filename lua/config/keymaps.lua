@@ -322,6 +322,7 @@ function OpenNotes(notes)
 
   -- Set 'q' to close the floating window
   vim.api.nvim_buf_set_keymap(buf, "n", "q", ":lua CloseFloatingWindow()<CR>", { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(buf, "n", "<leader>e", ":lua expand_buffer()<CR>", { noremap = true, silent = true })
   -- end
 end
 
@@ -331,6 +332,22 @@ function CloseFloatingWindow()
     floating_window.win = nil
     floating_window.buf = nil
   end
+end
+function expand_buffer()
+  local win = vim.api.nvim_get_current_win()
+  local config = vim.api.nvim_win_get_config(win)
+  local max_width = 100
+  if config.width == vim.o.columns then
+    config.width = math.min(math.floor(vim.o.columns * 0.4), max_width)
+    config.height = vim.o.lines
+  else
+    config.width = vim.o.columns
+    config.height = vim.o.lines
+  end
+  -- config.width = vim.o.columns
+  -- config.height = vim.o.lines
+  -- config.height = config.height + 10
+  vim.api.nvim_win_set_config(win, config)
 end
 
 local notes = {}
@@ -381,18 +398,22 @@ notes = insert_files_in_path()
 --   end
 -- end
 
-vim.api.nvim_command("command! -nargs=1 OpenNotes lua OpenNotes(<f-args>)")
+-- vim.api.nvim_command("command! -nargs=1 OpenNotes lua OpenNotes(<f-args>)")
 
+-- local notes = {}
 -- Key mapping to toggle the floating window
+local notesPickerList = {}
+
 for i, note in ipairs(notes) do
-  vim.api.nvim_set_keymap(
-    "n",
-    "\\\\" .. i,
-    ":lua OpenNotes('" .. note .. "')<CR>",
-    { noremap = true, silent = true, desc = note }
+  table.insert(
+    notesPickerList,
+    { desc = note, cmd = ":lua OpenNotes('" .. note .. "')", { noremap = true, silent = true } }
   )
-  -- - vim.api.nvim_set_keymap(
 end
+function command_picker_notes()
+  command_picker(notesPickerList)
+end
+vim.api.nvim_set_keymap("n", "\\n", ":lua command_picker_notes()<CR>", { noremap = true, silent = true })
 --   "n",
 --   "\\\\m",
 --   ":lua OpenNotes('notes.md')<CR>",
