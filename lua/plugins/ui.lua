@@ -22,7 +22,7 @@ return {
     cmd = "ZenMode",
 
     opts = function()
-      local max_width = 140
+      local max_width = 100
       local width = math.min(max_width, (vim.o.columns * 0.7))
 
       return {

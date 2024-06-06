@@ -295,7 +295,7 @@ function OpenNotes(notes)
   local file_path = vim.fn.expand(notesFolder)
   local buf = vim.fn.bufadd(file_path)
   vim.fn.bufload(buf)
-  local max_width = 100
+  local max_width = 70
   local width = math.min(math.floor(vim.o.columns * 0.4), max_width)
   local height = vim.o.lines
   local row = math.floor((vim.o.lines - height) / 4)
@@ -340,13 +340,16 @@ end
 function expand_buffer()
   local win = vim.api.nvim_get_current_win()
   local config = vim.api.nvim_win_get_config(win)
-  local max_width = 100
-  if config.width == vim.o.columns then
-    config.width = math.min(math.floor(vim.o.columns * 0.4), max_width)
+  local max_width = 120
+  local regularWidth = 70
+  if config.width > regularWidth then
+    config.width = math.min(math.floor(vim.o.columns * 0.4), regularWidth)
+    config.col = (vim.o.columns - config.width)
     config.height = vim.o.lines
   else
-    config.width = vim.o.columns
+    config.width = max_width
     config.height = vim.o.lines
+    config.col = math.floor((vim.o.columns - config.width) / 2)
   end
   -- config.width = vim.o.columns
   -- config.height = vim.o.lines
@@ -356,6 +359,10 @@ end
 
 local notes = {}
 
+keymap.set("n", "\\|", function()
+  vim.api.nvim_command('command! HopToWindow call luaeval("vim.api.nvim_set_current_win(_G.floating_window.win)")')
+  vim.api.nvim_command('command! HopToBuffer call luaeval("vim.api.nvim_set_current_buf(_G.floating_window.buf)")')
+end, default)
 -- local path = "~/.config/nvim/Notes/"
 
 function insert_files_in_path()
@@ -424,7 +431,16 @@ end
 function command_picker_notes()
   command_picker(notesPickerList)
 end
-vim.api.nvim_set_keymap("n", "\\n", ":lua command_picker_notes()<CR>", { noremap = true, silent = true })
+keymap.set("n", "|", function()
+  command_picker_notes()
+end, default)
+-- vim.api.nvim_set_keymap("n", "|", function()
+--   if floating_window.buf then
+--     vim.cmd(string.format("b %d", floating_window.buf))
+--   else
+--     command_picker_notes()
+--   end
+-- end, { noremap = true, silent = true })
 --   "n",
 --   "\\\\m",
 --   ":lua OpenNotes('notes.md')<CR>",
