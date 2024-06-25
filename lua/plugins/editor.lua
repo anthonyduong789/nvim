@@ -127,6 +127,7 @@ return {
         NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
         TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
         useState = { icon = "🔑", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        DO = { icon = "", color = "info" },
       },
       merge_keywords = true, -- when true, custom keywords will be merged with the defaults
     },
@@ -134,18 +135,18 @@ return {
   {
 
     "folke/flash.nvim",
-    enabled = true,
+    enabled = false,
   -- stylua: ignore
-  keys = {
-{ "s", mode = { "n", "x", "o" }, function() 
-    require("flash").jump() 
-    vim.api.nvim_command('normal! zz')
-end, desc = "Flash" },
-    -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-    -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-    -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-    -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-  },
+--   keys = {
+-- { "s", mode = { "n", "x", "o" }, function() 
+--     require("flash").jump() 
+--     vim.api.nvim_command('normal! zz')
+-- end, desc = "Flash" },
+--     -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+--     -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+--     -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+--     -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+--   },
     opts = {
       chars = {
         jump_labels = false,

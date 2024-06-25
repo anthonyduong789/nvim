@@ -229,10 +229,10 @@ function execute_command(prompt_bufnr)
 end
 
 -- Custom Telescope picker with layout customization
-function command_picker(tableList)
+function command_picker(prompt_title, tableList)
   require("telescope.pickers")
     .new({}, {
-      prompt_title = "Lspsaga/lsp commands",
+      prompt_title = prompt_title,
       finder = require("telescope.finders").new_table({
         results = tableList,
         entry_maker = function(entry)
@@ -264,7 +264,7 @@ function command_picker(tableList)
 end
 
 function command_pickerLspSaga()
-  command_picker(LspSagaCmds)
+  command_picker("LspSagaCmds: ", LspSagaCmds)
 end
 
 -- Key mapping to open the custom picker
@@ -415,21 +415,30 @@ notes = insert_files_in_path()
 -- Key mapping to toggle the floating window
 local notesPickerList = {}
 function newNote()
-  local newNoteFileName = vim.fn.input("Name for new Note file")
+  local newNoteFileName = vim.fn.input("New note filename: ")
   local file = newNoteFileName .. ".md"
   OpenNotes(file)
   table.insert(notes, file)
-end
-table.insert(notesPickerList, { desc = "new noteFile", cmd = ":lua newNote()", { noremap = true, silent = true } })
-
-for i, note in ipairs(notes) do
   table.insert(
     notesPickerList,
-    { desc = note, cmd = ":lua OpenNotes('" .. note .. "')", { noremap = true, silent = true } }
+    { desc = file, cmd = ":lua OpenNotes('" .. file .. "')", { noremap = true, silent = true } }
   )
 end
+
+function addNotesPickerList()
+  for i, note in ipairs(notes) do
+    table.insert(
+      notesPickerList,
+      { desc = note, cmd = ":lua OpenNotes('" .. note .. "')", { noremap = true, silent = true } }
+    )
+  end
+  -- NOTE: add new notes option
+  table.insert(notesPickerList, { desc = "new noteFile", cmd = ":lua newNote()", { noremap = true, silent = true } })
+end
+addNotesPickerList()
+
 function command_picker_notes()
-  command_picker(notesPickerList)
+  command_picker("Personal Notes taker", notesPickerList)
 end
 keymap.set("n", "|", function()
   command_picker_notes()
