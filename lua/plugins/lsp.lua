@@ -154,11 +154,11 @@ return {
   },
   {
     "copilot.lua",
-    enabled = true,
+    enabled = false,
   },
   {
     "copilot-cmp",
-    enabled = true,
+    enabled = false,
   },
 
   -- lsp servers

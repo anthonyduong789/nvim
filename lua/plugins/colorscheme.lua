@@ -30,7 +30,7 @@ return {
     "folke/tokyonight.nvim",
     priority = 1000,
     opts = {
-      transparent = true,
+      transparent = false,
       styles = {
         floats = "transparent",
         sidebars = "transparent",
@@ -47,7 +47,7 @@ return {
     name = "catppuccin",
     priority = 1000,
     opts = {
-      transparent_background = true,
+      transparent_background = false,
       integrations = {
         leap = true,
         telescope = true,
@@ -68,7 +68,7 @@ return {
     priority = 1000,
     opts = function()
       return {
-        transparent = true,
+        transparent = false,
         leap = true,
         telescope = true,
         harpoon = true,

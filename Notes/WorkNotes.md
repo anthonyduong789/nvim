@@ -153,9 +153,3 @@ Different Versions
   status “Active” a given “Equipment and Tool ID”
 
 7. Highest DMRRevision with the highest with Active with "Equipment AND Tool ID"
-
-## Talk to Martin
-
-- DMRRRevision how it's a text on the Operation Table but a number on the DMR table
-- Clarify all the access patterns and how they are implemented
-- deleting access pattern because ProductName is deleted
