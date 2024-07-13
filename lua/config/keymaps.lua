@@ -280,13 +280,6 @@ local floating_window = {
 }
 
 function OpenNotes(notes)
-  -- if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
-  --   CloseFloatingWindow()
-  --   vim.api.nvim_win_close(floating_window.win, true)
-  --   floating_window.win = nil
-  --   floating_window.buf = nil
-  -- else
-
   if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
     CloseFloatingWindow()
   end
@@ -295,11 +288,17 @@ function OpenNotes(notes)
   local file_path = vim.fn.expand(notesFolder)
   local buf = vim.fn.bufadd(file_path)
   vim.fn.bufload(buf)
-  local max_width = 70
-  local width = math.min(math.floor(vim.o.columns * 0.4), max_width)
+  local width = 120
+
   local height = vim.o.lines
   local row = math.floor((vim.o.lines - height) / 4)
-  local col = math.floor((vim.o.columns - width))
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  -- vim.cmd("vsplit")
+  -- local win = vim.api.nvim_get_current_win()
+  -- vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
+  -- vim.api.nvim_win_set_buf(win, buf)
+  -- vim.api.nvim_win_set_config(win, { width = width, height = height })
   local win = vim.api.nvim_open_win(buf, true, {
     relative = "editor",
     width = width,
@@ -332,6 +331,7 @@ end
 
 function CloseFloatingWindow()
   if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
+    vim.api.nvim_command("w")
     vim.api.nvim_win_close(floating_window.win, true)
     floating_window.win = nil
     floating_window.buf = nil

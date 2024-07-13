@@ -22,8 +22,8 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
-    -- { import = "lazyvim.plugins.extras.lang.markdown" },
-    -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    { import = "lazyvim.plugins.extras.lang.markdown" },
+    { import = "lazyvim.plugins.extras.ui.mini-animate" },
     -- {import = "lazyvim.plugins.extras.ui.treesitter-context"}, --ontop will display what function you are in --configured it more in my plugins
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
     -- NOTE: Want lsp but don't want the linting
@@ -68,7 +68,7 @@ require("lazy").setup({
 -- put he customizations here because it overides the default ones
 vim.api.nvim_set_hl(0, "LineNr", { ctermfg = "white" })
 -- Setup key mappings using Lua
-
+-- vim.cmd.colorscheme("rose-pine")
 -- vim.cmd.colorscheme("catppuccin")
 vim.cmd.colorscheme("tokyonight")
 -- vim.cmd.colorscheme("solarized-osaka")
@@ -136,25 +136,25 @@ cmp.setup({
 --   cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
 -- end, default)
 
-require("telescope").setup({
-  defaults = {
-    layout_strategy = "horizontal",
-    layout_config = {
-      horizontal = {
-        -- Width of the Telescope window as a percentage of total screen width
-        width = 0.999,
-        -- Width of the preview window as a percentage of the Telescope window width
-        preview_width = 0.6,
-        -- Height of the Telescope window as a percentage of total screen height
-        height = 0.999,
-        prompt_position = "top",
-      },
-      vertical = {
-        width = 0.9,
-        height = 0.55,
-        preview_height = 0.4,
-        prompt_position = "top",
-      },
-    },
-  },
-})
+-- require("telescope").setup({
+--   defaults = {
+--     layout_strategy = "horizontal",
+--     layout_config = {
+--       horizontal = {
+--         -- Width of the Telescope window as a percentage of total screen width
+--         width = 0.999,
+--         -- Width of the preview window as a percentage of the Telescope window width
+--         preview_width = 0.6,
+--         -- Height of the Telescope window as a percentage of total screen height
+--         height = 0.999,
+--         prompt_position = "top",
+--       },
+--       vertical = {
+--         width = 0.9,
+--         height = 0.55,
+--         preview_height = 0.4,
+--         prompt_position = "top",
+--       },
+--     },
+--   },
+-- })

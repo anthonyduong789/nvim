@@ -2,6 +2,7 @@ return {
   -- tools
   {
     "nvimdev/lspsaga.nvim",
+    enabled = true,
     config = function()
       require("lspsaga").setup({
         symbol_in_winbar = {
@@ -17,22 +18,21 @@ return {
       "nvim-tree/nvim-web-devicons", -- optional
     },
   },
-  -- {
-  --   "williamboman/mason.nvim",
-  --   opts = function(_, opts)
-  --     vim.list_extend(opts.ensure_installed, {
-  --       "luacheck",
-  --       "shellcheck",
-  --       "shfmt",
-  --       "tailwindcss-language-server",
-  --       "typescript-language-server",
-  --       "css-lsp",
-  --       "emmet-language-server",
-  --       "marksman",
-  --       "markdownlint",
-  --     })
-  --   end,
-  -- },
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "luacheck",
+        "shellcheck",
+        "shfmt",
+        "tailwindcss-language-server",
+        "typescript-language-server",
+        "css-lsp",
+        "emmet-language-server",
+        "marksman",
+      })
+    end,
+  },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "canary",
@@ -154,11 +154,11 @@ return {
   },
   {
     "copilot.lua",
-    enabled = false,
+    enabled = true,
   },
   {
     "copilot-cmp",
-    enabled = false,
+    enabled = true,
   },
 
   -- lsp servers

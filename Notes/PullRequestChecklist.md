@@ -5,6 +5,8 @@
 - check typos
 - check ints
 - good name for what the code is doing
+- Enums used in a certain way appended with Types
+- Minimal naming Conventions
 
 ### Match with specs
 

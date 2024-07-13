@@ -9,11 +9,11 @@ return {
   -- animations
   {
     "echasnovski/mini.animate",
-    enabled = false,
+    enabled = true,
     event = "VeryLazy",
     opts = function(_, opts)
       opts.scroll = {
-        enable = true,
+        enable = false,
       }
     end,
   },
@@ -65,7 +65,7 @@ return {
         markdown = {
           -- If set to false, headlines will be a single line and there will be no
           -- "fat_headline_upper_string" and no "fat_headline_lower_string"
-          fat_headlines = true,
+          fat_headlines = false,
           --
           -- Lines added above and below the header line makes it look thicker
           -- "lower half block" unicode symbol hex:2584
@@ -99,8 +99,9 @@ return {
     enabled = true,
   },
   {
+    -- NOTE: shows the line of on the left that is transparent
     "lukas-reineke/indent-blankline.nvim",
-    enabled = true,
+    enabled = false,
   },
   {
     "nvim-lualine/lualine.nvim",
@@ -130,7 +131,7 @@ return {
     --   -- },
     -- },
   },
-  -- messages, cmdline and the popupmenu
+  -- , cmdline and the popupmenu
   {
     "folke/noice.nvim",
     enabled = true,
@@ -139,6 +140,9 @@ return {
         filter = {
           event = "notify",
           find = "No information available",
+          any = {
+            { event = "lsp", kind = "message" },
+          },
         },
         opts = { skip = true },
       })
@@ -178,8 +182,9 @@ return {
 
   {
     "rcarriga/nvim-notify",
+    enabled = true,
     opts = {
-      timeout = 5000,
+      timeout = 0,
       background_colour = "#000000",
       render = "wrapped-compact",
     },

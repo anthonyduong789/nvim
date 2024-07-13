@@ -1,155 +1,74 @@
+# SolutionUnified Notes
+
 ## TODO
 
-> currently making a siteContainsAllNecessaryfields
-> when it does will be able to say isItemIsactive
+- Validate Add Product to validate fields?
+- Make sure that each new Product will start with a Draft as it's status
+- Check in with Martin for designing Between DMRs
+- move legend to bottom and this
+- make a hash from changes that will be show previous color current color
 
-### packagelock.json policy
+## Add a View for DMR Revision
 
-> dont increment
+### EditPage
 
-<!--delete packalock.json options -->
-<!--and npm install it again-->
-<!--adding a enum for a that will have a set options-->
-<!-- pksk -->
+- [] RenderTheEditPage
+- [] text
+- [] text
 
-> pk + sk
-> u id ?
-> in general pk shouldn't be a enum
-> filterexpress
+### Things to ask Martin
 
-## currently working on
+- [] mak
+- default label values when creating a new task
+- get more feedback on the layout of the view after add if they meet the requirements
 
-> making a dao for the dynamo db
-> in this implementations I'm using extending the versioned object with my dao for operations
-> the table will essentially have a list of the objects
+### Display / route to show the page
 
-> Operations
-> items: Operations[]
+- [x] renderProductsPage
+- [x] getRequest to be able to retrieve data
+- [x] getMore to be ablet to retrieve more data via pagination token
+- [] text
+- [] text
 
-### how to implement the the use of the query my certain fields
+### ProductsDetails things I need
 
-in the member example we are making a hash for each field and then we simply query by that field
-using the hash
+> [!NOTE]
+> used for Displaying on the right the data of selected windows
 
-## Query by hash return value
+- [x]if ProductDaterMaterial false then you will now show
+  shelf life
 
-> returns a list of the DynamoItem<T>
+- [] design ui / show the dmr Revisions
 
-```typescript
-//return
-/*
-items: DynamoItem < T > [];
-lastKey?: AWS.DynamoDB.DocumentClient.Key
-***/
+### ProductsCreatePage things I need
 
-export interface DynamoItem<T extends BaseObject> {
-  PK: string;
-  SK: string;
+1. ProductForm
 
-  GSI1PK?: string;
-  GSI1SK?: string;
+   - [x] create the all the input label
+   - [x] if note a Date Material will not have the Product Shelf Life
+   - [] format it to look nice(ask martin for tips on the ui)
 
-  GSI2PK?: string;
-  GSI2SK?: string;
+2. making the routing to actual be able to render this page
+3. Review of Product component
 
-  GSI3PK?: string;
-  GSI3SK?: string;
+### ProductAddProduct
 
-  // Used for optimistic locking
-  DynamoVersion: number;
+1. Add Product Page
+2. second
+3. third
 
-  // all attributes of T
-  item: T;
-}
-```
+## Other
 
-```
+- [x] when ProductDaterMaterial Not selected will not show the shelf life?
 
-```
+> [!NOTE]
+> how the rendering works is the router.ts goes through the routes/ and based
+> on the file
+> name that will be the base line route that will be used to render
+> example sites.ts will be /sites
+> routing
 
-createing DMRDynamoVersion
-{
-CreationNote?: string;
-Version: number;
-SUStatus: Status;
-Author: string;
-TimeCreated: number;
-DMRRevision: number;
-DMRStatus: string;
-}
-DMR is the major version
-Su it he minor version
+### Login for the testing
 
-## Building out the access patterns for the Operations data table
-
-```typescript
-export interface DMRObject extends VersionedObject {
-  DMRRevision: number;
-  DMRStatus: string;
-}
-
-export interface VersionedObject extends BaseObject {
-  CreationNote?: string;
-  Version: number;
-  SUStatus: Status;
-  Author: string;
-  TimeCreated: number;
-}
-DMR is the major version
-Version is the minor version
-
-8.1.1.3.3
-DMR.Version
-// ex
-Differenet DMR Version
-1.0
-2.0
-
-Different Versions
-1.0
-1.1
-
-```
-
-## spec notes then interpret them into the access patterns
-
-- Active version of an operation: Obtain record with the most recent DMR version and with status “Active”
-  and a given “Site”, “Department” and “Operation Name”
-
-1. SUStatus == "ACTIVE" with the highest DMRRevision for each DMR + Version
-   filtered by Site Department, and Operation Name to check if it exists
-   - method: list_Most_Recent_ActiveVersions_By_Site_Department_OperationName
-
-- Obtain record(s) with the most recent version and with status “Active”
-
-2. Highest highest version with status active ->
-   SUSatus == "ACTIVE" with the highest DMRRevision for each DMR
-   - method: listMostRecentActiveVersion
-
-- Obtain record(s) with the most recent version of a given “Operation Name”
-
-3. Highest active version of a DMR + Version with filtered by a Operation Name
-   i.e 1.0, 1.1, 1.2, 2.0, 2.1, 2.2
-   2.2 SUStatus == "ACTIVE"
-
-   - method: listMostRecentActiveVersionByOperationName
-
-4. DELTED access pattern as we deleted ProductName
-
-- Operation(s) belonging to a manufacturing change order: Obtain record(s) with the most recent version
-  for each DMR version and a given “Manufacturing Change Order”
-
-5. For each DMRRevision, find the highest Version filtered by a Manufacturing change order.
-   i.e for each dmr revesion find the highest Version then filter again by Manufacturing change order
-   example: 1.0, 1.1, 1.2, 2.0, 2.1, 2.2
-   -> 1.2, 2.2
-
-- Operations using a particular material SKU: Obtain record(s) with the most recent DMR version and with
-  status “Active” a given “Material SKU”
-
-6. SUStatus == "ACTIVE" with the highest DMRRevision then filtered by "Material SKU"
-
-- Operations using particular equipment: Obtain record(s) with the most recent DMR version and with
-  status “Active” a given “Equipment and Tool ID”
-
-7. Highest DMRRevision with the highest with Active with "Equipment AND Tool ID"
+- Login: 12341234
+- ps: 123412341234

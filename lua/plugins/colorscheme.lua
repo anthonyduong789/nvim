@@ -27,10 +27,22 @@
 --
 return {
   {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    config = function()
+      require("rose-pine").setup({
+        disable_background = true,
+        styles = {
+          italic = false,
+        },
+      })
+    end,
+  },
+  {
     "folke/tokyonight.nvim",
     priority = 1000,
     opts = {
-      transparent = false,
+      transparent = true,
       styles = {
         floats = "transparent",
         sidebars = "transparent",
