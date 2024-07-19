@@ -331,7 +331,6 @@ end
 
 function CloseFloatingWindow()
   if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
-    vim.api.nvim_command("w")
     vim.api.nvim_win_close(floating_window.win, true)
     floating_window.win = nil
     floating_window.buf = nil

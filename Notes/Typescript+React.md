@@ -7,6 +7,10 @@
 2. second
 3. third
 
+### useMemo
+
+- returns a memorized value similar to caching something so it doesn't need to be calculated
+
 ### useCallback
 
 > what essentially this does is that it memoroize a functionupreventing it from being recreated on every render unless its dependencies change.
@@ -16,7 +20,7 @@
 
 ```
 
-##### Non-Null Asseertion Operator!
+##### Non-Null Asseertion Operator
 
 > Asserts that a value is not null or undefined, overriding the TypeScript type checker.k
 

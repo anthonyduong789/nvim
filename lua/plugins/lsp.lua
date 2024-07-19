@@ -152,14 +152,15 @@ return {
       chat.setup(opts)
     end,
   },
-  {
-    "copilot.lua",
-    enabled = true,
-  },
-  {
-    "copilot-cmp",
-    enabled = true,
-  },
+  -- {
+  --   "copilot.lua",
+  --   enabled = true,
+  -- },
+  -- {
+  --   "copilot-cmp",
+  --   enabled = true,
+  -- },
+  --
 
   -- lsp servers
   -- {

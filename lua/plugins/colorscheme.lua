@@ -59,7 +59,7 @@ return {
     name = "catppuccin",
     priority = 1000,
     opts = {
-      transparent_background = false,
+      transparent_background = true,
       integrations = {
         leap = true,
         telescope = true,
@@ -80,12 +80,13 @@ return {
     priority = 1000,
     opts = function()
       return {
-        transparent = false,
-        leap = true,
-        telescope = true,
-        harpoon = true,
-        mason = true,
-        neotest = true,
+        flash = true,
+        transparent = true,
+        leap = false,
+        telescope = false,
+        harpoon = false,
+        mason = false,
+        neotest = false,
       }
     end,
   },

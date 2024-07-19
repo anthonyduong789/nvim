@@ -34,3 +34,7 @@
 Ctrl+w + H or K
 
 > H-> | | K -> =
+can set the staus bar on tmux with tmux with tmux line set g satus on tmux.conf
+set status
+
+

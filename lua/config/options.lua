@@ -38,13 +38,13 @@ vim.opt.cursorline = false
 vim.opt.clipboard = "unnamedplus"
 vim.api.nvim_set_hl(0, "LineNr", { fg = "red", bg = "black" })
 -- Disable status line completely
-
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
 vim.opt.foldcolumn = "1" -- '0' is not bad
 vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = false
+vim.o.guicursor = "i:block"
 -- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 -- vim.diagnostic.disable() -- diable diagonstic from the the start can always toggle this

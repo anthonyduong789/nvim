@@ -24,6 +24,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     { import = "lazyvim.plugins.extras.lang.markdown" },
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    { import = "lazyvim.plugins.extras.coding.codeium" },
     -- {import = "lazyvim.plugins.extras.ui.treesitter-context"}, --ontop will display what function you are in --configured it more in my plugins
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
     -- NOTE: Want lsp but don't want the linting
@@ -66,11 +67,12 @@ require("lazy").setup({
 })
 
 -- put he customizations here because it overides the default ones
-vim.api.nvim_set_hl(0, "LineNr", { ctermfg = "white" })
+-- vim.api.nvim_set_hl(0, "LineNr", { ctermfg = "white" })
 -- Setup key mappings using Lua
+-- vim.cmd.colorscheme("gruvbox")
 -- vim.cmd.colorscheme("rose-pine")
--- vim.cmd.colorscheme("catppuccin")
-vim.cmd.colorscheme("tokyonight")
+vim.cmd.colorscheme("catppuccin")
+-- vim.cmd.colorscheme("tokyonight")
 -- vim.cmd.colorscheme("solarized-osaka")
 vim.api.nvim_del_keymap("n", ";c")
 -- vim.api.nvim_del_keymap("n", "<C-n>")
@@ -90,7 +92,7 @@ function FlashColorschemes()
 end
 
 LineNumberColors()
--- FlashColorschemes()
+FlashColorschemes()
 
 -- NOTE: overide the auto completion settings correctly
 local cmp = require("cmp")
