@@ -3,7 +3,7 @@
 -- Add any additional autocmds here
 --
 --
--- vim.cmd([[
---   autocmd InsertLeave,TextChanged,TextChangedI * silent! update
---   autocmd FocusLost * silent! update
--- ]])
+vim.cmd([[
+  autocmd InsertLeave,TextChanged,TextChangedI * silent! update
+  autocmd FocusLost * silent! update
+]])

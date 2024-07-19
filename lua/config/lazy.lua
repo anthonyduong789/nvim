@@ -66,7 +66,8 @@ require("lazy").setup({
   },
 })
 
--- put he customizations here because it overides the default ones
+--  he  here because it overides the default ones
+-- put he customizati---ons here because it overides the default ones
 -- vim.api.nvim_set_hl(0, "LineNr", { ctermfg = "white" })
 -- Setup key mappings using Lua
 -- vim.cmd.colorscheme("gruvbox")
