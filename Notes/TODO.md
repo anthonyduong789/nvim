@@ -1,5 +1,9 @@
 # Admin Page tasks
 
+## fix Role Users change
+- [] fix Role Users change
+- [] make a way to filter by Admin Users in my Dao
+
 - [] need to add more entries the members page admin missing
   fields when making a new entries
 - [] fix the test related to the Environment Server
@@ -10,10 +14,10 @@
 - [] We need a route in members to query based on URL Params so that we can query
   users using site, department, lines, stations and then that result can be used in
   Line, Stations, Site, Department page.
-- [] fix Role Users change
 - [] add necessary fields and making sure the User fills theses out
 
 # DONE
+
 - [x] ensureAdmin hardware
 - [x] empty fields when first making an entry
 - [x] fix the MembercreatePage prop and admin inconsitency
@@ -21,9 +25,9 @@
 - [x] when adding an entry put request will automatically add certain fields
 
 # NOTE
-- [] contain uncessary  fields 
-- [] text
-- [] text
-- [] text
-- [] text
 
+- [] contain uncessary fields
+- [] text
+- [] text
+- [] text
+- [] text

@@ -12,14 +12,51 @@ return {
       "nvim-lua/plenary.nvim",
     },
     opts = {
-      filtered_items = {
-        hide_dotfiles = false,
+      filesystem = {
+        bind_to_cwd = false,
+        follow_current_file = { enabled = true },
+        use_libuv_file_watcher = true,
+        -- filtered_items = {
+        --   visible = false,
+        --   hide_dotfiles = false,
+        --   hide_gitignored = false,
+        --   hide_by_name = {
+        --     ".github",
+        --     ".gitignore",
+        --     "package-lock.json",
+        --     "node_modules",
+        --     --"node_modules",
+        --   },
+        --   hide_by_pattern = {
+        --     "*/node_modules/*",
+        --   },
+        --   always_show_by_pattern = { -- uses glob style patterns
+        --     ".env*",
+        --   },
+        --   never_show = { ".git" },
+        -- },
+      },
+      window = {
+        position = "float",
+      },
+      event_handlers = {
+        {
+          event = "neo_tree_buffer_enter",
+          handler = function(arg)
+            vim.cmd([[
+              setlocal relativenumber
+            ]])
+          end,
+        },
       },
     },
     keys = {
       { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
       { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
     },
+    -- config = function(_, opts)
+    --   require("neo-tree").setup(opts)
+    -- end,
   },
 
   {
