@@ -5,6 +5,22 @@ return {
   --
   --
   --
+  {
+
+    "nvim-neo-tree/neo-tree.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      filtered_items = {
+        hide_dotfiles = false,
+      },
+    },
+    keys = {
+      { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
+      { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+    },
+  },
 
   {
     "ThePrimeagen/harpoon",
@@ -256,15 +272,30 @@ return {
       --   end,
       --   desc = "Lists Diagnostics for all open buffers or a specific buffer",
       -- },
-
       {
-        "\\t",
+
+        ";f",
         function()
-          local builtin = require("telescope.builtin")
-          builtin.treesitter()
+          local telescope = require("telescope")
+
+          local function telescope_buffer_dir()
+            return vim.fn.expand("%:p:h")
+          end
+
+          telescope.extensions.file_browser.file_browser({
+            path = "%:p:h",
+            cwd = telescope_buffer_dir(),
+            respect_gitignore = false,
+            hidden = true,
+            grouped = true,
+            previewer = false,
+            initial_mode = "normal",
+            layout_config = { height = 40 },
+          })
         end,
-        desc = "Lists Function names, variables, from Treesitter",
+        desc = "Open File Browser with the path of the current buffer",
       },
+
       {
         "\\ls",
         function()
@@ -311,7 +342,7 @@ return {
       },
 
       {
-        "\\o",
+        "<leader>ff",
         function()
           local telescope = require("telescope.builtin")
           local actions = require("telescope.actions")

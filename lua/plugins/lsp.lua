@@ -23,13 +23,13 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "luacheck",
-        "shellcheck",
+        -- "shellcheck",
         "shfmt",
         "tailwindcss-language-server",
         "typescript-language-server",
         "css-lsp",
         "emmet-language-server",
-        "marksman",
+        -- "marksman",
       })
     end,
   },
@@ -152,15 +152,14 @@ return {
       chat.setup(opts)
     end,
   },
-  -- {
-  --   "copilot.lua",
-  --   enabled = true,
-  -- },
-  -- {
-  --   "copilot-cmp",
-  --   enabled = true,
-  -- },
-  --
+  {
+    "copilot.lua",
+    enabled = false,
+  },
+  {
+    "copilot-cmp",
+    enabled = false,
+  },
 
   -- lsp servers
   -- {

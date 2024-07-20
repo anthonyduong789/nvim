@@ -25,7 +25,8 @@
 - when you scan it will essential as a operator
 - start with the operator page that will add hello
 
-- example of making a lot of promises at once. 
+- example of making a lot of promises at once.
+
 ```typescript
 let imageHash: { [key: string]: any } = {};
 
@@ -41,5 +42,6 @@ await Promise.all(
   }),
 );
 ```
+
     // Important
     const { Password, LoginId, ConfirmPassword, ...rest } = member;

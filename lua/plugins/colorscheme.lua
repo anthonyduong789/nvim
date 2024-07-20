@@ -60,13 +60,6 @@ return {
     priority = 1000,
     opts = {
       transparent_background = true,
-      integrations = {
-        leap = true,
-        telescope = true,
-        harpoon = true,
-        mason = true,
-        neotest = true,
-      },
     },
     config = function(_, opts)
       require("catppuccin").setup(opts)
@@ -81,12 +74,12 @@ return {
     opts = function()
       return {
         flash = true,
-        transparent = true,
-        leap = false,
-        telescope = false,
-        harpoon = false,
-        mason = false,
-        neotest = false,
+        transparent = false,
+        leap = true,
+        telescope = true,
+        harpoon = true,
+        mason = true,
+        neotest = true,
       }
     end,
   },

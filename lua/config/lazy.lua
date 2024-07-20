@@ -18,11 +18,11 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
-    { import = "lazyvim.plugins.extras.coding.copilot" },
+    -- { import = "lazyvim.plugins.extras.coding.copilot" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
-    { import = "lazyvim.plugins.extras.lang.markdown" },
+    -- { import = "lazyvim.plugins.extras.lang.markdown" },
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
     { import = "lazyvim.plugins.extras.coding.codeium" },
     -- {import = "lazyvim.plugins.extras.ui.treesitter-context"}, --ontop will display what function you are in --configured it more in my plugins
@@ -69,7 +69,7 @@ require("lazy").setup({
 --  he  here because it overides the default ones
 -- put he customizati---ons here because it overides the default ones
 -- vim.api.nvim_set_hl(0, "LineNr", { ctermfg = "white" })
--- Setup key mappings using Lua
+-- Setup key mappinghellos using Lua
 -- vim.cmd.colorscheme("gruvbox")
 -- vim.cmd.colorscheme("rose-pine")
 vim.cmd.colorscheme("catppuccin")
@@ -92,7 +92,7 @@ function FlashColorschemes()
   vim.cmd([[highlight Substitute guibg=#FF0000]])
 end
 
-LineNumberColors()
+-- LineNumberColors()
 FlashColorschemes()
 
 -- NOTE: overide the auto completion settings correctly
