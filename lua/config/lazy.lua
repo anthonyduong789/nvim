@@ -82,11 +82,12 @@ vim.api.nvim_del_keymap("n", ";c")
 vim.api.nvim_del_keymap("n", "<leader><leader>")
 
 function LineNumberColors()
-  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#6b6b6a" })
+  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#8c8484" })
   -- vim.api.nvim_set_hl(0, "LineNr", { fg = "#87AFFF" }
-  vim.api.nvim_set_hl(0, "LineNr", { fg = "#FDFFD2" })
-  -- vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FDFFD2" })
-  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#6b6b6a" })
+  vim.api.nvim_set_hl(0, "LineNr", { fg = "#FDFFD2", })
+  -- vim.api.nvim_set_hl(0, "CursorLineNr", { fg ="#FDFFD2" })
+  -- vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#6b6b6a" })
+  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#8c8484" })
 end
 
 function FlashColorschemes()
@@ -94,7 +95,7 @@ function FlashColorschemes()
   vim.cmd([[highlight Substitute guibg=#FF0000]])
 end
 
--- LineNumberColors()
+LineNumberColors()
 FlashColorschemes()
 
 -- NOTE: overide the auto completion settings correctly

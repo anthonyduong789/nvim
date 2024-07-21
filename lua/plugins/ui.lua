@@ -9,7 +9,7 @@ return {
   -- animations
   {
     "echasnovski/mini.animate",
-    enabled = true,
+    enabled = false,
     event = "VeryLazy",
     opts = function(_, opts)
       opts.scroll = {
@@ -378,41 +378,41 @@ return {
       },
     },
   },
-  {
-
-    "mvllow/modes.nvim",
-    tag = "v0.2.0",
-    config = function()
-      require("modes").setup({
-        colors = {
-          bg = "#FFB4C2", -- Optional bg param, defaults to Normal hl group
-          copy = "#f5c359",
-          delete = "#c75c6a",
-          insert = "#FDFFD2",
-          visual = "#FFB4C2",
-        },
-
-        -- Set opacity for cursorline and number background
-        -- line_helloopacity = 0.15,
-
-        -- Enable cursor highlights
-        set_cursor = true,
-
-        -- Enable cursorline initially, and disable cursorline for inactive windows
-        -- or ignored filetypes
-        set_cursorline = true,
-
-        -- Enable line number highlights to match cursorline
-        set_number = true,
-
-        -- Disable modes highlights in specified filetypes
-        -- Please PR commonly ignored filetypes
-        ignore_filetypes = { "NvimTree", "TelescopePrompt" },
-      })
-
-      -- vim.o.guicursor = "i:block"
-    end,
-  },
+  -- {
+  --
+  --   "mvllow/modes.nvim",
+  --   tag = "v0.2.0",
+  --   config = function()
+  --     require("modes").setup({
+  --       colors = {
+  --         bg = "#FFB4C2", -- Optional bg param, defaults to Normal hl group
+  --         copy = "#f5c359",
+  --         delete = "#c75c6a",
+  --         insert = "#FDFFD2",
+  --         visual = "#FFB4C2",
+  --       },
+  --
+  --       -- Set opacity for cursorline and number background
+  --       -- line_helloopacity = 0.15,
+  --
+  --       -- Enable cursor highlights
+  --       set_cursor = true,
+  --
+  --       -- Enable cursorline initially, and disable cursorline for inactive windows
+  --       -- or ignored filetypes
+  --       set_cursorline = true,
+  --
+  --       -- Enable line number highlights to match cursorline
+  --       set_number = true,
+  --
+  --       -- Disable modes highlights in specified filetypes
+  --       -- Please PR commonly ignored filetypes
+  --       ignore_filetypes = { "NvimTree", "TelescopePrompt" },
+  --     })
+  --
+  --     -- vim.o.guicursor = "i:block"
+  --   end,
+  -- },
   -- {
   --   "nvim-tree/nvim-tree.lua",
   --   config = function()
