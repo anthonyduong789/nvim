@@ -74,7 +74,7 @@ return {
     opts = function()
       return {
         flash = true,
-        transparent = false,
+        transparent = true,
         leap = true,
         telescope = true,
         harpoon = true,

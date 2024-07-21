@@ -14,8 +14,8 @@ keymap.set("n", "<C-a>", "gg<S-v>G")
 
 -- Save file and quit
 keymap.set("n", "<Leader>w", ":update<Return>", opts)
-keymap.set("n", "<Leader>q", ":quit<Return>", opts)
-keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
+-- keymap.set("n", "<Leader>q", ":quit<Return>", opts)
+-- keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 
 -- File explorer with NvimTree
 -- keymap.set("n", "<Leader>f", ":NvimTreeFindFile<Return>", opts)

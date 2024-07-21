@@ -203,78 +203,78 @@ return {
       "nvim-telescope/telescope-file-browser.nvim",
     },
     keys = {
-      {
-        -- FIXME: fix this
-        "\\e",
-        function()
-          local telescope = require("telescope._extensions.file_browser")
+      -- {
+      --   -- FIXME: fix this
+      --   "\\e",
+      --   function()
+      --     local telescope = require("telescope._extensions.file_browser")
+      --
+      --     local function telescope_buffer_dir()
+      --       return vim.fn.expand("%:p:h")
+      --     end
+      --
+      --     telescope({
+      --       path = "%:p:h",
+      --       cwd = telescope_buffer_dir(),
+      --       respect_gitignore = true,
+      --       hidden = true,
+      --       grouped = true,
+      --       previewer = false,
+      --       initial_mode = "normal",
+      --       layout_config = { height = 40 },
+      --     })
+      --   end,
+      --   desc = "Open file browser with the current buffer",
+      -- },
 
-          local function telescope_buffer_dir()
-            return vim.fn.expand("%:p:h")
-          end
+      -- {
+      --   "\\\\g",
+      --   function()
+      --     local builtin = require("telescope.builtin")
+      --     builtin.live_grep({
+      --       vimgrep_arguments = {
+      --         "rg",
+      --         "--color=never",
+      --         "--no-heading",
+      --         "--with-filename",
+      --         "--line-number",
+      --         "--column",
+      --         "--smart-case",
+      --         "--glob=!.git/",
+      --         "--glob=!node_modules/",
+      --       },
+      --     })
+      --   end,
+      --   desc = "grep current workign directory",
+      -- },
+      -- {
+      --
+      --   "\\g",
+      --   function()
+      --     local builtin = require("telescope.builtin")
+      --     local current_file = vim.fn.expand("%:p")
+      --     builtin.live_grep({
+      --       search_dirs = { current_file }, -- Sets the search directory to the current file's directory
+      --     })
+      --     -- Function to perform a grep search on the current file using Telescope
+      --   end,
+      --   -- Function to live grep in the current file using Telescope
+      --
+      --   desc = "grep current file",
+      -- },
 
-          telescope({
-            path = "%:p:h",
-            cwd = telescope_buffer_dir(),
-            respect_gitignore = true,
-            hidden = true,
-            grouped = true,
-            previewer = false,
-            initial_mode = "normal",
-            layout_config = { height = 40 },
-          })
-        end,
-        desc = "Open file browser with the current buffer",
-      },
-
-      {
-        "\\\\g",
-        function()
-          local builtin = require("telescope.builtin")
-          builtin.live_grep({
-            vimgrep_arguments = {
-              "rg",
-              "--color=never",
-              "--no-heading",
-              "--with-filename",
-              "--line-number",
-              "--column",
-              "--smart-case",
-              "--glob=!.git/",
-              "--glob=!node_modules/",
-            },
-          })
-        end,
-        desc = "grep current workign directory",
-      },
-      {
-
-        "\\g",
-        function()
-          local builtin = require("telescope.builtin")
-          local current_file = vim.fn.expand("%:p")
-          builtin.live_grep({
-            search_dirs = { current_file }, -- Sets the search directory to the current file's directory
-          })
-          -- Function to perform a grep search on the current file using Telescope
-        end,
-        -- Function to live grep in the current file using Telescope
-
-        desc = "grep current file",
-      },
-
-      {
-        "\\f",
-        function()
-          local builtin = require("telescope.builtin")
-          builtin.find_files({
-            find_command = { "rg", "--files", "--hidden", "--no-ignore", "--glob=!.git/", "--glob=!node_modules/" },
-            no_ignore = true,
-            hidden = true,
-          })
-        end,
-        desc = "Lists files in your current working directory, respects .gitignore",
-      },
+      -- {
+      --   "\\f",
+      --   function()
+      --     local builtin = require("telescope.builtin")
+      --     builtin.find_files({
+      --       find_command = { "rg", "--files", "--hidden", "--no-ignore", "--glob=!.git/", "--glob=!node_modules/" },
+      --       no_ignore = true,
+      --       hidden = true,
+      --     })
+      --   end,
+      --   desc = "Lists files in your current working directory, respects .gitignore",
+      -- },
       -- {
       --   ";r",
       --   function()
@@ -283,14 +283,14 @@ return {
       --   end,
       --   desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
       -- },
-      {
-        "\\b",
-        function()
-          local builtin = require("telescope.builtin")
-          builtin.buffers()
-        end,
-        desc = "Lists open buffers",
-      },
+      -- {
+      --   "\\b",
+      --   function()
+      --     local builtin = require("telescope.builtin")
+      --     builtin.buffers()
+      --   end,
+      --   desc = "Lists open buffers",
+      -- },
 
       -- {
       --   ";;",
@@ -309,75 +309,83 @@ return {
       --   end,
       --   desc = "Lists Diagnostics for all open buffers or a specific buffer",
       -- },
+      -- {
+      --
+      --   ";f",
+      --   function()
+      --     local telescope = require("telescope")
+      --
+      --     local function telescope_buffer_dir()
+      --       return vim.fn.expand("%:p:h")
+      --     end
+      --
+      --     telescope.extensions.file_browser.file_browser({
+      --       path = "%:p:h",
+      --       cwd = telescope_buffer_dir(),
+      --       respect_gitignore = false,
+      --       hidden = true,
+      --       grouped = true,
+      --       previewer = false,
+      --       initial_mode = "normal",
+      --       layout_config = { height = 40 },
+      --     })
+      --   end,
+      --   desc = "Open File Browser with the path of the current buffer",
+      -- },
+
+      -- {
+      --   "\\ls",
+      --   function()
+      --     local telescope = require("telescope.builtin")
+      --     local actions = require("telescope.actions")
+      --     local action_state = require("telescope.actions.state")
+      --
+      --     local function telescope_buffer_dir()
+      --       return vim.fn.expand("%:p:h")
+      --     end
+      --     local open_in_new_tab = function(bufnr)
+      --       local selection = action_state.get_selected_entry()
+      --       actions.close(bufnr)
+      --       vim.cmd("tabnew " .. selection.path)
+      --     end
+      --     telescope.find_files({
+      --       search_dirs = { telescope_buffer_dir() }, -- Set the search directory to the current buffer's directory
+      --       cwd = telescope_buffer_dir(),
+      --       hidden = false,
+      --       no_ignore = false, -- Respect .gitignore
+      --       -- layout_strategy = "horizontal",
+      --       -- layout_config = {
+      --       --   height = 0.99, -- Use 100% of the height of Neovim
+      --       --   width = 0.99, -- Use 100% of the width of Neovim
+      --       --   -- preview_cutoff = 0,
+      --       --   preview_width = 0.8,
+      --       --   prompt_position = "top",
+      --       -- },
+      --       -- attach_mappings = function(_, map)
+      --       --   -- Map the <CR> (Enter) key to open the file in a new tab
+      --       --   map("i", "<CR>", open_in_new_tab)
+      --       --   map("n", "<CR>", open_in_new_tab)
+      --       --   return true -- Return true to keep default mappings as well, remove to only use custom mapping
+      --       -- end,
+      --     })
+      --   end,
+      --   desc = "Open File Browser with the path of the current buffer",
+      -- },
+      -- {
+      --   "\\e",
+      --   function()
+      --     local telescope = require("telescope.builtin")
+      --   end,
+      -- },
+      --
       {
-
-        ";f",
+        "<leader>ft",
         function()
-          local telescope = require("telescope")
-
-          local function telescope_buffer_dir()
-            return vim.fn.expand("%:p:h")
-          end
-
-          telescope.extensions.file_browser.file_browser({
-            path = "%:p:h",
-            cwd = telescope_buffer_dir(),
-            respect_gitignore = false,
-            hidden = true,
-            grouped = true,
-            previewer = false,
-            initial_mode = "normal",
-            layout_config = { height = 40 },
-          })
+          local builtin = require("telescope.builtin")
+          builtin.treesitter()
         end,
-        desc = "Open File Browser with the path of the current buffer",
+        desc = "treesitter_search",
       },
-
-      {
-        "\\ls",
-        function()
-          local telescope = require("telescope.builtin")
-          local actions = require("telescope.actions")
-          local action_state = require("telescope.actions.state")
-
-          local function telescope_buffer_dir()
-            return vim.fn.expand("%:p:h")
-          end
-          local open_in_new_tab = function(bufnr)
-            local selection = action_state.get_selected_entry()
-            actions.close(bufnr)
-            vim.cmd("tabnew " .. selection.path)
-          end
-          telescope.find_files({
-            search_dirs = { telescope_buffer_dir() }, -- Set the search directory to the current buffer's directory
-            cwd = telescope_buffer_dir(),
-            hidden = false,
-            no_ignore = false, -- Respect .gitignore
-            -- layout_strategy = "horizontal",
-            -- layout_config = {
-            --   height = 0.99, -- Use 100% of the height of Neovim
-            --   width = 0.99, -- Use 100% of the width of Neovim
-            --   -- preview_cutoff = 0,
-            --   preview_width = 0.8,
-            --   prompt_position = "top",
-            -- },
-            -- attach_mappings = function(_, map)
-            --   -- Map the <CR> (Enter) key to open the file in a new tab
-            --   map("i", "<CR>", open_in_new_tab)
-            --   map("n", "<CR>", open_in_new_tab)
-            --   return true -- Return true to keep default mappings as well, remove to only use custom mapping
-            -- end,
-          })
-        end,
-        desc = "Open File Browser with the path of the current buffer",
-      },
-      {
-        "\\e",
-        function()
-          local telescope = require("telescope.builtin")
-        end,
-      },
-
       {
         "<leader>ff",
         function()
@@ -394,8 +402,8 @@ return {
             vim.cmd("tabnew " .. selection.path)
           end
           telescope.find_files({
-            search_dirs = { telescope_buffer_dir() }, -- Set the search directory to the current buffer's directory
-            cwd = telescope_buffer_dir(),
+            -- search_dirs = { telescope_buffer_dir() }, -- Set the search directory to the current buffer's directory
+            -- cwd = telescope_buffer_dir(),
             hidden = false,
             no_ignore = false, -- Respect .gitignore
             -- layout_strategy = "horizontal",

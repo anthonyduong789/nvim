@@ -7,7 +7,7 @@
 > %is always filePath is vim including configs for the plugin
 > highlight and use keys :s/replaceThis/new
 > **global is**
-> :%s/replaceThis/new
+> :%s/replaceThis/new this will only do the first occurence
 > :%s/old/new/g: Replace all occurrences of 'old' with 'new' in the file.
 > :%s/old/new/gc: Replace all occurrences with confirmation.
 

@@ -33,7 +33,7 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = "a"
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 -- Set the clipboard register to a custom register (let's say 'a')
 vim.opt.clipboard = "unnamedplus"
 vim.api.nvim_set_hl(0, "LineNr", { fg = "red", bg = "black" })
@@ -44,6 +44,7 @@ vim.opt.foldcolumn = "1" -- '0' is not bad
 vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = false
+vim.opt.swapfile = false
 -- vim.o.guicursor = "i:block"
 -- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"

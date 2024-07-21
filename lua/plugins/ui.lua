@@ -9,7 +9,7 @@ return {
   -- animations
   {
     "echasnovski/mini.animate",
-    enabled = false,
+    enabled = true,
     event = "VeryLazy",
     opts = function(_, opts)
       opts.scroll = {
@@ -55,7 +55,7 @@ return {
       vim.cmd([[highlight Headline5 guibg=#1e0b7b guifg=white]])
       vim.cmd([[highlight Headline6 guibg=#560b7b guifg=white]])
       -- Defines the codeblock background color to something darker
-      vim.cmd([[highlight CodeBlock guibg=#09090d]])
+      -- vim.cmd([[highlight CodeBlock guibg=#09090d]])
       -- When you add a line of dashes with --- this specifies the color, I'm not
       -- adding a "guibg" but you can do so if you want to add a background color
       vim.cmd([[highlight Dash guifg=white]])
@@ -108,28 +108,28 @@ return {
     enabled = true,
     opts = {
       options = {
-        theme = "solarized_dark",
         bottom = false,
       },
-      -- sections = {
-      --   lualine_x = {
-      --     {
-      --       require("noice").api.statusline.mode.get,
-      --       cond = require("noice").api.statusline.mode.has,
-      --       color = { fg = "#ff9e64" },
-      --     },
-      --     {
-      --       require("noice").api.status.command.get,
-      --       cond = require("noice").api.status.command.has,
-      --       color = { fg = "#ff9e64" },
-      --     },
-      --   },
-      --   -- lualine_a = {
-      --   --   {
-      --   --     "tabs",
-      --   --   },
-      --   -- },
-      -- },
+      sections = {
+
+        lualine_x = {
+          {
+            require("noice").api.statusline.mode.get,
+            cond = require("noice").api.statusline.mode.has,
+            color = { fg = "#ff9e64" },
+          },
+          {
+            require("noice").api.status.command.get,
+            cond = require("noice").api.status.command.has,
+            color = { fg = "#ff9e64" },
+          },
+        },
+        -- lualine_a = {
+        --   {
+        --     "buffers",
+        --   },
+        -- },
+      },
     },
   },
   -- , cmdline and the popupmenu
@@ -185,7 +185,7 @@ return {
     "rcarriga/nvim-notify",
     enabled = true,
     opts = {
-      timeout = 10000,
+      timeout = 3000,
       background_colour = "#000000",
       render = "wrapped-compact",
     },
