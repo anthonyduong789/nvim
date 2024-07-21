@@ -33,10 +33,10 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = "a"
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 -- Set the clipboard register to a custom register (let's say 'a')
 vim.opt.clipboard = "unnamedplus"
-vim.api.nvim_set_hl(0, "LineNr", { fg = "red", bg = "black" })
+-- vim.api.nvim_set_hl(0, "LineNr", { fg = "red", bg = "black" })
 -- Disable status line completely
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
@@ -45,7 +45,7 @@ vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to de
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = false
 vim.opt.swapfile = false
-vim.o.guicursor = "i:block"
+-- vim.o.guicursor = "i:block"
 -- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 -- vim.diagnostic.disable() -- diable diagonstic from the the start can always toggle this

@@ -26,7 +26,7 @@ return {
         --     "package-lock.json",
         --     "node_modules",
         --     --"node_modules",
-        --   },
+        --   }hell,
         --   hide_by_pattern = {
         --     "*/node_modules/*",
         --   },

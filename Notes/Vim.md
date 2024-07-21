@@ -40,3 +40,7 @@ set status
 
 diW 
 will delete till whitespace
+
+Q will replay macros the ones use just did
+
+

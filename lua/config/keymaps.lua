@@ -14,8 +14,8 @@ keymap.set("n", "<C-a>", "gg<S-v>G")
 
 -- Save file and quit
 keymap.set("n", "<Leader>w", ":update<Return>", opts)
--- keymap.set("n", "<Leader>q", ":quit<Return>", opts)
--- keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
+keymap.set("n", "<Leader>q", ":quit<Return>", opts)
+keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 
 -- File explorer with NvimTree
 -- keymap.set("n", "<Leader>f", ":NvimTreeFindFile<Return>", opts)
@@ -439,7 +439,7 @@ addNotesPickerList()
 function command_picker_notes()
   command_picker("Personal Notes taker", notesPickerList)
 end
-keymap.set("n", "|", function()
+keymap.set("n", "<leader>n", function()
   command_picker_notes()
 end, default)
 -- vim.api.nvim_set_keymap("n", "|", function()

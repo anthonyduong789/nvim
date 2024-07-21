@@ -72,9 +72,9 @@ require("lazy").setup({
 -- vim.cmd.colorscheme("gruvbox")
 -- vim.cmd.colorscheme("rose-pine")
 -- vim.cmd.colorscheme("catppuccin")
--- vim.cmd.colorscheme("tokyonight")
+vim.cmd.colorscheme("tokyonight")
 -- vim.cmd.colorscheme("solarized-osaka")
-vim.cmd.colorscheme("default")
+-- vim.cmd.colorscheme("default")
 
 vim.api.nvim_del_keymap("n", ";c")
 -- vim.api.nvim_del_keymap("n", "<C-n>")
@@ -84,8 +84,8 @@ vim.api.nvim_del_keymap("n", "<leader><leader>")
 function LineNumberColors()
   vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#6b6b6a" })
   -- vim.api.nvim_set_hl(0, "LineNr", { fg = "#87AFFF" }
-  -- vim.api.nvim_set_hl(0, "LineNr", { fg = "#FDFFD2" })
-  vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FDFFD2" })
+  vim.api.nvim_set_hl(0, "LineNr", { fg = "#FDFFD2" })
+  -- vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FDFFD2" })
   vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#6b6b6a" })
 end
 
@@ -94,7 +94,7 @@ function FlashColorschemes()
   vim.cmd([[highlight Substitute guibg=#FF0000]])
 end
 
-LineNumberColors()
+-- LineNumberColors()
 FlashColorschemes()
 
 -- NOTE: overide the auto completion settings correctly
