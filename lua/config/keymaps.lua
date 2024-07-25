@@ -48,6 +48,13 @@ keymap.set("v", "<Leader>00d", function()
   end
 end, { noremap = true, silent = true, desc = "Short doc explanation" })
 
+keymap.set("v", "<Leader>0f", function()
+  local input_text = "fix syntax"
+  if input_text ~= "" then
+    require("CopilotChat").ask(input_text, { selection = require("CopilotChat.select").visual })
+  end
+end, { noremap = true, silent = true, desc = "Short doc explanation" })
+
 -- --------------------------------------------------------------------------------------------------V
 
 -- saves terminal id to sent to later
@@ -201,24 +208,23 @@ vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>", opts)
 
 -- Define a list of commands
 local LspSagaCmds = {
-  { desc = "doc 📄", cmd = ":Lspsaga hover_doc" },
-  { desc = "Show code action 🤖", cmd = ":Lspsaga code_action" },
-  { desc = "Show line diagnostics", cmd = ":Lspsaga show_line_diagnostics" },
-  { desc = "Diagnostic jump forward", cmd = ":Lspsaga diagnostic_jump_next" },
-  { desc = "Diagnostic jump backward", cmd = ":Lspsaga diagnostic_jump_prev" },
-  { desc = "rename ✍️", cmd = ":Lspsaga rename" },
-  { desc = "peek_definition 🔍", cmd = ":Lspsaga peek_definition" },
-  { desc = "peek type definition 🔤", cmd = ":Lspsaga peek_type_definition" },
-  { desc = "type definition🔤", cmd = ":Lspsaga goto_type_definition" },
   { desc = "references & Implementations 🌳", cmd = ":Lspsaga finder" },
-  { desc = "floating terminal💻", cmd = ":Lspsaga term_toggle" },
-  { desc = "outline 🎄", cmd = ":Lspsaga outline" },
-  { desc = "windbar toggle⬆️", cmd = ":Lspsaga winbar_toggle" },
-  { desc = "workspace diagnostics☹️", cmd = ":Lspsaga show_buf_diagnostics" },
   { desc = "incoming calls 📲 ", cmd = ":Lspsaga incoming_calls" },
   { desc = "outgoing calls 🔈", cmd = ":Lspsaga outgoing_calls" },
   { desc = "Calls incoming + outgoing calls 🔈", cmd = ":Lspsaga finder incoming_calls outgoing_calls" },
   { desc = "finder tyd+ref+imp+def", cmd = ":Lspsaga finder tyd+ref+imp+def" },
+  -- { desc = "doc 📄", cmd = ":Lspsaga hover_doc" },
+  { desc = "Show code action 🤖", cmd = ":Lspsaga code_action" },
+  { desc = "Show line diagnostics", cmd = ":Lspsaga show_line_diagnostics" },
+  { desc = "Diagnostic jump forward", cmd = ":Lspsaga diagnostic_jump_next" },
+  { desc = "Diagnostic jump backward", cmd = ":Lspsaga diagnostic_jump_prev" },
+  -- { desc = "rename ✍️", cmd = ":Lspsaga rename" },
+  { desc = "peek_definition 🔍", cmd = ":Lspsaga peek_definition" },
+  { desc = "peek type definition 🔤", cmd = ":Lspsaga peek_type_definition" },
+  { desc = "type definition🔤", cmd = ":Lspsaga goto_type_definition" },
+  -- { desc = "floating terminal💻", cmd = ":Lspsaga term_toggle" },
+  { desc = "windbar toggle⬆️", cmd = ":Lspsaga winbar_toggle" },
+  -- { desc = "workspace diagnostics☹️", cmd = ":Lspsaga show_buf_diagnostics" },
 }
 
 -- Function to execute the selected command
@@ -290,7 +296,7 @@ function OpenNotes(notes)
   vim.fn.bufload(buf)
   local width = 120
 
-  local height = vim.o.lines
+  local height = vim.o.lines - 5
   local row = math.floor((vim.o.lines - height) / 4)
   local col = math.floor((vim.o.columns - width) / 2)
 
@@ -318,7 +324,7 @@ function OpenNotes(notes)
   vim.api.nvim_buf_set_option(buf, "buftype", "")
   vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
   vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
-  vim.api.nvim_win_set_option(win, "cursorline", true)
+  vim.api.nvim_win_set_option(win, "cursorline", false)
   vim.api.nvim_win_set_option(win, "relativenumber", true)
   floating_window.buf = buf
   floating_window.win = win
@@ -331,6 +337,7 @@ end
 
 function CloseFloatingWindow()
   if floating_window.win and vim.api.nvim_win_is_valid(floating_window.win) then
+    vim.cmd("write")
     vim.api.nvim_win_close(floating_window.win, true)
     floating_window.win = nil
     floating_window.buf = nil
@@ -367,9 +374,10 @@ end, default)
 function insert_files_in_path()
   local path = vim.fn.expand("~/.config/nvim/Notes/") -- expand the tilde to the full path
   local files = {
-    "nvimHelp.md",
-    "notes.md",
-    "nvimApiLuaNotes.md",
+    "TODO.md",
+    "WorkNotes.md",
+    "Typescript+React.md",
+    "Vim.md",
   }
 
   local function file_exists(file)

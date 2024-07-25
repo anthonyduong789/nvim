@@ -75,6 +75,7 @@ return {
         end,
       }
     end,
+
     keys = {
       {
         "<leader>0q",
@@ -131,13 +132,13 @@ return {
         mode = { "n", "v" },
       },
     },
-    init = function()
-      LazyVim.on_load("which-key.nvim", function()
-        vim.schedule(function()
-          require("which-key").register({ a = { name = "+CopilotChat (AI)" } }, { prefix = "<leader>" })
-        end)
-      end)
-    end,
+    -- init = function()
+    --   LazyVim.on_load("which-key.nvim", function()
+    --     vim.schedule(function()
+    --       require("which-key").register({ a = { name = "+CopilotChat (AI)" } }, { prefix = "<leader>" })
+    --     end)
+    --   end)
+    -- end,
     config = function(_, opts)
       local chat = require("CopilotChat")
 

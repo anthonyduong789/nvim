@@ -1,6 +1,6 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
+
   -- bootstrap lazy.nvim
   -- stylua: ignore
   vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable",
@@ -18,12 +18,12 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
-    -- { import = "lazyvim.plugins.extras.coding.copilot" },
+    { import = "lazyvim.plugins.extras.coding.copilot" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     -- { import = "lazyvim.plugins.extras.lang.markdown" },
-    { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
     -- {import = "lazyvim.plugins.extras.ui.treesitter-context"}, --ontop will display what function you are in --configured it more in my plugins
     { import = "lazyvim.plugins.extras.coding.mini-surround" },
     -- NOTE: Want lsp but don't want the linting
@@ -72,31 +72,55 @@ require("lazy").setup({
 -- vim.cmd.colorscheme("gruvbox")
 -- vim.cmd.colorscheme("rose-pine")
 -- vim.cmd.colorscheme("catppuccin")
-vim.cmd.colorscheme("tokyonight")
+-- vim.cmd.colorscheme("tokyonight")
+-- vim.cmd.colorscheme("tokyonight-moon")
+-- vim.cmd.colorscheme("tokyonight-day")
+-- vim.cmd.colorscheme("tokyonight-storm")
 -- vim.cmd.colorscheme("solarized-osaka")
--- vim.cmd.colorscheme("default")
+-- vim.cmd.colorscheme("vim")
+-- vim.cmd.colorscheme("lunaperche")
 
 vim.api.nvim_del_keymap("n", ";c")
 -- vim.api.nvim_del_keymap("n", "<C-n>")
 -- vim.api.nvim_del_keymap("n", "<C-p>")
-vim.api.nvim_del_keymap("n", "<leader><leader>")
+-- vim.api.nvim_del_keymap("n", "<leader><space>")
+-- vim.api.nvim_del_keymap("n", "<space><space>")
 
 function LineNumberColors()
-  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#8c8484" })
+  vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#6b6b6a" })
   -- vim.api.nvim_set_hl(0, "LineNr", { fg = "#87AFFF" }
-  vim.api.nvim_set_hl(0, "LineNr", { fg = "#FDFFD2", })
+  -- vim.api.nvim_set_hl(0, "LineNr", { fg = "#87AFFF" })
+  vim.api.nvim_set_hl(0, "LineNr", { fg = "#FDFFD2" })
   -- vim.api.nvim_set_hl(0, "CursorLineNr", { fg ="#FDFFD2" })
   -- vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#6b6b6a" })
-  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#8c8484" })
+  vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#6b6b6a" })
 end
 
+-- FlashBackdrop     Comment      backdrop
+-- FlashMatch        Search       search matches
+-- FlashCurrent      IncSearch    current match
+-- FlashLabel        Substitute   jump label
+-- FlashPrompt       MsgArea      prompt
+-- FlashPromptIcon   Special      prompt icon
+-- FlashCursor       Cursor       cursor
 function FlashColorschemes()
-  vim.cmd([[highlight FlashLabel guibg=#FF0000]])
-  vim.cmd([[highlight Substitute guibg=#FF0000]])
+  vim.cmd([[highlight FlashLabel guibg=#E90074]])
+  vim.cmd([[highlight Substitute guibg=#E90074]])
+  -- vim.cmd([[highlight FlashBackdrop guibg=]])
+  -- vim.cmd([[highlight FlashMatch guibg=#E6B9A6]])
+  -- vim.cmd([[highlight FlashCurrent guibg=#E6B9A6]])
+  -- vim.cmd([[highlight FlashPrompt guibg=#E6B9A6]])
+  -- vim.cmd([[highlight FlashPromptIcon guibg=#E6B9A6]])
+  -- vim.cmd([[highlight FlashCursor guibg=#E6B9A6]])
 end
 
+vim.cmd([[
+highlight Visual ctermfg=NONE ctermbg=236 guifg=NONE guibg=Grey
+]])
+
+-- vim.cmd([[highlight LspInlayHint guibg=#E6B9A6]])
 LineNumberColors()
-FlashColorschemes()
+-- FlashColorschemes()
 
 -- NOTE: overide the auto completion settings correctly
 local cmp = require("cmp")

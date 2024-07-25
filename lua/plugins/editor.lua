@@ -16,27 +16,32 @@ return {
         bind_to_cwd = false,
         follow_current_file = { enabled = true },
         use_libuv_file_watcher = true,
-        -- filtered_items = {
-        --   visible = false,
-        --   hide_dotfiles = false,
-        --   hide_gitignored = false,
-        --   hide_by_name = {
-        --     ".github",
-        --     ".gitignore",
-        --     "package-lock.json",
-        --     "node_modules",
-        --     --"node_modules",
-        --   }hell,
-        --   hide_by_pattern = {
-        --     "*/node_modules/*",
-        --   },
-        --   always_show_by_pattern = { -- uses glob style patterns
-        --     ".env*",
-        --   },
-        --   never_show = { ".git" },
-        -- },
+        filtered_items = {
+          visible = false,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+          hide_by_name = {
+            ".github",
+            ".gitignore",
+            "package-lock.json",
+            "node_modules",
+            --"node_modules",
+          },
+          hide_by_pattern = {
+            "*/node_modules/*",
+          },
+          always_show_by_pattern = { -- uses glob style patterns
+            ".env*",
+          },
+          never_show = { ".git" },
+        },
       },
+
       window = {
+        -- left
+        -- right
+        -- float
+        -- current
         position = "float",
       },
       event_handlers = {
@@ -151,24 +156,86 @@ return {
 
     "folke/flash.nvim",
     enabled = true,
-  -- stylua: ignore
---   keys = {
--- { "s", mode = { "n", "x", "o" }, function() 
---     require("flash").jump() 
---     vim.api.nvim_command('normal! zz')
--- end, desc = "Flash" },
---     -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
---     -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
---     -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
---     -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
---   },
-    opts = {
-      chars = {
-        jump_labels = false,
-        enabled = false,
-      },
-    },
+    vscode = true,
+
+    -- NOTE: This is how to change opts of things
+    -- opts = {
+    --   char = {
+    --     enabled = false,
+    --   },
+    --   highlight = {
+    --     -- show a backdrop with hl FlashBackdrop
+    --     backdrop = true,
+    --     -- Highlight the search matches
+    --     matches = true,
+    --     -- extmark priority
+    --     priority = 5000,
+    --     groups = {
+    --       match = "FlashMatch",
+    --       current = "FlashCurrent",
+    --       backdrop = "FlashBackdrop",
+    --       label = "FlashLabel",
+    --     },
+    --   },
+    -- },
+
+    opts = function(_, opts)
+      -- opts.modes = {
+      --   char = {
+      --     jump_labels = false,
+      --   },
+      -- }
+      opts.highlight = {
+        backdrop = false,
+      }
+
+      return {
+        search = {
+          multi_window = true,
+        },
+        highlight = {
+          backdrop = true,
+        },
+
+        modes = {
+          char = {
+            enabled = false,
+          },
+        },
+      }
+    end,
+
+    -- keys = {
+    --   {
+    --     "s",
+    --     mode = { "n", "x", "o" },
+    --     function()
+    --       require("flash").jump()
+    --       -- vim.api.nvim_command('normal! zt')
+    --     end,
+    --     desc = "Flash",
+    --   },
+    --   -- { "s", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    --   {
+    --     "r",
+    --     mode = "o",
+    --     function()
+    --       require("flash").remote()
+    --     end,
+    --     desc = "Remote Flash",
+    --   },
+    --   {
+    --     "R",
+    --     mode = { "o", "x" },
+    --     function()
+    --       require("flash").treesitter_search()
+    --     end,
+    --     desc = "Treesitter Search",
+    --   },
+    --   -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    -- },
   },
+
   {
     "ggandor/leap.nvim",
     enabled = false,
@@ -176,18 +243,32 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
+
+    opts = {},
+    config = function()
+      local wk = require("which-key")
+      wk.add({
+        { "<leader>0", group = "Copilot 🤖" },
+        { "<leader>m", group = "markdown prefix" },
+        { "<leader>t", group = "🖥️terminal🖥️" },
+      })
     end,
-    opts = {
-      defaults = {
-        ["<leader>t"] = { name = "🖥️terminal🖥️" },
-        ["<leader>m"] = { name = "markdown prefix" },
-        ["<leader>0"] = { name = "Copilot 🤖" },
-      },
-    },
-  }, -- },
+  },
+  -- {
+  --   "folke/which-key.nvim",
+  --   event = "VeryLazy",
+  --   init = function()
+  --     vim.o.timeout = true
+  --     vim.o.timeoutlen = 300
+  --   end,
+  --   opts = {
+  --     defaults = {
+  --       { "<leader>0", group = "Copilot 🤖" },
+  --       { "<leader>m", group = "markdown prefix" },
+  --       { "<leader>t", group = "🖥️terminal🖥️" },
+  --     },
+  --   },
+  -- }, -- },
   {
     "echasnovski/mini.hipatterns",
     event = "BufReadPre",
@@ -199,6 +280,7 @@ return {
   },
   {
     "telescope.nvim",
+    enabled = true,
     dependencies = {
       "nvim-telescope/telescope-file-browser.nvim",
     },
@@ -283,20 +365,20 @@ return {
       --   end,
       --   desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
       -- },
-      -- {
-      --   "\\b",
-      --   function()
-      --     local builtin = require("telescope.builtin")
-      --     builtin.buffers()
-      --   end,
-      --   desc = "Lists open buffers",
-      -- },
+      {
+        "<leader><leader>",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.buffers({})
+          -- vim.cmd("stopinsert")
+        end,
+        desc = "Lists open buffers",
+      },
 
       -- {
-      --   ";;",
+      --   "<leader><leader>",
       --   function()
       --     local builtin = require("telescope.builtin")
-      --
       --     builtin.resume()
       --   end,
       --   desc = "Resume the previous telescope picker",
@@ -386,44 +468,44 @@ return {
         end,
         desc = "treesitter_search",
       },
-      {
-        "<leader>ff",
-        function()
-          local telescope = require("telescope.builtin")
-          local actions = require("telescope.actions")
-          local action_state = require("telescope.actions.state")
-
-          local function telescope_buffer_dir()
-            return vim.fn.expand("%:p:h")
-          end
-          local open_in_new_tab = function(bufnr)
-            local selection = action_state.get_selected_entry()
-            actions.close(bufnr)
-            vim.cmd("tabnew " .. selection.path)
-          end
-          telescope.find_files({
-            -- search_dirs = { telescope_buffer_dir() }, -- Set the search directory to the current buffer's directory
-            -- cwd = telescope_buffer_dir(),
-            hidden = false,
-            no_ignore = false, -- Respect .gitignore
-            -- layout_strategy = "horizontal",
-            -- layout_config = {
-            --   height = 0.99, -- Use 100% of the height of Neovim
-            --   width = 0.99, -- Use 100% of the width of Neovim
-            --   -- preview_cutoff = 0,
-            --   preview_width = 0.8,
-            --   prompt_position = "top",
-            -- },
-            attach_mappings = function(_, map)
-              -- Map the <CR> (Enter) key to open the file in a new tab
-              map("i", "<CR>", open_in_new_tab)
-              map("n", "<CR>", open_in_new_tab)
-              return true -- Return true to keep default mappings as well, remove to only use custom mapping
-            end,
-          })
-        end,
-        desc = "File Browser current buffer directory new Tab",
-      },
+      -- {
+      --   ";f",
+      --   function()
+      --     local telescope = require("telescope.builtin")
+      --     local actions = require("telescope.actions")
+      --     local action_state = require("telescope.actions.state")
+      --
+      --     local function telescope_buffer_dir()
+      --       return vim.fn.expand("%:p:h")
+      --     end
+      --     local open_in_new_tab = function(bufnr)
+      --       local selection = action_state.get_selected_entry()
+      --       actions.close(bufnr)
+      --       vim.cmd("tabnew " .. selection.path)
+      --     end
+      --     telescope.find_files({
+      --       -- search_dirs = { telescope_buffer_dir() }, -- Set the search directory to the current buffer's directory
+      --       -- cwd = telescope_buffer_dir(),
+      --       hidden = false,
+      --       no_ignore = false, -- Respect .gitignore
+      --       -- layout_strategy = "horizontal",
+      --       -- layout_config = {
+      --       --   height = 0.99, -- Use 100% of the height of Neovim
+      --       --   width = 0.99, -- Use 100% of the width of Neovim
+      --       --   -- preview_cutoff = 0,
+      --       --   preview_width = 0.8,
+      --       --   prompt_position = "top",
+      --       -- },
+      --       attach_mappings = function(_, map)
+      --         -- Map the <CR> (Enter) key to open the file in a new tab
+      --         -- map("i", "<CR>", open_in_new_tab)
+      --         -- map("n", "<CR>", open_in_new_tab)
+      --         return true -- Return true to keep default mappings as well, remove to only use custom mapping
+      --       end,
+      --     })
+      --   end,
+      --   desc = "File Browser current buffer directory new Tab",
+      -- },
     },
 
     config = function(_, opts)

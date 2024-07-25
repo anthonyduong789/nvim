@@ -45,10 +45,11 @@ vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to de
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = false
 vim.opt.swapfile = false
--- vim.o.guicursor = "i:block"
+vim.o.guicursor = "i:block"
 -- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
--- vim.diagnostic.disable() -- diable diagonstic from the the start can always toggle this
+vim.diagnostic.disable() -- diable diagonstic from the the start can always toggle this
+vim.lsp.inlay_hint.enable(false)
 
 -- vim.opt.foldexpr = ""
 --

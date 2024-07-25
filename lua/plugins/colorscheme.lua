@@ -73,13 +73,25 @@ return {
     priority = 1000,
     opts = function()
       return {
-        flash = true,
+        flash = false,
         transparent = true,
-        leap = true,
-        telescope = true,
-        harpoon = true,
-        mason = true,
-        neotest = true,
+        styles = {
+          -- Style to be applied to different syntax groups
+          -- Value is any valid attr-list value for `:help nvim_set_hl`
+          comments = { italic = true },
+          keywords = { italic = true },
+          functions = {},
+          variables = {},
+          -- Background styles. Can be "dark", "transparent" or "normal"
+          sidebars = "transparent", -- style for sidebars, see below
+          floats = "transparent", -- style for floating windows
+        },
+        dim_inactive = false,
+
+        -- on_colors = function(colors)
+        --   colors.hint = colors.orange
+        --   colors.error = "ff0000"
+        -- end,
       }
     end,
   },
