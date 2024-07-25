@@ -105,7 +105,7 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    enabled = true,
+    enabled = false,
     opts = {
       options = {
         bottom = false,

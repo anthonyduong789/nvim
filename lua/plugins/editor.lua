@@ -16,25 +16,25 @@ return {
         bind_to_cwd = false,
         follow_current_file = { enabled = true },
         use_libuv_file_watcher = true,
-        filtered_items = {
-          visible = false,
-          hide_dotfiles = false,
-          hide_gitignored = false,
-          hide_by_name = {
-            ".github",
-            ".gitignore",
-            "package-lock.json",
-            "node_modules",
-            --"node_modules",
-          },
-          hide_by_pattern = {
-            "*/node_modules/*",
-          },
-          always_show_by_pattern = { -- uses glob style patterns
-            ".env*",
-          },
-          never_show = { ".git" },
-        },
+        -- filtered_items = {
+        --   visible = false,
+        --   hide_dotfiles = false,
+        --   hide_gitignored = ,
+        --   hide_by_name = {
+        --     ".github",
+        --     ".gitignore",
+        --     "package-lock.json",
+        --     "node_modules",
+        --     --"node_modules",
+        --   },
+        --   hide_by_pattern = {
+        --     "*/node_modules/*",
+        --   },
+        --   always_show_by_pattern = { -- uses glob style patterns
+        --     ".env*",
+        --   },
+        --   never_show = { ".git" },
+        -- },
       },
 
       window = {
@@ -129,17 +129,15 @@ return {
     cmd = { "TodoTrouble", "TodoTelescope" },
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below useState
-      -- ust
+
       keywords = {
         FIX = {
           icon = " ", -- icon used for the sign, and in search results
           color = "error", -- can be a hex color, or a named color (see below)
           alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-          -- signs = false, -- configure signs for some keywords individually
+          signs = false, -- configure signs for some keywords individually
         },
+        mark = { icon = " ", color = "info", alt = { "m" } },
         TODO = { icon = " ", color = "info" },
         HACK = { icon = " ", color = "warning" },
         WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
@@ -147,9 +145,40 @@ return {
         NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
         TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
         useState = { icon = "🔑", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-        DO = { icon = "", color = "info" },
+        DO = { icon = "", color = "info", alt = { "M" } },
       },
       merge_keywords = true, -- when true, custom keywords will be merged with the defaults
+    },
+    keys = {
+      {
+        "]t",
+        function()
+          require("todo-comments").jump_next()
+        end,
+        desc = "Next Todo Comment",
+      },
+      {
+        "[t",
+        function()
+          require("todo-comments").jump_prev()
+        end,
+        desc = "Previous Todo Comment",
+      },
+      { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo (Trouble)" },
+      {
+        "<leader>xT",
+        "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>",
+        desc = "Todo/Fix/Fixme (Trouble)",
+      },
+      -- work on the cwd
+      {
+        "<leader>xm",
+        "<cmd>Trouble todo toggle filter = {tag = {mark}}<cr>",
+        desc = "Todo/Fix/Fixme (Trouble)",
+      },
+
+      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
     },
   },
   {
@@ -179,6 +208,9 @@ return {
     --   },
     -- },
 
+    -- m:
+    -- mark:
+    -- m:
     opts = function(_, opts)
       -- opts.modes = {
       --   char = {

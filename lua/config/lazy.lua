@@ -118,6 +118,15 @@ vim.cmd([[
 highlight Visual ctermfg=NONE ctermbg=236 guifg=NONE guibg=Grey
 ]])
 
+vim.cmd([[
+highlight Cursor guifg=#F3F5ED guibg=#F3F5ED
+]])
+
+vim.cmd([[
+highlight Cursor2 guifg=#e4f7c6 guibg=#e4f7c6
+highlight Cursor2 guifg=#d4f5a4 guibg=#d4f5a4
+" highlight Cursor2 guifg=#424241 guibg=#424241
+]])
 -- vim.cmd([[highlight LspInlayHint guibg=#E6B9A6]])
 LineNumberColors()
 -- FlashColorschemes()

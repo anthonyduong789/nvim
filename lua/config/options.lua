@@ -45,7 +45,24 @@ vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to de
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = false
 vim.opt.swapfile = false
-vim.o.guicursor = "i:block"
+-- vim.o.guicursor = "n-v-c-sm-i-ci-ve:block,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor"
+vim.o.guicursor = "n-v-c:block-Cursor/lCursor,i-ci-ve:block-Cursor2/lCursor2,r-cr:hor20,o:hor50"
+-- ver25-
+
+-- - `block`: The cursor is a block that covers the entire cell.
+-- - `horizontal`: The cursor is a horizontal bar at the bottom of the cell.
+-- - `vertical`: The cursor is a vertical line within the cell.
+--
+-- You can also specify the cursor style for different modes by appending `-mode_name`, where `mode_name` can be:
+--
+-- - `n`: Normal mode
+-- - `v`: Visual mode
+-- - `i`: Insert mode
+-- - `c`: Command-line mode
+-- - `r`: Replace mode
+-- - `o`: Operator-pending mode
+--
+-- For example, `n:block,i:horizontal` would set the cursor to a block in normal mode and a horizontal bar in insert mode.
 -- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 vim.diagnostic.disable() -- diable diagonstic from the the start can always toggle this
