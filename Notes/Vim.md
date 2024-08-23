@@ -34,16 +34,13 @@
 Ctrl+w + H or K
 
 > H-> | | K -> =
-can set the staus bar on tmux with tmux with tmux line set g satus on tmux.conf
-set status
+> can set the staus bar on tmux with tmux with tmux line set g satus on tmux.conf
+> set status
 
-
-diW 
+diW
 will delete till whitespace
 
 Q will replay macros the ones use just did
-
-
 
 > tabe = '<C-c>t'
 > quit = 'q'
@@ -86,10 +83,9 @@ Q will replay macros the ones use just did
 #### Lspsaga project-wide Replace
 
 :Lspsaga project_replace old_name new_name.
+
 ### Definition
 
 > edit = '<C-c>o'
 > vsplit = '<C-c>v'
 > split = '<C-c>i'
-
-

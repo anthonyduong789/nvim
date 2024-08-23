@@ -41,12 +41,12 @@ vim.opt.clipboard = "unnamedplus"
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
 vim.opt.foldcolumn = "1" -- '0' is not bad
-vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.opt.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = false
 vim.opt.swapfile = false
 -- vim.o.guicursor = "n-v-c-sm-i-ci-ve:block,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor"
-vim.o.guicursor = "n-v-c:block-Cursor/lCursor,i-ci-ve:block-Cursor2/lCursor2,r-cr:hor20,o:hor50"
+-- vim.o.guicursor = "n-v-c:block-Cursor/lCursor,i-ci-ve:block-Cursor2/lCursor2,r-cr:hor20,o:hor50"
 -- ver25-
 
 -- - `block`: The cursor is a block that covers the entire cell.

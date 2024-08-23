@@ -15,7 +15,7 @@ return {
     end,
     dependencies = {
       "nvim-treesitter/nvim-treesitter", -- optional
-      "nvim-tree/nvim-web-devicons", -- optional
+      "nvim-tree/nvim-web-devicons",     -- optional
     },
   },
   {
@@ -38,7 +38,7 @@ return {
     branch = "canary",
     dependencies = {
       { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+      { "nvim-lua/plenary.nvim" },  -- for curl, log wrapper
     },
 
     opts = function()
@@ -155,11 +155,11 @@ return {
   },
   {
     "copilot.lua",
-    enabled = true,
+    enabled = false,
   },
   {
     "copilot-cmp",
-    enabled = true,
+    enabled = false,
   },
 
   -- lsp servers

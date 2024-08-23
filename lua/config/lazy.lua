@@ -1,6 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-
   -- bootstrap lazy.nvim
   -- stylua: ignore
   vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable",
@@ -12,7 +11,7 @@ require("lazy").setup({
 
   spec = {
     -- add LazyVim and import its plugins
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    { "LazyVim/LazyVim",                                     import = "lazyvim.plugins" },
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
@@ -72,7 +71,7 @@ require("lazy").setup({
 -- vim.cmd.colorscheme("gruvbox")
 -- vim.cmd.colorscheme("rose-pine")
 -- vim.cmd.colorscheme("catppuccin")
--- vim.cmd.colorscheme("tokyonight")
+vim.cmd.colorscheme("tokyonight")
 -- vim.cmd.colorscheme("tokyonight-moon")
 -- vim.cmd.colorscheme("tokyonight-day")
 -- vim.cmd.colorscheme("tokyonight-storm")

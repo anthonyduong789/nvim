@@ -17,8 +17,7 @@
 --   {
 --     "LazyVim/LazyVim",
 --     opts = {
---       colorscheme = "gruvbox",
---     },
+--       colorscheme = "gruvbox", },
 --   },
 -- }
 --
@@ -42,7 +41,7 @@ return {
     "folke/tokyonight.nvim",
     priority = 1000,
     opts = {
-      transparent = true,
+      transparent = false,
       styles = {
         floats = "transparent",
         sidebars = "transparent",
@@ -84,7 +83,7 @@ return {
           variables = {},
           -- Background styles. Can be "dark", "transparent" or "normal"
           sidebars = "transparent", -- style for sidebars, see below
-          floats = "transparent", -- style for floating windows
+          floats = "transparent",   -- style for floating windows
         },
         dim_inactive = false,
 
